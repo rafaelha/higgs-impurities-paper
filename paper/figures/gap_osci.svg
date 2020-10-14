@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="204.44914mm"
+   height="144.49707mm"
+   viewBox="0 0 204.44914 144.49707"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="gap_osci.svg"
+   inkscape:export-filename="/data/mpi/publications/2020-09_paper_impurities/figures/gap_osci.png"
+   inkscape:export-xdpi="124.27795"
+   inkscape:export-ydpi="124.27795">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="-23.51597"
+     inkscape:cy="256.74666"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1278"
+     inkscape:window-height="682"
+     inkscape:window-x="1280"
+     inkscape:window-y="708"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-4.6896935,-5.8890834)">
+    <image
+       sodipodi:absref="/data/mpi/publications/2020-09_paper_impurities/figures/gap_ft_cleanclean.png"
+       xlink:href="gap_ft_cleanclean.png"
+       y="5.8890834"
+       x="4.6896935"
+       width="103.05096"
+       height="67.554367"
+       preserveAspectRatio="none"
+       id="image857" />
+    <image
+       sodipodi:absref="/data/mpi/publications/2020-09_paper_impurities/figures/gap_osci_cleanclean.png"
+       xlink:href="gap_osci_cleanclean.png"
+       y="10.564336"
+       x="71.333939"
+       width="31.445135"
+       height="20.790167"
+       preserveAspectRatio="none"
+       id="image843" />
+    <image
+       sodipodi:absref="/data/mpi/publications/2020-09_paper_impurities/figures/gap_ft_cleandirty.png"
+       xlink:href="gap_ft_cleandirty.png"
+       y="5.9257503"
+       x="107.74065"
+       width="101.39819"
+       height="67.5177"
+       preserveAspectRatio="none"
+       id="image871" />
+    <image
+       sodipodi:absref="/data/mpi/publications/2020-09_paper_impurities/figures/gap_osci_cleandirty.png"
+       xlink:href="gap_osci_cleandirty.png"
+       y="14.529775"
+       x="173.68843"
+       width="26.838442"
+       height="18.653282"
+       preserveAspectRatio="none"
+       id="image885" />
+    <image
+       sodipodi:absref="/data/mpi/publications/2020-09_paper_impurities/figures/gap_ft_dirtyclean.png"
+       xlink:href="gap_ft_dirtyclean.png"
+       y="82.337692"
+       x="5.1108427"
+       width="101.95452"
+       height="68.048462"
+       preserveAspectRatio="none"
+       id="image899" />
+    <image
+       sodipodi:absref="/data/mpi/publications/2020-09_paper_impurities/figures/gap_osci_dirtyclean.png"
+       xlink:href="gap_osci_dirtyclean.png"
+       y="89.750397"
+       x="70.051537"
+       width="28.224678"
+       height="18.957195"
+       preserveAspectRatio="none"
+       id="image913" />
+    <image
+       sodipodi:absref="/data/mpi/publications/2020-09_paper_impurities/figures/gap_ft_dirtydirty.png"
+       xlink:href="gap_ft_dirtydirty.png"
+       y="81.064392"
+       x="107.06536"
+       width="99.942497"
+       height="69.321762"
+       preserveAspectRatio="none"
+       id="image927" />
+    <image
+       sodipodi:absref="/data/mpi/publications/2020-09_paper_impurities/figures/gap_osci_dirtydirty.png"
+       xlink:href="gap_osci_dirtydirty.png"
+       y="90.899773"
+       x="169.70322"
+       width="29.431204"
+       height="20.688831"
+       preserveAspectRatio="none"
+       id="image941" />
+  </g>
+</svg>
