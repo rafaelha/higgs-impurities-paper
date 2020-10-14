@@ -58,22 +58,20 @@ def A(t):
     return A0*np.exp(-(t-te)**2/(2*tau**2))*np.cos(w*t) \
         +  A0_pr*np.exp(-(t-te-t_delay)**2/(2*tau_pr**2))*np.cos(w_pr*(t-t_delay))
 
-tau = 5.37
-te = -40.11
-dt = 100
-w = 3.78E-2
-A0 = -20.55
 
 tau = 5.37
-te = -39
+te = -40
 dt = 100
-w = 0.04
-A0 = -24
+dt = 0
+w = 0.038
+A0 = -25
 
-plt.plot(t_pulse, Efield(t_pulse, tau, te, dt, w, A0))
-t = np.linspace(min(t_pulse), max(t_pulse), 1000)
+t = np.linspace(-75, max(t_pulse), 1000)
+plt.plot(t, Efield(t, tau, te, dt, w, A0))
 E_fit = Efield(t, tau, te, dt, w, A0)
+plt.xlim((min(t), max(t)))
 
+#%%
 from scipy.optimize import curve_fit
 
 popt, pcov = curve_fit(Efield, x,y, p0=[tau, te, dt, w, A0])

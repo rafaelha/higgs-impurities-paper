@@ -19,7 +19,7 @@ code_version = {
 }
 #%%
 # ncpus = int(os.environ.get('SLURM_CPUS_PER_TASK', default=1))       # number of CPUs
-if len(sys.argv) > 1:
+if len(sys.argv) == 3:
     job_ID = int(sys.argv[1])
     task_ID = int(sys.argv[1])
     task_count = int(sys.argv[2])+1
@@ -32,33 +32,33 @@ if task_ID != -1:
     exec("from {} import params".format(sys.argv[1]))
     params = params[task_ID::task_count]
 else:
-    #from parameters import params
-    #params = [ params[0] ]
+    from parameters import params
+    params = [ params[0] ]
 
-    params = [
-        {
-            "Ne": 850,
-            "tmin": -2*(2*np.pi),
-            "tmax": 30*(2*np.pi),
-            "Nt": 3000,
-            "T": 0.56, #0.22
-            "wd":  10,
-            "s": np.array([1]),
-            "m": np.array([1.0]),
-            "ef": np.array([500]),
-            "g": np.array([10]),
-            "U": np.array([[0.2082]]),
-            "A0": -1,
-            "tau": 0.81,
-            "w":  0.36,
-            "te": -4.21,
-            "A0_pr": -0.1,
-            "tau_pr": 0.81,
-            "w_pr": 0.36,
-            "t_delay": 9,
-            "te_pr": -4.21
-        }
-    ]
+    # params = [
+    #     {
+    #         "Ne": 850,
+    #         "tmin": -2*(2*np.pi),
+    #         "tmax": 30*(2*np.pi),
+    #         "Nt": 3000,
+    #         "T": 0.56, #0.22
+    #         "wd":  10,
+    #         "s": np.array([1]),
+    #         "m": np.array([1.0]),
+    #         "ef": np.array([500]),
+    #         "g": np.array([10]),
+    #         "U": np.array([[0.2082]]),
+    #         "A0": -1,
+    #         "tau": 0.81,
+    #         "w":  0.36,
+    #         "te": -4.21,
+    #         "A0_pr": -0.1,
+    #         "tau_pr": 0.81,
+    #         "w_pr": 0.36,
+    #         "t_delay": 9,
+    #         "te_pr": -4.21
+    #     }
+    # ]
 
 
 for p in params:
@@ -143,6 +143,12 @@ for p in params:
                 d = d_new
                 d_new = UN0*d*integrate.quad(d0_integrand, -wd, wd, (d,))[0]
             return d_new
+    B = 1/(kb*0.000001)
+    pre_d0 = 0.13
+    U = 1 / N0 / integrate.quad(d0_integrand, -wd, wd, (pre_d0,))[0]
+    U = np.array([U])
+    print('U=',U)
+    B = 1/(kb*T)
     d_eq0 = find_d0(UN0)
     print('gap=',d_eq0)
 
@@ -236,28 +242,6 @@ for p in params:
         f = (x2 - x1)/(x2 - x0)
         der = (1-f)*(y2 - y1)/(x2 - x1) + f*(y1 - y0)/(x1 - x0)
         return np.concatenate([[der[0]],der,[der[-1]]])
-    def running_mean(x, N):
-        cumsum = np.cumsum(np.insert(x, 0, 0))
-        return (cumsum[N:] - cumsum[:-N]) / float(N)
-
-    # ps = np.loadtxt('..\\material_parameters_Matsunaga\\pulse_shape.csv', delimiter=',')
-    # rm = 20
-    # t_pulse = running_mean(ps[:,0],rm)
-
-    # b = 0.3
-    # smooth = (np.tanh((t_pulse-1.5)/b)+1)/2
-    # smooth2 = (-np.tanh((t_pulse-7.5)/b)+1)/2
-
-    # e_pulse = running_mean(ps[:,1],rm)*smooth*smooth2
-    # e_pulse /= np.max(np.abs(e_pulse))
-
-    # # 1 time unit = 0.438856 ps
-    # t_pulse /= 0.438856
-
-    # a_pulse = -scipy.integrate.cumtrapz(e_pulse,t_pulse, initial=0)
-    # shift = 0.9
-    # A_pump = scipy.interpolate.interp1d(np.concatenate([[-1e4],t_pulse-shift*2*np.pi,[1e4]]),A0*np.concatenate([[0],a_pulse,[a_pulse[-1]]]),kind='linear')
-    # A_probe = scipy.interpolate.interp1d(np.concatenate([[-1e4],t_pulse-shift*2*np.pi+t_delay,[1e4]]),A0_pr*np.concatenate([[0],a_pulse,[a_pulse[-1]]]),kind='linear')
 
     def A(t):
         # return A_pump(t) + A_probe(t)
@@ -330,7 +314,7 @@ for p in params:
     s0 = np.zeros(ne, dtype=complex)
 
     t0 = tmin
-    tt = np.array_split(t_points,len(t_points)//10)
+    tt = np.array_split(t_points,len(t_points)//100)
 
     JP1 = []
     JD1 = []
@@ -403,7 +387,7 @@ for p in params:
     jd_3 = np.concatenate(JD3)
     jp_3 = np.concatenate(JP3)
     t = t_points
-    tp = t/(2*np.pi)
+    tp = t
 
     j_1 = jd_1 + jp_1
     j_3 = jp_3 + jd_3
@@ -457,7 +441,7 @@ for p in params:
         plt.plot(tp,efield)
         # plt.xlim((-1,1))
         plt.ylabel(f'$A(t)$')
-        plt.xlabel(f'$t/2 \pi$')
+        plt.xlabel(f'$t$')
 
         plt.subplot(132)
         tw, aw = rfft(t,A(t))
@@ -491,7 +475,7 @@ for p in params:
         plt.plot(tp,d_2.real)
         plt.title(f'Re$[\Delta]$')
         plt.subplot(122)
-        sel = np.abs(tp-7)<4
+        sel = np.abs(tp>0)
         dsel = d_2[sel,0].real
         dsel -= np.mean(dsel)
         tw, dw = rfft(t[sel],dsel)
@@ -499,6 +483,8 @@ for p in params:
         tw, dw = rfft(t[sel],dsel)
         plt.plot(tw, nm(np.abs(dw)), '.-')
         plt.xlim((0,5*d_eq0[0]))
+        plt.axvline(1*d_eq[0], c='gray', lw=1)
+        plt.axvline(2*d_eq[0], c='gray', lw=1)
         # plt.plot(tp, d_2.imag)
         # plt.title(f'Im$[\Delta]$')
         plt.tight_layout()
@@ -528,7 +514,7 @@ for p in params:
             plt.plot(tw, sr2/nm1, '.', c='blue', label='Re $j/i\omega A$')
             plt.plot(tw, si2/nm2, '.', c='orange', label='Im $j/i \omega A$')
             plt.xlim((0,4*d_eq0[0]))
-            plt.ylim(0,10)
+            # plt.ylim(0,10)
             plt.legend()
 
         plt.subplot(131)

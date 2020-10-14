@@ -12,13 +12,13 @@ u_en = 10
 meV_to_THz = 0.2417990504024
 
 d0 = np.array([0.13])
-# U = np.array([[0.459]])
+# U = np.array([[0.46]])
 # d0  = np.array([0.20])
-# U = np.array([[0.506]])
+# U = np.array([[0.5]])
 # d0  = np.array([0.23])
-# U = np.array([[0.524]])
+# U = np.array([[0.525]])
 
-us = [np.array([[0.459]]), np.array([[0.506]]), np.array([[0.524]])]
+us = [np.array([[0.459]]), np.array([[0.5]]), np.array([[0.524]])]
 
 m=np.array([0.78])
 ef=np.array([100])
@@ -92,13 +92,13 @@ for j in np.arange(3):
 #%%
 plt.figure(figsize=(3,2))
 plt.plot(temps*u_temp, 2*gaps*u_en*meV_to_THz, 'k')
-plt.ylim((0,d0[0]*3.3*2*u_en*meV_to_THz))
+plt.ylim((0,d0[0]*2*2*u_en*meV_to_THz))
 plt.xlabel('T (K)')
 plt.ylabel('$2\Delta$ (THz)')
 plt.tight_layout()
 plt.savefig('BCS.pdf')
 import pickle
-f1 = open(f'BCS.pickle', 'w')
+f1 = open(f'BCS.pickle', 'ab')
 pickle.dump(temps*u_temp, f1)
 pickle.dump(2*gaps*u_en*meV_to_THz, f1)
 f1.close()
