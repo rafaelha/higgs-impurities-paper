@@ -19,17 +19,21 @@ code_version = {
 }
 #%%
 # ncpus = int(os.environ.get('SLURM_CPUS_PER_TASK', default=1))       # number of CPUs
-job_ID = int(os.environ.get('SLURM_ARRAY_JOB_ID', default=-1))       # job ID
-task_ID = int(os.environ.get('SLURM_ARRAY_TASK_ID', default=-1)) # task ID
-task_count = int(os.environ.get('SLURM_ARRAY_TASK_COUNT', default=1))
-task_count = 64
+if len(sys.argv) > 1:
+    job_ID = int(sys.argv[1])
+    task_ID = int(sys.argv[1])
+    task_count = int(sys.argv[2])+1
+else:
+    job_ID = -1
+    task_ID = -1
+    task_count = 1
 
 if task_ID != -1:
     exec("from {} import params".format(sys.argv[1]))
     params = params[task_ID::task_count]
 else:
-    from parameters import params
-    params = [ params[0] ]
+    #from parameters import params
+    #params = [ params[0] ]
 
     params = [
         {
