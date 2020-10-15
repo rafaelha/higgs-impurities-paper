@@ -106,25 +106,64 @@
 
 
 \begin{eqnarray}
-	H_{BCS} = \sum_{i\mathbf{k}\sigma} c_{i\mathbf{k}\sigma}^\dagger
+	H_{\text{BCS}} = \sum_{i\mathbf{k}\sigma}  
+	\varepsilon_{i\mathbf{k}}c_{i\mathbf{k}\sigma}^\dagger
 	c_{i\mathbf{k}\sigma} + \sum_{i\mathbf{k}}^{}
 	\left( \Delta_i c_{i\mathbf{-k}\uparrow }^\dagger
-	c_{i\mathbf{k}\downarrow }^\dagger  \right)
+	c_{i\mathbf{k}\downarrow }^\dagger  \right) \,,
 \end{eqnarray}
 
-\begin{eqnarray}
+where $\varepsilon_{i\mathbf{k}} = s_i \left(\mathbf{k}^2/2m_i -
+\varepsilon_{F_i}\right)$ and the superconducting order parameter is self-consistently determined by 
+$\Delta_i = \sum_{j\mathbf{k}}^{}U_{ij} \langle c_{j-\mathbf{k}\downarrow
+}c_{j\mathbf{k}\uparrow }\rangle$.
+
+\begin{eqnarray*}
 	H_{\text{p-p}} = -\sum_{i\mathbf{kk'}\sigma}^{}
 	\mathbf{J}_{i\mathbf{kk'}} \cdot \mathbf{A} \,
 	c_{i\mathbf{k}\sigma}^\dagger  c_{i\mathbf{k}'\sigma} +
 	\sum_{i\mathbf{k}\sigma}^{} \frac{s_i e^2}{2m_i} \mathbf{A}^2 \,
 	c_{i\mathbf{k}\sigma}^\dagger c_{i\mathbf{k}\sigma}
-\end{eqnarray}
+\end{eqnarray*}
+
+\begin{eqnarray*}
+	\langle \left|\mathbf{e} \cdot
+	\mathbf{J}_{i\mathbf{kk'}}\right|^2\rangle_{\text{Av}}
+	&=& \int \frac{d\Omega_\mathbf{k}}{4\pi} \frac{d\Omega_\mathbf{k}'}{4\pi}
+	\left|\mathbf{e} \cdot \mathbf{J}_{i\mathbf{kk'}}\right|^2
+	\\
+	&\approx& \frac{(e v_{F_i})^2}{3 \pi N_i(0)} 
+	\frac{\gamma_i}{(\varepsilon-\varepsilon')^2 + \gamma_i^2}
+\end{eqnarray*}
+
+Discussion of $A, A^2$.
+
+The full Hamiltonian is given by $H = H_{BCS} + H_{p-p}$.
+
 
 
 
 
 
 \section{Single-band superconductivity}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=\columnwidth]{figures/fig1.pdf}
+	\caption{ABC}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=\columnwidth]{figures/fig2.pdf}
+	\caption{ABC}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=\columnwidth]{figures/fig3.pdf}
+	\caption{ABC}
+\end{figure}
 \begin{comment}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Higgs oscillations}

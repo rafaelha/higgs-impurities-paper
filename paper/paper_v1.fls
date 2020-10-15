@@ -1,4 +1,4 @@
-PWD C:/Users/rafae/Documents/higgs/paper
+PWD C:/Users/rafae/Documents/higgs-impurities-paper/paper
 INPUT C:/Users/rafae/AppData/Local/MiKTeX/2.9/miktex/data/le/pdftex/pdflatex.fmt
 INPUT paper_v1.tex
 OUTPUT paper_v1.log
@@ -170,6 +170,19 @@ INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/omscmr.fd
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/omscmr.fd
+INPUT figures/fig1.pdf
+INPUT ./figures/fig1.pdf
+INPUT ./figures/fig1.pdf
+INPUT ./figures/fig1.pdf
+INPUT figures/fig2.pdf
+INPUT ./figures/fig2.pdf
+INPUT ./figures/fig2.pdf
+INPUT ./figures/fig2.pdf
+INPUT figures/fig3.pdf
+INPUT ./figures/fig3.pdf
+INPUT ./figures/fig3.pdf
+INPUT ./figures/fig3.pdf
+INPUT C:/Users/rafae/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map
 INPUT figures/influence_pump_pulse_freq.png
 INPUT ./figures/influence_pump_pulse_freq.png
 INPUT ./figures/influence_pump_pulse_freq.png
@@ -177,7 +190,6 @@ INPUT ./figures/influence_pump_pulse_freq.png
 INPUT ./figures/influence_pump_pulse_freq.png
 INPUT paper_v1.bbl
 INPUT paper_v1.bbl
-INPUT C:/Users/rafae/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map
 INPUT paper_v1.aux
 INPUT ./paper_v1.out
 INPUT ./paper_v1.out
@@ -193,6 +205,8 @@ INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfon
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb

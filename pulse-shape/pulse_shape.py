@@ -55,15 +55,15 @@ def Efield(t, tau, te, dt, w, A0):
 def A(t):
 # return A_pump(t) + A_probe(t)
     """ Returns the vector potential at time t """
-    return A0*np.exp(-(t-te)**2/(2*tau**2))*np.cos(w*t) \
-        +  A0_pr*np.exp(-(t-te-t_delay)**2/(2*tau_pr**2))*np.cos(w_pr*(t-t_delay))
+    return A0*np.exp(-(t-te)**2/(2*tau**2))*np.cos(w*t) # \
+        # +  A0_pr*np.exp(-(t-te-t_delay)**2/(2*tau_pr**2))*np.cos(w_pr*(t-t_delay))
 
 
 tau = 5.37
 te = -40
 dt = 100
 dt = 0
-w = 0.038
+w = 0.04
 A0 = -25
 
 t = np.linspace(-75, max(t_pulse), 1000)
@@ -71,6 +71,41 @@ plt.plot(t, Efield(t, tau, te, dt, w, A0))
 E_fit = Efield(t, tau, te, dt, w, A0)
 plt.xlim((min(t), max(t)))
 
+#%% fig 1 - pulse
+plt.rcParams.update({'font.size': 13})
+SMALL_SIZE = 11
+MEDIUM_SIZE = 13
+BIGGER_SIZE = 15
+
+plt.rc('font', size=MEDIUM_SIZE)          # controls default text sizes
+plt.rc('axes', titlesize=MEDIUM_SIZE)     # fontsize of the axes title
+plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
+plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+
+plt.figure('pulse-t', figsize=(4.5,1.8))
+plt.clf()
+t = np.linspace(-75, 500, 1000)
+plt.plot(t*u_t, Efield(t, tau, te, dt, w, A0), 'k')
+plt.xlim((-4.5,20))
+plt.ylabel('$E(t)$')
+plt.xlabel('$t$ (ps)')
+plt.tight_layout()
+plt.savefig('pulse.pdf', transparent=True)
+
+plt.figure('pulse-w', figsize=(2.5,1.8))
+plt.clf()
+ww, ew = fft(t, A(t)**2)
+plt.plot(ww/u_t/(2*np.pi),np.abs(ew), 'k')
+plt.xlim((0,3))
+# plt.axvline(d0*u_e*meV_to_THz, c='k', lw=0.7)
+plt.axvline(2*d0*u_e*meV_to_THz, c='k', lw=0.3)
+plt.xlabel('Frequency (THz)')
+plt.ylabel('$|A^2(\omega)|$')
+plt.tight_layout()
+plt.savefig('pulse_w.pdf', transparent=True)
 #%%
 from scipy.optimize import curve_fit
 

@@ -2,6 +2,8 @@
 import numpy as np
 from scipy import integrate
 import matplotlib.pyplot as plt
+import pickle
+
 
 hbar=1
 kb=1
@@ -38,6 +40,7 @@ N0 = m*kf/(2*np.pi**2)
 Ne = 1000
 ep = np.linspace(-wd, wd, Ne)
 
+#%%
 
 def d0_integrand(x, d):
     # This is an auxiliary function used in find_d0 to calculate an integral
@@ -103,3 +106,18 @@ pickle.dump(temps*u_temp, f1)
 pickle.dump(2*gaps*u_en*meV_to_THz, f1)
 f1.close()
 # plt.xlim((8,9))
+
+#%%
+f1 = open(f'BCS.pickle', 'rb')
+a=pickle.load(f1)
+b=pickle.load(f1)
+f1.close()
+
+plt.figure(figsize=(1.8,1.3))
+plt.plot(a, b[:,0], 'k')
+plt.ylim((0,0.8))
+plt.xlim((0,10))
+plt.xlabel('T (K)')
+plt.ylabel('$2\Delta$ (THz)')
+plt.tight_layout()
+plt.savefig('BCS-1.pdf', transparent=True)

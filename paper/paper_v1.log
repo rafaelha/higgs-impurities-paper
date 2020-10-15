@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.12.12)  12 OCT 2020 18:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.12.12)  16 OCT 2020 01:19
 entering extended mode
 **./paper_v1.tex
 (paper_v1.tex
@@ -581,27 +581,50 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 79.
- Excluding 'comment' comment.
-<figures/influence_pump_pulse_freq.png, id=31, 1225.57875pt x 901.3675pt>
+<figures/fig1.pdf, id=31, 481.13051pt x 269.86018pt>
+File: figures/fig1.pdf Graphic file (type pdf)
+<use figures/fig1.pdf>
+Package pdftex.def Info: figures/fig1.pdf  used on input line 152.
+(pdftex.def)             Requested size: 246.0pt x 137.97687pt.
+<figures/fig2.pdf, id=32, 481.13051pt x 386.12756pt>
+File: figures/fig2.pdf Graphic file (type pdf)
+<use figures/fig2.pdf>
+Package pdftex.def Info: figures/fig2.pdf  used on input line 158.
+(pdftex.def)             Requested size: 246.0pt x 197.42325pt.
+<figures/fig3.pdf, id=33, 481.13051pt x 515.10944pt>
+File: figures/fig3.pdf Graphic file (type pdf)
+<use figures/fig3.pdf>
+Package pdftex.def Info: figures/fig3.pdf  used on input line 164.
+(pdftex.def)             Requested size: 246.0pt x 263.37044pt.
+ Excluding 'comment' comment. [1{C:/Users/rafae/AppData/Local/MiKTeX/2.9/pdftex
+/config/pdftex.map} <./figures/fig1.pdf>]
+
+LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix]
+ on input line 339.
+
+<figures/influence_pump_pulse_freq.png, id=82, 1225.57875pt x 901.3675pt>
 File: figures/influence_pump_pulse_freq.png Graphic file (type png)
 <use figures/influence_pump_pulse_freq.png>
 Package pdftex.def Info: figures/influence_pump_pulse_freq.png  used on input l
-ine 304.
+ine 343.
 (pdftex.def)             Requested size: 246.0pt x 180.91672pt.
- (paper_v1.bbl) [1{C:/Users/rafae/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex
-.map} <./figures/influence_pump_pulse_freq.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 311.
+(paper_v1.bbl) [2 <./figures/fig2.pdf> <./figures/fig3.pdf
+
+pdfTeX warning: pdflatex (file ./figures/fig3.pdf): PDF inclusion: multiple pdf
+s with page group included in a single page
+> <./figures/influence_pump_pulse_freq.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 350.
  (paper_v1.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 311.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 311.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 350.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 350.
 Package rerunfilecheck Info: File `paper_v1.out' has not changed.
 (rerunfilecheck)             Checksum: 6584A4A749C8E784831DBB075C8ADE46;1556.
  ) 
 Here is how much of TeX's memory you used:
- 13484 strings out of 492970
- 193268 string characters out of 3126593
- 340435 words of memory out of 3000000
- 17156 multiletter control sequences out of 15000+200000
+ 13503 strings out of 492970
+ 193758 string characters out of 3126593
+ 329435 words of memory out of 3000000
+ 17169 multiletter control sequences out of 15000+200000
  14920 words of font info for 68 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  36i,11n,38p,564b,430s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -613,19 +636,20 @@ MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Users/rafae/AppData/Loc
 al/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/rafa
 e/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
 C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
-/cmmi7.pfb><C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public
-/amsfonts/cm/cmr10.pfb><C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/
-type1/public/amsfonts/cm/cmr6.pfb><C:/Users/rafae/AppData/Local/Programs/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/rafae/AppData/Local/Prog
-rams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/rafae/AppData
-/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/
-rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pf
+/cmmi5.pfb><C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public
+/amsfonts/cm/cmmi7.pfb><C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/
+type1/public/amsfonts/cm/cmr10.pfb><C:/Users/rafae/AppData/Local/Programs/MiKTe
+X 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/rafae/AppData/Local/Pro
+grams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/rafae/AppDat
+a/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/r
+afae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pf
 b><C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
-/cm/cmsy7.pfb><C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/cm/cmti9.pfb>
-Output written on paper_v1.pdf (1 page, 252780 bytes).
+/cm/cmsy5.pfb><C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
+lic/amsfonts/cm/cmsy7.pfb><C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmti9.pfb>
+Output written on paper_v1.pdf (2 pages, 2223547 bytes).
 PDF statistics:
- 105 PDF objects out of 1000 (max. 8388607)
- 11 named destinations out of 1000 (max. 500000)
- 12862 words of extra memory for PDF output out of 14400 (max. 10000000)
+ 223 PDF objects out of 1000 (max. 8388607)
+ 14 named destinations out of 1000 (max. 500000)
+ 12877 words of extra memory for PDF output out of 14400 (max. 10000000)
 
