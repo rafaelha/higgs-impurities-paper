@@ -18,18 +18,12 @@ code_version = {
     "1.1": "pulse shape modified, now parameter te, te_pr"
 }
 #%%
-# ncpus = int(os.environ.get('SLURM_CPUS_PER_TASK', default=1))       # number of CPUs
-if len(sys.argv) == 3:
-    job_ID = int(sys.argv[1])
-    task_ID = int(sys.argv[1])
-    task_count = int(sys.argv[2])+1
-else:
-    job_ID = -1
-    task_ID = -1
-    task_count = 1
+job_ID = int(sys.argv[1])
+task_ID = int(sys.argv[1])
+task_count = int(sys.argv[2])+1
 
 if task_ID != -1:
-    exec("from {} import params".format(sys.argv[1]))
+    from parameters import params
     params = params[task_ID::task_count]
 else:
     from parameters import params
