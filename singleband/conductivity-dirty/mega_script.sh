@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAX=159
+MAX=138
 for i in `seq 0 1 ${MAX}`
 do
 	FILENAME=job_file_${i}.ll
