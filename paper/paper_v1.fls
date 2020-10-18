@@ -182,14 +182,40 @@ INPUT figures/fig3.pdf
 INPUT ./figures/fig3.pdf
 INPUT ./figures/fig3.pdf
 INPUT ./figures/fig3.pdf
+INPUT figures/two_band_cond.png
+INPUT ./figures/two_band_cond.png
+INPUT ./figures/two_band_cond.png
+INPUT ./figures/two_band_cond.png
+INPUT ./figures/two_band_cond.png
 INPUT C:/Users/rafae/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map
+INPUT figures/gap_osci.png
+INPUT ./figures/gap_osci.png
+INPUT ./figures/gap_osci.png
+INPUT ./figures/gap_osci.png
+INPUT ./figures/gap_osci.png
+INPUT figures/noneq_cond.png
+INPUT ./figures/noneq_cond.png
+INPUT ./figures/noneq_cond.png
+INPUT ./figures/noneq_cond.png
+INPUT ./figures/noneq_cond.png
+INPUT figures/leggett_oscillations.png
+INPUT ./figures/leggett_oscillations.png
+INPUT ./figures/leggett_oscillations.png
+INPUT ./figures/leggett_oscillations.png
+INPUT ./figures/leggett_oscillations.png
+INPUT figures/leggett_coupling.png
+INPUT ./figures/leggett_coupling.png
+INPUT ./figures/leggett_coupling.png
+INPUT ./figures/leggett_coupling.png
+INPUT ./figures/leggett_coupling.png
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr17.tfm
+INPUT paper_v1.bbl
+INPUT paper_v1.bbl
 INPUT figures/influence_pump_pulse_freq.png
 INPUT ./figures/influence_pump_pulse_freq.png
 INPUT ./figures/influence_pump_pulse_freq.png
 INPUT ./figures/influence_pump_pulse_freq.png
 INPUT ./figures/influence_pump_pulse_freq.png
-INPUT paper_v1.bbl
-INPUT paper_v1.bbl
 INPUT paper_v1.aux
 INPUT ./paper_v1.out
 INPUT ./paper_v1.out
@@ -211,6 +237,8 @@ INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfon
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb
