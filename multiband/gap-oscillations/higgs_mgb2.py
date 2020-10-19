@@ -19,7 +19,7 @@ code_version = {
     "1.1": "pulse shape modified, now parameter te, te_pr",
     "1.2": "U calculated from gap and v (gap and v are input parameters)"
 }
-if len(sys.argv)==3:
+if True:#len(sys.argv)==3:
     job_ID = int(sys.argv[1])
     task_ID = int(sys.argv[1])
     task_count = int(sys.argv[2])+1
@@ -32,7 +32,10 @@ else:
 if task_ID != -1:
     from parameters import params
     params = params[task_ID::task_count]
+    print('parameters loaded')
 else:
+    print('parameters not loaded')
+    pass
     from parameters import params
     params = [ params[0] ]
 
