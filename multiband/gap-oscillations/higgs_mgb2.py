@@ -205,7 +205,7 @@ for p in params:
     # gscale=np.array([10])
     g = p["g"]
     pre_d0 = p["pre_d0"]
-    v = p["v"]
+    v_legget = p["v"]
     #pump parameters
     A0 = p["A0"]
     tau = p["tau"]
@@ -360,7 +360,7 @@ for p in params:
 
     B = 1/(kb*0.000001)
     ep = np.linspace(-wd, wd, Ne)
-    U = find_U(v, pre_d0, integrate.simps(0.5*1/np.sqrt(ep**2+pre_d0.reshape(2,1)**2)*np.tanh(B/2*np.sqrt(ep**2+pre_d0.reshape(2,1)**2)),ep))
+    U = find_U(v_legget, pre_d0, integrate.simps(0.5*1/np.sqrt(ep**2+pre_d0.reshape(2,1)**2)*np.tanh(B/2*np.sqrt(ep**2+pre_d0.reshape(2,1)**2)),ep))
     UN0 = U*N0[:, np.newaxis]
     print('U=',U)
     print('UN0=',UN0)
@@ -736,7 +736,7 @@ for p in params:
             #'gscale': gscale,
             'g': g,
             'U': U,
-            'v':v,
+            'v':v_legget,
             'd_eq0_T0': d_eq0_T0,
             'd_eq0': d_eq0,
             'd_eq': d_eq,
@@ -793,3 +793,4 @@ for p in params:
 # plot(t,np.sum(r21o[:,1,:Ne//2],axis=1).real)
 # plot(t,np.sum(r21e[:,0,:Ne//2],axis=1).real)
 # plot(t,np.sum(r21e[:,1,:Ne//2],axis=1).real)
+
