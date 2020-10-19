@@ -69,6 +69,37 @@ INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/booktabs/bookta
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/booktabs/booktabs.sty
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/comment/comment.sty
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/comment/comment.sty
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/siunitx/siunitx.sty
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/siunitx/siunitx.sty
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3kernel/expl3.sty
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3kernel/expl3.sty
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3kernel/expl3-code.tex
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3kernel/expl3-code.tex
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/unicode-data/UnicodeData.txt
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/unicode-data/UnicodeData.txt
+INPUT nul:.tex
+INPUT nul:.tex
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3kernel/l3pdfmode.def
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3kernel/l3pdfmode.def
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3packages/xparse/xparse.sty
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3packages/xparse/xparse.sty
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/tools/array.sty
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/tools/array.sty
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3packages/l3keys2e/l3keys2e.sty
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3packages/l3keys2e/l3keys2e.sty
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/translator/translator.sty
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/translator/translator.sty
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/translator/translator.sty
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/float/float.sty
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/float/float.sty
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/hyperref/hyperref.sty
@@ -105,6 +136,12 @@ INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/oberdiek/epstop
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/oberdiek/epstopdf-base.sty
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/oberdiek/grfext.sty
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/oberdiek/grfext.sty
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/ts1enc.dfu
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/ts1enc.dfu
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/translator/translator-basic-dictionary-English.dict
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/translator/translator-basic-dictionary-English.dict
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/siunitx/siunitx-abbreviations.cfg
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/siunitx/siunitx-abbreviations.cfg
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/color.sty
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/color.sty
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics-cfg/color.cfg
@@ -122,9 +159,6 @@ INPUT ./paper_v1.out
 INPUT ./paper_v1.out
 OUTPUT paper_v1.out
 OUTPUT paper_v1Notes.bib
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr9.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr12.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmbx12.tfm
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsfonts/umsa.fd
@@ -150,6 +184,15 @@ INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmbsy10.tfm
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmss10.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmss8.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmss8.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmtt10.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmtt8.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmtt8.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr9.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr12.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmbx12.tfm
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmti9.tfm
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr6.tfm
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmmi9.tfm
@@ -158,6 +201,10 @@ INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmsy9
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmsy6.tfm
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmex9.tfm
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmss9.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmss8.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmtt9.tfm
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmtt8.tfm
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/symbols/msam10.tfm
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/symbols/msam7.tfm
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
@@ -170,6 +217,8 @@ INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/omscmr.fd
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/omscmr.fd
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmti10.tfm
+INPUT C:/Users/rafae/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map
 INPUT figures/fig1.pdf
 INPUT ./figures/fig1.pdf
 INPUT ./figures/fig1.pdf
@@ -187,7 +236,6 @@ INPUT ./figures/two_band_cond.png
 INPUT ./figures/two_band_cond.png
 INPUT ./figures/two_band_cond.png
 INPUT ./figures/two_band_cond.png
-INPUT C:/Users/rafae/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map
 INPUT figures/gap_osci.png
 INPUT ./figures/gap_osci.png
 INPUT ./figures/gap_osci.png
@@ -229,12 +277,18 @@ INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfon
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmex9.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmex9.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb
@@ -249,7 +303,15 @@ INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfon
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb
 INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb
+INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb

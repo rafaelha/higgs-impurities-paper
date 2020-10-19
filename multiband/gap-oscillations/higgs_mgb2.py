@@ -17,7 +17,7 @@ import gc
 code_version = {
     "1.0": "first version",
     "1.1": "pulse shape modified, now parameter te, te_pr",
-    "1.2": "U calculated from gap and v (gap and v are input parameters)"
+    "1.2": "U calculated from gap and v (gap and v are input parameters), r21e r21o saved"
 }
 if len(sys.argv)==3:
     job_ID = int(sys.argv[1])

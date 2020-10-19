@@ -9,7 +9,7 @@
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{comment}
-
+\usepackage{siunitx}
 \usepackage{float}
 \usepackage[
     pdftitle={},
@@ -81,9 +81,20 @@
 	\item Collective modes in superconductors: Higgs, Goldstone (shifted to plasma energy due to Anderson-Higgs)
 	\item In two-band superconductors: Additional out-of-phase Leggett mode, can couple to Higgs in nonequilibrium
 	\item Difficulties excitation Higgs mode, in clean-limit only weak coupling
-	\item In dirty superconductors: Coupling is enhanced
+	\item In dirty superconductors: Coupling is enhanced. Activation of
+		$\mathbf{p} \cdot \mathbf{A}$ term by momentum-converation
+		braking impurity scattering.
+	\item Discussion of Matthis Bardeen theory.
 	\item This work: 1) Higgs oscillations in two-band sc. with bands in different limits, 2) Nonequilibrium optical conductivity, 3) Leggett mode in dirty-limit, 4) Prediction for MgB$_2$
 \end{itemize}
+
+This article is organized as follows. In Sec. \ref{sec:model} we briefly review
+key aspects of the model as introduced by Murotani and Shimano []. We then
+discuss the case of a single-band superconductor in a pump-probe scenario and
+additionally with an assymetric supercurrent-inducing probe pulse in Sec.
+\ref{sec:singleband}. We then extend these results to the two-band case in Sec.
+\ref{sec:multiband} where we give explicit experimental predicitons for
+pump-probe characterization of collective modes in MgB$_2$.
 
 
 
@@ -146,26 +157,82 @@ The full Hamiltonian is given by $H = H_{BCS} + H_{p-p}$.
 
 
 
+
+Shortcoming of the model. Momentum-angle averaging removes information about
+polarization, momentum of photon. The gap oscillates with its equilibrium value
+and not $\Delta_{\infty}$. Also, the results are an expansion in $A$ up to third
+order. Specifically, the gap in only included up to second order (the only
+nonzero term) which makes it hard to say when this approximation becomes
+invalid. The dependence of the gap on fluence is linear up to this order.
+
+
 \section{Single-band superconductivity}
+\label{sec:singleband}
+
+Motivated by the experiment of Matsunaga et al. [] we choose parameters
+$\Delta_{\text{eq}}=\SI{1.3}{\milli\electronvolt}$,
+$\varepsilon_{F}=\SI{1}{\electronvolt}$, $m=0.78 m_e$, $s=1$ that reflect
+measurements and ab-initio calculations on NbN [DFT-reference].
+The Debye energy for NbN is order order of $\omega_D = \SI{5}{\milli\electronvolt}$, but
+for better numerical resolvability we choose $\omega_D =
+\SI{2}{\milli\electronvolt}$.
+
+A characteristic property of a pump pulse is its pulse length $\tau$ in units of the natural
+timescale of the superconductor, $\hbar/\Delta$. For $\tau \ll \hbar / \Delta$
+the superconductor is \textit{quenched}, while it is adiabatically driven in the
+opposite limit of $\tau \gg  \hbar / \Delta$. Here, we investigate a quench
+scenario with $\hbar\tau/\Delta=x$ by fitting the pulse form $A(t) = A_0 \exp\left( -(t-t')^2/2\tau^2
+\right)\cos \Omega t$ to the reported data of [Matsunaga]. The resulting
+electrical field waveform is shown in panel A of Fig. \ref{fig:singleband-gap}. 
+
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=\columnwidth]{figures/fig1.pdf}
-	\caption{ABC}
+	\caption{(A) Pulse field $E(t)$ realizing a qunech. (B) Spectral
+	composition $|A(\omega)|$. The gray shaded area illustrates the
+quasi-particle continuum. (C) Spectral compositon $A^2(\omega)$ of the second
+order component $A^2(t)$ responsible for excitation of collective modes. The
+peak around zero frequency corresponds to a DFG process while the peak at finite
+$\SI{1.2}{\tera\hertz}$ is a SFC process. (C) Evolution of the magnitude of the
+order parameter $\left|2\Delta(t)\right|$ for impuritiy strength varying from
+$\gamma/2\Delta=0.5$ to $20$ and Fourier spectrum of the gap oscillations (D).
+(E) Relaxation value $\Delta_{\infty}$ and amplitude of oscillation show a very
+similar dependence as a function of disorder strength which has maximum effect
+at around $\gamma \approx \Delta$.}
+
+$\Delta_{\infty}$ is given by the overlap of the pulse with the density of
+states of the quasiparticel continuum, 
+$$\Delta_{\infty} \propto
+\int_{}^{}d\omega N(\omega) A(\omega) \approx N(\varepsilon_F)
+\int_{\varepsilon_F}^{\infty}d\omega A(\omega)$$.
+\label{fig:singleband-gap}
 \end{figure}
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=\columnwidth]{figures/fig2.pdf}
-	\caption{ABC}
+	\caption{Real part $\sigma'$ (A,C) and imaginary part $\sigma''$ (B,D)
+		of optical conductivities to first order in $A$ 
+	for various impurity scattering rates at $T=\SI{4}{\kelvin}$ (A,B) and
+various temperatures at $\gamma/2\Delta=10$. $\sigma'$ show a characteristic
+conductivity gap below $T_C$ and both $\sigma'$, $\sigma''$ diverge in the
+static limit.}
 \end{figure}
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=\columnwidth]{figures/fig3.pdf}
-	\caption{ABC}
+	\caption{(A,B) Conductivity spectra for sweeped pump-probe delay $\delta
+	t_{\text{p-p}}$ to third order in $A$. (C) False-color plot of
+$\sigma' $ which was average-subtracted and normalized to show the oscillations.
+A phase shift occurs across the resonance at $2\Delta_{\text{eq}}$ of the quench pulse
+frequency. (D) Fourier spectrum of panel (C) showing that frequency of
+conductivity oscillation is peaked at $2\Delta_{\text{eq}}$.}
 \end{figure}
 %\begin{comment}
+\section{Multi-band superconductivity}
+\label{sec:multiband}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Higgs oscillations}
 \label{sec:higgs_oscillations}
@@ -247,6 +314,11 @@ The full Hamiltonian is given by $H = H_{BCS} + H_{p-p}$.
 \begin{itemize}
 	\item Discuss Fig. 5 for varying coupling strength and compare with clean limit result
 \end{itemize}
+
+Leggett mode has been potentially measured in between the two gaps. Discuss this
+and also refer to Schnyder Nature Comm. Figure out the parameter regime that
+inverted the gaps. Reproduce (or see what was wrong) with Murotani who also
+choose parameters such that the Leggett mode is inside the gap.
 
 \begin{figure}[H]
     \centering
