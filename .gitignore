@@ -5,6 +5,7 @@ __pycache__/
 
 *.err
 *.out
+*.ll
 
 # C extensions
 *.so
