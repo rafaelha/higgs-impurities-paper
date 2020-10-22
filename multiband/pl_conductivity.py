@@ -27,7 +27,7 @@ plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
-folder = 'gap-oscillations'
+folder = 'conductivity'
 files = glob.glob(f'{folder}/*.pickle')
 
 save_plots = False
@@ -55,9 +55,9 @@ def fft(t,f, inverse=False):
         idx = np.argsort(xw)
         xw = xw[idx]
         f = f[idx]
-        fw = scipy.ifft(f, axis=0)/np.sqrt(Nt)*Nt
+        fw = scipy.fft.ifft(f, axis=0)/np.sqrt(Nt)*Nt
     else:
-        fw = scipy.fft(f, axis=0)/np.sqrt(Nt)
+        fw = scipy.fft.fft(f, axis=0)/np.sqrt(Nt)
         xw = np.concatenate([xw[:Nt//2], xw[Nt//2:]-2*np.pi/dt])
         idx = np.argsort(xw)
         xw = xw[idx]
@@ -82,7 +82,7 @@ for f in files:
         reader.close()
 
 #%%
-def values(key):
+def values(key,res=res):
     vals = []
     for r in res:
         entry = r[key]
@@ -156,29 +156,34 @@ def plotHiggs(r, offset = 0.5, plot=True):
     w = r['w']
     d_eq = r['d_eq'][:,0,0]
     g = r['g']
+    A = r['A']
 
-    t_ = t[t>offset]
-    d_ = d[t>offset]
+    # determine left boundary for fft
+    tleft = 3*tau+1
+    tright = 140
+    cond = np.logical_and(t>=tleft, t<=tright)
+
+    t_ = t[cond]
+    d_ = d[cond]
     d_ -= np.mean(d_, axis=0)
     if plot:
-        plt.figure('Higgs')
+        plt.figure('Higgs', figsize=(5,2.5))
         plt.clf()
         plt.subplot(121)
+        plt.axvspan(tleft,tright,facecolor='gray', alpha=0.3)
         plt.plot(t,d)
-        plt.axvline(offset, c='gray', lw=2,ls='--')
         plt.xlabel(f'$t$')
         plt.ylabel(f'Re$\delta \Delta$')
-        title(r)
+        # title(r)
 
     lw = np.copy(g)
     lw[lw>0.01] = 2
     lw[lw<0.01] = 0.8
-    if len(d_eq)>1:
-        plt.axvline(d_eq[1]*2, c='gray', lw=lw[1])
     w_, dw_ = fft(t_, d_)
     if plot:
         plt.subplot(122)
         plt.axvline(d_eq[0]*2, c='gray', lw=lw[0])
+        plt.axvline(d_eq[1]*2, c='gray', lw=lw[1])
         plt.plot(w_, np.abs(dw_))
         plt.xlim((0,4))
         plt.xlabel(f'$\omega$')
@@ -208,7 +213,7 @@ def plotHiggsLast(r, offset=0):
     title(r)
 
 def conductivity(r, order=1, plot=True, begin=None, end=None, subtract=True):
-    r2 = sel(A0=r['A0'], g=r['g'], A0_pr=0)[0]
+    r2 = sel(A0=r['A0'], g=r['g'], A0_pr=0, tau=r['tau'], w=r['w'])[0]
     # r3 = sel(T=0.22, t_delay=r['t_delay'], A0=0, A0_pr=r['A0_pr'])[0]
 
     if order == 1:
@@ -308,7 +313,7 @@ def conductivity(r, order=1, plot=True, begin=None, end=None, subtract=True):
     sl2 = np.logical_and(w>0, w<6*gap)
     return w[sl2], s[sl2]
 
-def plotLegett(r, offset=0):
+def plotLeggett(r, offset=0):
     d_eq = r['d_eq'][:,0,0]
     d = r['d_2']
     dphase = d[:,0].imag/d_eq[0] - d[:,1].imag/d_eq[1]
@@ -316,15 +321,21 @@ def plotLegett(r, offset=0):
     tau = r['tau']
     w = r['w']
     g = r['g']
+    v = r['v']
 
-    t_ = t[t>offset]
-    dp_ = dphase[t>offset]
+    tleft = 3*tau+1
+    tright = 140
+    cond = np.logical_and(t>tleft, t<=tright)
+
+    t_ = t[cond]
+    dp_ = dphase[cond]
     dp_ -= np.mean(dp_, axis=0)
-    plt.figure('Leggett')
+    plt.figure('Leggett', figsize=(5,2.5))
     plt.clf()
     plt.subplot(121)
+    plt.ylabel('$\delta\\varphi, v=$'+str(np.round(v,3)))
+    plt.axvspan(tleft,tright,facecolor='gray', alpha=0.3)
     plt.plot(t,dphase)
-    plt.axvline(offset, c='gray', lw=2,ls='--')
     # plt.ylim((np.min(dp_),np.max(dp_)))
     # plt.ylim((-0.0002,0.0002))
     plt.xlabel(f'$t$')
@@ -337,17 +348,122 @@ def plotLegett(r, offset=0):
     lw = np.copy(g)
     lw[lw>0.01] = 2
     lw[lw<0.01] = 0.8
-    plt.axvline(d_eq[0]*1, c='gray', lw=lw[0], ls='-.')
-    plt.axvline(d_eq[0]*2, c='gray', lw=lw[0], ls='-.')
-    plt.axvline(d_eq[0]*3, c='gray', lw=lw[0], ls='-.')
+    plt.axvline(d_eq[0]*2, c='gray', lw=lw[0], ls='-')
     if len(d_eq)>1:
-        plt.axvline(d_eq[1]*1, c='gray', lw=lw[1], ls='-')
         plt.axvline(d_eq[1]*2, c='gray', lw=lw[1])
-        plt.axvline(d_eq[1]*3, c='gray', lw=lw[1], ls='-')
     plt.plot(w_, np.abs(dpw_))
-    plt.xlim((0,4))
+    plt.xlim((0,2))
     plt.xlabel(f'$\omega$')
     plt.tight_layout()
+
+    dpw_[w_<0] = 0
+    ileggett = np.argmax(np.abs(dpw_))
+    wlegget = w_[ileggett]
+    vallegget = np.abs(dpw_[ileggett])
+    plt.plot([wlegget], [vallegget], 'rx')
+
+    return wlegget
+def plotHiggsLeggett(r):
+    d = r['d_2'].real
+    d_im = r['d_2'].real
+    t = r['t']
+    tau = r['tau']
+    e = r['efield']
+    w = r['w']
+    d_eq = r['d_eq'][:,0,0]
+    g = r['g']
+    A = r['A']
+    v = r['v']
+
+    plt.figure('HL',figsize=(6,3.5))
+    plt.clf()
+    fig, axs = plt.subplots(1,3,num='HL')
+    axh = axs[0]
+    axl = axs[1]
+    ax1 = axs[2]
+
+    alpha = 0.9
+    lww = 1
+
+
+    # determine left boundary for fft
+    tleft = 3*tau+1
+
+    tright = 120
+    cond = np.logical_and(t>=tleft, t<=tright)
+
+    # axh.set_ylabel('$\delta\\varphi, v=$'+str(np.round(v,3)))
+    axh.set_xlabel('$t$')
+    axh.axvspan(tleft,tright,facecolor='gray', alpha=0.3)
+    axh.plot(t,d.real, alpha=alpha,lw=lww)
+    axh.set_xlim((min(t)+10, tright))
+
+    ax2 = ax1.twinx()
+
+
+    t_ = t[cond]
+    d_ = d[cond]
+    d_ -= np.mean(d_, axis=0)
+
+    lw = np.copy(g)
+    lw[lw>0.01] = 1
+    lw[lw<0.01] = 0.3
+    w_, dw_ = fft(t_, d_)
+    color = 'black'
+    ax1.set_xlabel(f'$\omega$')
+    ax1.set_ylabel('$\delta\Delta\'$', color=color)
+    ax1.tick_params(axis='y', labelcolor=color)
+    ax1.axvline(d_eq[0]*2, c='gray', lw=lw[0])
+    ax1.axvline(d_eq[1]*2, c='gray', lw=lw[1])
+    ax1.axvline(2*w, c='green', lw=1, ls='--')
+    ax1.plot(w_, np.abs(dw_), alpha=alpha,lw=lww)
+
+    d = r['d_2']
+    dphase = d[:,0].imag/d_eq[0] - d[:,1].imag/d_eq[1]
+
+    dp_ = dphase[cond]
+    dp_ -= np.mean(dp_, axis=0)
+
+    w_, dpw_ = fft(t_, dp_)
+    # plt.axvline(d_eq[0]*2, c='gray', lw=1)
+    # plt.axvline(d_eq[1]*2, c='gray', lw=1)
+
+    color = 'tab:red'
+    # ax2.set_ylabel('$\delta\\varphi, v=$'+str(np.round(v,3)), color=color)
+    ax2.tick_params(axis='y', labelcolor=color)
+    ax2.plot(w_, np.abs(dpw_), color=color, alpha=alpha, lw=lww)
+    plt.xlim((0,2))
+
+
+    axl.set_ylabel('$\delta\\varphi, v=$'+str(np.round(v,3)))
+    axl.set_xlabel('$t$')
+    axl.axvspan(tleft,tright,facecolor='gray', alpha=0.3)
+    axl.plot(t,dphase, c='tab:red', lw=0.8, alpha=alpha)
+    axl.set_xlim((min(t)+10, tright))
+
+    plt.tight_layout()
+
+    dpw_[w_<0] = 0
+    ileggett = np.argmax(np.abs(dpw_))
+    wlegget = w_[ileggett]
+    vallegget = np.abs(dpw_[ileggett])
+    # ax2.plot([wlegget], [vallegget], 'rx')
+
+    return wlegget
+# plotHiggsLeggett(res[14])
+# plt.pause(0.01)
+# plt.figure()
+# plotHiggsLeggett(res[1])
+# plt.pause(0.01)
+# plt.figure()
+# plotHiggsLeggett(res[140])
+# plt.pause(0.01)
+# plt.figure()
+# plotHiggsLeggett(res[24])
+# plt.pause(0.01)
+# plt.figure()
+# plotHiggsLeggett(res[449])
+# plt.pause(0.01)
 
 def plotE(r):
     plt.figure()
@@ -384,10 +500,11 @@ def plotA(r):
     def nm(x):
         return x / np.max(np.abs(x))
 
-    plt.figure('A')
+    plt.figure('A',figsize=(10,2))
     plt.clf()
     plt.subplot(131)
     plt.plot(tp,A)
+    plt.xlim((min(tp), abs(min(tp))))
     # plt.xlim((-1,1))
     plt.ylabel(f'$A(t)$')
     plt.xlabel(f'$t$')
@@ -400,10 +517,11 @@ def plotA(r):
     plt.xlim((0,5*d_eq[0]))
     plt.ylabel(f'$A(\omega)$')
     plt.xlabel(f'$\omega$')
-    plt.axvline(d_eq[0], c='gray', lw=1)
-    plt.axvspan(2*d_eq[0], 4*d_eq[1], facecolor='gray', alpha=0.2)
+    plt.axvspan(2*d_eq[0], 4*d_eq[1], facecolor='gray', alpha=0.3)
     if len(d_eq)>1: plt.axvspan(2*d_eq[1], 4*d_eq[1], facecolor='gray', alpha=0.2)
     plt.xlim((0,3*d_eq[1]))
+    plt.axvline(2*d_eq[0], c='k', lw=0.2)
+    plt.axvline(2*d_eq[0], c='k', lw=0.2)
     plt.tight_layout()
 
     plt.subplot(133)
@@ -418,7 +536,6 @@ def plotA(r):
     plt.xlim((0,3*d_eq[1]))
     if len(d_eq)>1: plt.axvline(2*d_eq[1], c='gray', lw=1)
     plt.tight_layout()
-
 def cond_pcolor():
     plt.figure('cc', figsize=(3,3))
     plt.clf()
@@ -505,7 +622,6 @@ def cond_w_pcolor():
     # plt.ylabel('$\omega_{\delta t_{pp}}$')
     # plt.tight_layout()
 
-
 def cond_w_3d():
     fig = plt.figure('ccw3d')
     ax = fig.gca(projection='3d')
@@ -556,12 +672,24 @@ r0 = sel(t_delay=delays[-1])[0]
 d_eq = r0['d_eq'][:,0,0]
 gap = np.max(d_eq)
 t = r0['t']
+taus = np.sort(values('tau'))
+wss = np.sort(values('w'))
 
 pulses = []
 for r in res:
     pulse = {'tau':r['tau'], 'w':r['w']}
     if pulse not in pulses:
         pulses.append(pulse)
+
+pulses_sort = []
+for tau in taus:
+    for ws in wss:
+        for pulse in pulses:
+            if pulse['w']==ws and pulse['tau']==tau:
+                pulses_sort.append(pulse)
+                pulses.remove(pulse)
+
+pulses = pulses_sort
 
 save = False
 
@@ -594,10 +722,44 @@ Ascale = A0 / (Amax * u_A)
 cm = 'rainbow'
 
 #%%
+def z(array):
+    return zip(np.arange(len(array)), array)
 
 
+# leggett = np.zeros((len(pulses), len(vs), len(fourcases)))
+# for i, pulse in z(pulses):
+#     print('step',i)
+#     for j, v in z(vs):
+#         for k, imp in z(fourcases):
+#             r = sel(first=True, w=pulse['w'], tau=pulse['tau'], v=v,g=imp)
 
+#             # if j==0 and k == 0:
+#             #     plotA(r)
+#             #     plt.savefig(folder + f'/figures/A{i}.pdf')
+#             # plotHiggs(r)
+#             # plt.savefig(folder + f'/figures/H-A{i}-v{j}-imp{k}.pdf')
+#             # plotLeggett(r)
+#             # plt.savefig(folder + f'/figures/L-A{i}-v{j}-imp{k}.pdf')
+#             wleggett = plotHiggsLeggett(r)
+#             leggett[i,j,k] = wleggett
+#             plt.savefig(folder + f'/figures/HLt-A{i}-v{j}-imp{k}.pdf')
 
+# #%%
+
+# fourcases = [cleanclean, cleandirty, dirtyclean, dirtydirty]
+# fc = ['1cc', '2cd','3dc','4dd']
+# for i in np.arange(len(pulses)):
+#     plt.figure(figsize=(3.5,2))
+#     for k in np.arange(len(fourcases)):
+#         plt.plot(vs, leggett[i,:,k], label=fc[k])
+#     # plt.legend()
+#     plt.xlabel('$v$')
+#     plt.ylabel('w')
+#     plt.axhline(d_eq[0]*2, c='gray', lw=1)
+#     plt.axhline(d_eq[1]*2, c='gray', lw=1)
+#     plt.tight_layout()
+#     # plt.ylim((0,max(np.max(leggett[i,:,k]), 2)))
+#     plt.savefig(folder + f'/figures/Leggett-A{i}.pdf')
 
 
 
@@ -612,20 +774,20 @@ cm = 'rainbow'
 
 
 #%%
-# cc1 = []
-# cc3 = []
-# rr = []
+cc1 = []
+cc3 = []
+rr = []
 # delays = delays[1:]
-# s_imp = 8
-# for d in delays:
-#     r = sel(first=True, t_delay=d, A0_pr=A0_prs[0], g=gammas[s_imp])
-#     rr.append(r)
-#     w, s1 = conductivity(r, order=1, plot=False)
-#     w, s3 = conductivity(r, order=3, plot=False)
-#     cc1.append(s1)
-#     cc3.append(s3)
-# cc1 = np.stack(cc1)
-# cc3 = np.stack(cc3)
+s_imp = 8
+for d in delays:
+    r = sel(first=True, t_delay=d, A0_pr=0.1, A0=1, g=dirtydirty, w=0.7, tau=4)
+    rr.append(r)
+    w, s1 = conductivity(r, order=1, plot=False)
+    w, s3 = conductivity(r, order=3, plot=False)
+    cc1.append(s1)
+    cc3.append(s3)
+cc1 = np.stack(cc1)
+cc3 = np.stack(cc3)
 
 ##%%
 

@@ -1,155 +1,166 @@
-PWD C:/Users/rafae/Documents/higgs-impurities-paper/paper
-INPUT C:/Users/rafae/AppData/Local/MiKTeX/2.9/miktex/data/le/pdftex/pdflatex.fmt
+PWD /home/haenel/Documents/higgs-impurities-paper/paper
+INPUT /etc/texmf/web2c/texmf.cnf
+INPUT /usr/share/texmf/web2c/texmf.cnf
+INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
 INPUT paper_v1.tex
 OUTPUT paper_v1.log
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/revtex/revtex4-2.cls
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/revtex/revtex4-2.cls
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/revtex/aps4-2.rtx
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/revtex/aps4-2.rtx
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/revtex/aps4-2.rtx
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/revtex/aps10pt4-2.rtx
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/revtex/aps10pt4-2.rtx
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/textcase/textcase.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/textcase/textcase.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/url/url.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/url/url.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/natbib/natbib.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/natbib/natbib.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/revtex/revsymb4-2.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/revtex/revsymb4-2.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/inputenc.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/inputenc.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/babel/babel.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/babel/babel.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/babel/switch.def
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/arabi/bblopts.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/arabi/bblopts.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/babel-english/english.ldf
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/babel-english/english.ldf
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/babel/babel.def
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/babel/txtbabel.def
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/microtype/microtype.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/microtype/microtype.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/keyval.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/keyval.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/microtype/microtype-pdftex.def
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/microtype/microtype-pdftex.def
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/microtype/microtype.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/microtype/microtype.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/microtype/microtype.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsmath/amsmath.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsmath/amsmath.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsmath/amstext.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsmath/amstext.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsmath/amsgen.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsmath/amsgen.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsmath/amsbsy.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsmath/amsbsy.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsmath/amsopn.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsmath/amsopn.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsfonts/amssymb.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsfonts/amssymb.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsfonts/amsfonts.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsfonts/amsfonts.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/braket/braket.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/braket/braket.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/tools/bm.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/tools/bm.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/graphicx.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/graphicx.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/graphics.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/graphics.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/trig.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/trig.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics-cfg/graphics.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics-cfg/graphics.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics-def/pdftex.def
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics-def/pdftex.def
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/booktabs/booktabs.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/booktabs/booktabs.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/comment/comment.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/comment/comment.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/siunitx/siunitx.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/siunitx/siunitx.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3kernel/expl3.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3kernel/expl3.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3kernel/expl3-code.tex
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3kernel/expl3-code.tex
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/unicode-data/UnicodeData.txt
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/unicode-data/UnicodeData.txt
-INPUT nul:.tex
-INPUT nul:.tex
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3kernel/l3pdfmode.def
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3kernel/l3pdfmode.def
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3packages/xparse/xparse.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3packages/xparse/xparse.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/tools/array.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/tools/array.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3packages/l3keys2e/l3keys2e.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3packages/l3keys2e/l3keys2e.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/translator/translator.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/translator/translator.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/translator/translator.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/float/float.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/float/float.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/hyperref/hyperref.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/hyperref/hyperref.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/oberdiek/hobsub-hyperref.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/oberdiek/hobsub-hyperref.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/oberdiek/hobsub-hyperref.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/oberdiek/hobsub-generic.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/oberdiek/hobsub-generic.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/ifxetex/ifxetex.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/ifxetex/ifxetex.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/oberdiek/auxhook.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/oberdiek/auxhook.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/oberdiek/kvoptions.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/oberdiek/kvoptions.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/hyperref/pd1enc.def
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/hyperref/pd1enc.def
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/00miktex/hyperref.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/00miktex/hyperref.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/hyperref/puenc.def
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/hyperref/puenc.def
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/hyperref/hpdftex.def
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/hyperref/hpdftex.def
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/oberdiek/rerunfilecheck.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/oberdiek/rerunfilecheck.sty
+INPUT /usr/share/texmf/tex/latex/revtex/revtex4-1.cls
+INPUT /usr/share/texmf/tex/latex/revtex/revtex4-1.cls
+INPUT /usr/share/texmf/tex/latex/revtex/aps4-1.rtx
+INPUT /usr/share/texmf/tex/latex/revtex/aps4-1.rtx
+INPUT /usr/share/texmf/tex/latex/revtex/aps4-1.rtx
+INPUT /usr/share/texmf/tex/latex/revtex/aps10pt4-1.rtx
+INPUT /usr/share/texmf/tex/latex/revtex/aps10pt4-1.rtx
+INPUT /usr/share/texmf/tex/latex/textcase/textcase.sty
+INPUT /usr/share/texmf/tex/latex/textcase/textcase.sty
+INPUT /usr/share/texmf/tex/latex/url/url.sty
+INPUT /usr/share/texmf/tex/latex/url/url.sty
+INPUT /usr/share/texmf/tex/latex/natbib/natbib.sty
+INPUT /usr/share/texmf/tex/latex/natbib/natbib.sty
+INPUT /usr/share/texmf/tex/latex/revtex/revsymb4-1.sty
+INPUT /usr/share/texmf/tex/latex/revtex/revsymb4-1.sty
+INPUT /usr/share/texmf/tex/latex/base/inputenc.sty
+INPUT /usr/share/texmf/tex/latex/base/inputenc.sty
+INPUT /usr/share/texmf/tex/latex/base/utf8.def
+INPUT /usr/share/texmf/tex/latex/base/utf8.def
+INPUT /usr/share/texmf/tex/latex/base/t1enc.dfu
+INPUT /usr/share/texmf/tex/latex/base/t1enc.dfu
+INPUT /usr/share/texmf/tex/latex/base/ot1enc.dfu
+INPUT /usr/share/texmf/tex/latex/base/ot1enc.dfu
+INPUT /usr/share/texmf/tex/latex/base/omsenc.dfu
+INPUT /usr/share/texmf/tex/latex/base/omsenc.dfu
+INPUT /usr/share/texmf/tex/generic/babel/babel.sty
+INPUT /usr/share/texmf/tex/generic/babel/babel.sty
+INPUT /usr/share/texmf/tex/generic/babel-english/english.ldf
+INPUT /usr/share/texmf/tex/generic/babel-english/english.ldf
+INPUT /usr/share/texmf/tex/generic/babel/babel.def
+INPUT /usr/share/texmf/tex/latex/microtype/microtype.sty
+INPUT /usr/share/texmf/tex/latex/microtype/microtype.sty
+INPUT /usr/share/texmf/tex/latex/graphics/keyval.sty
+INPUT /usr/share/texmf/tex/latex/graphics/keyval.sty
+INPUT /usr/share/texmf/tex/latex/microtype/microtype-pdftex.def
+INPUT /usr/share/texmf/tex/latex/microtype/microtype-pdftex.def
+INPUT /usr/share/texmf/tex/latex/microtype/microtype.cfg
+INPUT /usr/share/texmf/tex/latex/microtype/microtype.cfg
+INPUT /usr/share/texmf/tex/latex/microtype/microtype.cfg
+INPUT /usr/share/texmf/tex/latex/amsmath/amsmath.sty
+INPUT /usr/share/texmf/tex/latex/amsmath/amsmath.sty
+INPUT /usr/share/texmf/tex/latex/amsmath/amstext.sty
+INPUT /usr/share/texmf/tex/latex/amsmath/amstext.sty
+INPUT /usr/share/texmf/tex/latex/amsmath/amsgen.sty
+INPUT /usr/share/texmf/tex/latex/amsmath/amsgen.sty
+INPUT /usr/share/texmf/tex/latex/amsmath/amsbsy.sty
+INPUT /usr/share/texmf/tex/latex/amsmath/amsbsy.sty
+INPUT /usr/share/texmf/tex/latex/amsmath/amsopn.sty
+INPUT /usr/share/texmf/tex/latex/amsmath/amsopn.sty
+INPUT /usr/share/texmf/tex/latex/amsfonts/amssymb.sty
+INPUT /usr/share/texmf/tex/latex/amsfonts/amssymb.sty
+INPUT /usr/share/texmf/tex/latex/amsfonts/amsfonts.sty
+INPUT /usr/share/texmf/tex/latex/amsfonts/amsfonts.sty
+INPUT /usr/share/texmf/tex/latex/braket/braket.sty
+INPUT /usr/share/texmf/tex/latex/braket/braket.sty
+INPUT /usr/share/texmf/tex/latex/tools/bm.sty
+INPUT /usr/share/texmf/tex/latex/tools/bm.sty
+INPUT /usr/share/texmf/tex/latex/graphics/graphicx.sty
+INPUT /usr/share/texmf/tex/latex/graphics/graphicx.sty
+INPUT /usr/share/texmf/tex/latex/graphics/graphics.sty
+INPUT /usr/share/texmf/tex/latex/graphics/graphics.sty
+INPUT /usr/share/texmf/tex/latex/graphics/trig.sty
+INPUT /usr/share/texmf/tex/latex/graphics/trig.sty
+INPUT /usr/share/texmf/tex/latex/graphics-cfg/graphics.cfg
+INPUT /usr/share/texmf/tex/latex/graphics-cfg/graphics.cfg
+INPUT /usr/share/texmf/tex/latex/graphics-def/pdftex.def
+INPUT /usr/share/texmf/tex/latex/graphics-def/pdftex.def
+INPUT /usr/share/texmf/tex/generic/oberdiek/infwarerr.sty
+INPUT /usr/share/texmf/tex/generic/oberdiek/infwarerr.sty
+INPUT /usr/share/texmf/tex/generic/oberdiek/ltxcmds.sty
+INPUT /usr/share/texmf/tex/generic/oberdiek/ltxcmds.sty
+INPUT /usr/share/texmf/tex/latex/booktabs/booktabs.sty
+INPUT /usr/share/texmf/tex/latex/booktabs/booktabs.sty
+INPUT /usr/share/texmf/tex/latex/comment/comment.sty
+INPUT /usr/share/texmf/tex/latex/comment/comment.sty
+INPUT /usr/share/texmf/tex/latex/siunitx/siunitx.sty
+INPUT /usr/share/texmf/tex/latex/siunitx/siunitx.sty
+INPUT /usr/share/texmf/tex/latex/l3kernel/expl3.sty
+INPUT /usr/share/texmf/tex/latex/l3kernel/expl3.sty
+INPUT /usr/share/texmf/tex/latex/l3kernel/expl3-code.tex
+INPUT /usr/share/texmf/tex/latex/l3kernel/expl3-code.tex
+INPUT /usr/share/texmf/tex/generic/unicode-data/UnicodeData.txt
+INPUT /usr/share/texmf/tex/generic/unicode-data/CaseFolding.txt
+INPUT /usr/share/texmf/tex/generic/unicode-data/SpecialCasing.txt
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmr10.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmr10.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmr10.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmr10.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmr10.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmr10.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmr10.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmr10.tfm
+INPUT /usr/share/texmf/tex/latex/l3kernel/l3pdfmode.def
+INPUT /usr/share/texmf/tex/latex/l3kernel/l3pdfmode.def
+INPUT /usr/share/texmf/tex/latex/l3packages/xparse/xparse.sty
+INPUT /usr/share/texmf/tex/latex/l3packages/xparse/xparse.sty
+INPUT /usr/share/texmf/tex/latex/tools/array.sty
+INPUT /usr/share/texmf/tex/latex/tools/array.sty
+INPUT /usr/share/texmf/tex/latex/l3packages/l3keys2e/l3keys2e.sty
+INPUT /usr/share/texmf/tex/latex/l3packages/l3keys2e/l3keys2e.sty
+INPUT /usr/share/texmf/tex/latex/beamer/translator/translator.sty
+INPUT /usr/share/texmf/tex/latex/beamer/translator/translator.sty
+INPUT /usr/share/texmf/tex/latex/beamer/translator/translator.sty
+INPUT /usr/share/texmf/tex/latex/beamer/translator/translator-language-mappings.tex
+INPUT /usr/share/texmf/tex/latex/beamer/translator/translator-language-mappings.tex
+INPUT /usr/share/texmf/tex/latex/float/float.sty
+INPUT /usr/share/texmf/tex/latex/float/float.sty
+INPUT /usr/share/texmf/tex/latex/hyperref/hyperref.sty
+INPUT /usr/share/texmf/tex/latex/hyperref/hyperref.sty
+INPUT /usr/share/texmf/tex/generic/oberdiek/hobsub-hyperref.sty
+INPUT /usr/share/texmf/tex/generic/oberdiek/hobsub-hyperref.sty
+INPUT /usr/share/texmf/tex/generic/oberdiek/hobsub-hyperref.sty
+INPUT /usr/share/texmf/tex/generic/oberdiek/hobsub-generic.sty
+INPUT /usr/share/texmf/tex/generic/oberdiek/hobsub-generic.sty
+INPUT /usr/share/texmf/tex/generic/ifxetex/ifxetex.sty
+INPUT /usr/share/texmf/tex/generic/ifxetex/ifxetex.sty
+INPUT /usr/share/texmf/tex/latex/oberdiek/auxhook.sty
+INPUT /usr/share/texmf/tex/latex/oberdiek/auxhook.sty
+INPUT /usr/share/texmf/tex/latex/oberdiek/kvoptions.sty
+INPUT /usr/share/texmf/tex/latex/oberdiek/kvoptions.sty
+INPUT /usr/share/texmf/tex/latex/hyperref/pd1enc.def
+INPUT /usr/share/texmf/tex/latex/hyperref/pd1enc.def
+INPUT /usr/share/texmf/tex/latex/latexconfig/hyperref.cfg
+INPUT /usr/share/texmf/tex/latex/latexconfig/hyperref.cfg
+INPUT /usr/share/texmf/tex/latex/hyperref/puenc.def
+INPUT /usr/share/texmf/tex/latex/hyperref/puenc.def
+INPUT /usr/share/texmf/tex/latex/hyperref/hpdftex.def
+INPUT /usr/share/texmf/tex/latex/hyperref/hpdftex.def
+INPUT /usr/share/texmf/tex/latex/oberdiek/rerunfilecheck.sty
+INPUT /usr/share/texmf/tex/latex/oberdiek/rerunfilecheck.sty
 INPUT paper_v1.aux
 INPUT paper_v1.aux
 OUTPUT paper_v1.aux
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/microtype/mt-cmr.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/microtype/mt-cmr.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/context/base/supp-pdf.mkii
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/context/base/supp-pdf.mkii
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/oberdiek/epstopdf-base.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/oberdiek/epstopdf-base.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/oberdiek/grfext.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/oberdiek/grfext.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/ts1enc.dfu
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/ts1enc.dfu
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/translator/translator-basic-dictionary-English.dict
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/translator/translator-basic-dictionary-English.dict
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/siunitx/siunitx-abbreviations.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/siunitx/siunitx-abbreviations.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/color.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/color.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics-cfg/color.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics-cfg/color.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/hyperref/nameref.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/hyperref/nameref.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/oberdiek/gettitlestring.sty
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/generic/oberdiek/gettitlestring.sty
+INPUT /usr/share/texmf/tex/latex/microtype/mt-cmr.cfg
+INPUT /usr/share/texmf/tex/latex/microtype/mt-cmr.cfg
+INPUT /usr/share/texmf/tex/context/base/mkii/supp-pdf.mkii
+INPUT /usr/share/texmf/tex/context/base/mkii/supp-pdf.mkii
+INPUT /usr/share/texmf/tex/latex/oberdiek/epstopdf-base.sty
+INPUT /usr/share/texmf/tex/latex/oberdiek/epstopdf-base.sty
+INPUT /usr/share/texmf/tex/latex/oberdiek/grfext.sty
+INPUT /usr/share/texmf/tex/latex/oberdiek/grfext.sty
+INPUT /usr/share/texmf/tex/latex/latexconfig/epstopdf-sys.cfg
+INPUT /usr/share/texmf/tex/latex/latexconfig/epstopdf-sys.cfg
+INPUT /usr/share/texmf/tex/latex/base/ts1enc.dfu
+INPUT /usr/share/texmf/tex/latex/base/ts1enc.dfu
+INPUT /usr/share/texmf/tex/latex/beamer/translator/dicts/translator-basic-dictionary/translator-basic-dictionary-English.dict
+INPUT /usr/share/texmf/tex/latex/beamer/translator/dicts/translator-basic-dictionary/translator-basic-dictionary-English.dict
+INPUT /usr/share/texmf/tex/latex/siunitx/siunitx-abbreviations.cfg
+INPUT /usr/share/texmf/tex/latex/siunitx/siunitx-abbreviations.cfg
+INPUT /usr/share/texmf/tex/latex/graphics/color.sty
+INPUT /usr/share/texmf/tex/latex/graphics/color.sty
+INPUT /usr/share/texmf/tex/latex/graphics-cfg/color.cfg
+INPUT /usr/share/texmf/tex/latex/graphics-cfg/color.cfg
+INPUT /usr/share/texmf/tex/latex/hyperref/nameref.sty
+INPUT /usr/share/texmf/tex/latex/hyperref/nameref.sty
+INPUT /usr/share/texmf/tex/generic/oberdiek/gettitlestring.sty
+INPUT /usr/share/texmf/tex/generic/oberdiek/gettitlestring.sty
 INPUT paper_v1.out
 INPUT paper_v1.out
 INPUT paper_v1.out
@@ -159,159 +170,120 @@ INPUT ./paper_v1.out
 INPUT ./paper_v1.out
 OUTPUT paper_v1.out
 OUTPUT paper_v1Notes.bib
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsfonts/umsa.fd
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsfonts/umsa.fd
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/symbols/msam10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/microtype/mt-msa.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/microtype/mt-msa.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/symbols/msam7.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/symbols/msam5.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsfonts/umsb.fd
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsfonts/umsb.fd
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/microtype/mt-msb.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/microtype/mt-msb.cfg
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmbx10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmbx7.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmbx5.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmmib10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmmib7.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmmib5.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmbsy10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmss10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmss8.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmss8.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmtt10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmtt8.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmtt8.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr9.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr12.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmbx12.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmti9.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr6.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmmi9.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmmi6.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmsy9.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmsy6.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmex9.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmss9.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmss8.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmtt9.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmtt8.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/symbols/msam10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/symbols/msam7.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmbx9.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmbx6.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmmib9.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmmib6.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmbsy9.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/omscmr.fd
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/omscmr.fd
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmti10.tfm
-INPUT C:/Users/rafae/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
+INPUT /usr/share/texmf/tex/latex/amsfonts/umsa.fd
+INPUT /usr/share/texmf/tex/latex/amsfonts/umsa.fd
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/symbols/msam10.tfm
+INPUT /usr/share/texmf/tex/latex/microtype/mt-msa.cfg
+INPUT /usr/share/texmf/tex/latex/microtype/mt-msa.cfg
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/symbols/msam7.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/symbols/msam5.tfm
+INPUT /usr/share/texmf/tex/latex/amsfonts/umsb.fd
+INPUT /usr/share/texmf/tex/latex/amsfonts/umsb.fd
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
+INPUT /usr/share/texmf/tex/latex/microtype/mt-msb.cfg
+INPUT /usr/share/texmf/tex/latex/microtype/mt-msb.cfg
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmbx10.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmbx7.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmbx5.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmmib10.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmmib7.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmmib5.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmbsy10.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmss10.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmss8.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmss8.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmtt10.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmtt8.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmtt8.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmr9.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmr12.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmbx12.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmti9.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmr6.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmmi9.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmmi6.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmsy9.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmsy6.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmex9.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmss9.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmss8.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmtt9.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmtt8.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/symbols/msam10.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/symbols/msam7.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmbx9.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmbx6.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmmib9.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmmib6.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmbsy9.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm
+INPUT /usr/share/texmf/tex/latex/base/omscmr.fd
+INPUT /usr/share/texmf/tex/latex/base/omscmr.fd
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmti10.tfm
+INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map
 INPUT figures/fig1.pdf
-INPUT ./figures/fig1.pdf
 INPUT ./figures/fig1.pdf
 INPUT ./figures/fig1.pdf
 INPUT figures/fig2.pdf
 INPUT ./figures/fig2.pdf
 INPUT ./figures/fig2.pdf
-INPUT ./figures/fig2.pdf
 INPUT figures/fig3.pdf
-INPUT ./figures/fig3.pdf
 INPUT ./figures/fig3.pdf
 INPUT ./figures/fig3.pdf
 INPUT figures/two_band_cond.png
 INPUT ./figures/two_band_cond.png
 INPUT ./figures/two_band_cond.png
-INPUT ./figures/two_band_cond.png
-INPUT ./figures/two_band_cond.png
 INPUT figures/gap_osci.png
-INPUT ./figures/gap_osci.png
-INPUT ./figures/gap_osci.png
 INPUT ./figures/gap_osci.png
 INPUT ./figures/gap_osci.png
 INPUT figures/noneq_cond.png
 INPUT ./figures/noneq_cond.png
 INPUT ./figures/noneq_cond.png
-INPUT ./figures/noneq_cond.png
-INPUT ./figures/noneq_cond.png
 INPUT figures/leggett_oscillations.png
-INPUT ./figures/leggett_oscillations.png
-INPUT ./figures/leggett_oscillations.png
 INPUT ./figures/leggett_oscillations.png
 INPUT ./figures/leggett_oscillations.png
 INPUT figures/leggett_coupling.png
 INPUT ./figures/leggett_coupling.png
 INPUT ./figures/leggett_coupling.png
-INPUT ./figures/leggett_coupling.png
-INPUT ./figures/leggett_coupling.png
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/tfm/public/cm/cmr17.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmr17.tfm
 INPUT paper_v1.bbl
 INPUT paper_v1.bbl
 INPUT figures/influence_pump_pulse_freq.png
 INPUT ./figures/influence_pump_pulse_freq.png
 INPUT ./figures/influence_pump_pulse_freq.png
-INPUT ./figures/influence_pump_pulse_freq.png
-INPUT ./figures/influence_pump_pulse_freq.png
 INPUT paper_v1.aux
 INPUT ./paper_v1.out
 INPUT ./paper_v1.out
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx7.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx7.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmex9.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmex9.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb
-INPUT C:/Users/rafae/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx7.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx9.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmex10.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cmextra/cmex9.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi10.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi5.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi6.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi7.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi9.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr10.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr17.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr6.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr7.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr9.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy5.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy6.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy7.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy9.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmti10.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmti9.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/symbols/msbm10.pfb
