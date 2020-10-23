@@ -781,7 +781,7 @@ for i,pulse in z(pulses):
 
                 r0 = sel(first=True, A0=1, A0_pr=0, tau=pulse['tau'], w=pulse['w'], v=v, g=case)
                 plotHiggsLeggett(r0)
-                savefig(f'figs/HL-A{i}-v{j}-imp{k}.pdf')
+                plt.savefig(f'figs/HL-A{i}-v{j}-imp{k}.pdf')
                 cond_3d()
                 plt.figure('cc3d')
                 plt.savefig(f'figs/cond3d_real-A{i}-v{j}-imp{k}.pdf')
