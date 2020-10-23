@@ -213,7 +213,7 @@ def plotHiggsLast(r, offset=0):
     title(r)
 
 def conductivity(r, order=1, plot=True, begin=None, end=None, subtract=True):
-    r2 = sel(A0=r['A0'], g=r['g'], A0_pr=0, tau=r['tau'], w=r['w'])[0]
+    r2 = sel(first=True, A0=r['A0'], g=r['g'], A0_pr=0, tau=r['tau'], w=r['w'], t_delay=r['t_delay'], v=r['v'])
     # r3 = sel(T=0.22, t_delay=r['t_delay'], A0=0, A0_pr=r['A0_pr'])[0]
 
     if order == 1:
@@ -310,7 +310,7 @@ def conductivity(r, order=1, plot=True, begin=None, end=None, subtract=True):
         plt.xlabel(f'$\omega$')
         plt.tight_layout()
     # sl2 = np.logical_and(w>0, w<4*d_eq[0])
-    sl2 = np.logical_and(w>0, w<6*gap)
+    sl2 = np.logical_and(w>0, w<4*gap)
     return w[sl2], s[sl2]
 
 def plotLeggett(r, offset=0):
@@ -548,7 +548,7 @@ def cond_pcolor():
         # return x/(mean)
         return x
 
-    plt.pcolormesh(w*u_e*meV_to_THz, delays*u_t, nm2(np.abs(cc.real)), cmap=cm, shading='gouraud')#, vmin=0.9, vmax=1.1)
+    plt.pcolormesh(w*u_e*meV_to_THz, delays*u_t, nm2(np.abs(cc.real)), cmap=cm)#, shading='gouraud')#, vmin=0.9, vmax=1.1)
     plt.axvline(2*gap*u_e*meV_to_THz)
     plt.xlabel('Frequency (THz)')
     plt.ylabel('$\delta t_{pp}$ (ps)')
@@ -693,6 +693,8 @@ pulses = pulses_sort
 
 save = False
 
+gammas = [0.0001,10]
+
 cleanclean= np.array([gammas[0], gammas[0]])
 cleandirty = np.array([gammas[0], gammas[1]])
 dirtyclean = np.array([gammas[1], gammas[0]])
@@ -779,8 +781,11 @@ cc3 = []
 rr = []
 # delays = delays[1:]
 s_imp = 8
+delays = delays[5:]
 for d in delays:
-    r = sel(first=True, t_delay=d, A0_pr=0.1, A0=1, g=dirtydirty, w=0.7, tau=4)
+    r = sel(t_delay=d, A0_pr=0.1, A0=1, g=dirtydirty, w=0.7, tau=4, v=0.02)
+    print(len(r))
+    r = r[0]
     rr.append(r)
     w, s1 = conductivity(r, order=1, plot=False)
     w, s3 = conductivity(r, order=3, plot=False)
@@ -789,20 +794,20 @@ for d in delays:
 cc1 = np.stack(cc1)
 cc3 = np.stack(cc3)
 
-##%%
+#%%
 
 
-# cc = (cc1 + Ascale**2 * cc3)*u_conductivity
+cc = (cc1 + 3*Ascale**2 * cc3)*u_conductivity
 
-# ccm = cc - np.mean(cc,axis=0)
-# w_delay,ccw = fft(delays, ccm.real)
-# w_delay,ccwi = fft(delays, ccm.imag)
+ccm = cc - np.mean(cc,axis=0)
+w_delay,ccw = fft(delays, ccm.real)
+w_delay,ccwi = fft(delays, ccm.imag)
 
-# # cond_3d()
-# cond_pcolor()
+cond_3d()
+cond_pcolor()
 # plt.title(f'$\gamma/2\Delta={gammas[s_imp][0]/2/gap}$')
 # plt.tight_layout()
-# # cond_w_pcolor()
+cond_w_pcolor()
 
 
 #%% fig1 E
