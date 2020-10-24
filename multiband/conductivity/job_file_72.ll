@@ -10,9 +10,9 @@
 # @ environment = COPY_ALL
 # @ notification = never
 # @ notify_user =
-# @ class = 20core
+# @ class = 28core
 # @ queue
 # exit on error
 set -e
 export OMP_NUM_THREADS=1
-python3 higgs_mgb2.py 72 119
+python3 higgs_mgb2.py 72 319

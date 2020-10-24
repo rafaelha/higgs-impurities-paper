@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAX=119
+MAX=319
 for i in `seq 0 1 ${MAX}`
 do
 	FILENAME=job_file_${i}.ll
@@ -19,7 +19,7 @@ do
 	echo "# @ environment = COPY_ALL" >> $FILENAME
 	echo "# @ notification = never" >> $FILENAME
 	echo "# @ notify_user =" >> $FILENAME
-	echo "# @ class = 20core" >> $FILENAME
+	echo "# @ class = 28core" >> $FILENAME
 	echo "# @ queue" >> $FILENAME
 
 	echo "# exit on error" >> $FILENAME
