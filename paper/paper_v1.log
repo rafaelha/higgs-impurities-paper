@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/TeX Live for SUSE Linux) (preloaded format=pdflatex 2020.10.19)  22 OCT 2020 14:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/TeX Live for SUSE Linux) (preloaded format=pdflatex 2020.10.19)  27 OCT 2020 10:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1065,7 +1065,11 @@ Class revtex4-1 Info: Robustifying \LaTeX's \boldmath command on input line 36.
 Class revtex4-1 Info: cite was not loaded (OK!) on input line 36.
 Class revtex4-1 Info: mcite was not loaded (OK!) on input line 36.
 Class revtex4-1 Info: multicol was not loaded (OK!) on input line 36.
-(./paper_v1.aux)
+(./paper_v1.aux
+
+LaTeX Warning: Label `fig:singleband-gap' multiply defined.
+
+)
 \openout1 = `paper_v1.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
@@ -1297,85 +1301,98 @@ File: figures/fig3.pdf Graphic file (type pdf)
 <use figures/fig3.pdf>
 Package pdftex.def Info: figures/fig3.pdf used on input line 225.
 (pdftex.def)             Requested size: 246.0pt x 263.37044pt.
+ <figures/m-fig1.pdf, id=92, 481.13051pt x 386.12756pt>
+File: figures/m-fig1.pdf Graphic file (type pdf)
 
-<figures/two_band_cond.png, id=92, 1229.59375pt x 819.06pt>
+<use figures/m-fig1.pdf>
+Package pdftex.def Info: figures/m-fig1.pdf used on input line 239.
+(pdftex.def)             Requested size: 246.0pt x 197.42325pt.
+
+<figures/two_band_cond.png, id=93, 1229.59375pt x 819.06pt>
 File: figures/two_band_cond.png Graphic file (type png)
 
 <use figures/two_band_cond.png>
-Package pdftex.def Info: figures/two_band_cond.png used on input line 250.
+Package pdftex.def Info: figures/two_band_cond.png used on input line 270.
 (pdftex.def)             Requested size: 246.0pt x 163.85909pt.
 
-<figures/gap_osci.png, id=93, 582.82259pt x 412.05556pt>
+<figures/gap_osci.png, id=94, 582.82259pt x 412.05556pt>
 File: figures/gap_osci.png Graphic file (type png)
 
 <use figures/gap_osci.png>
-Package pdftex.def Info: figures/gap_osci.png used on input line 262.
+Package pdftex.def Info: figures/gap_osci.png used on input line 282.
 (pdftex.def)             Requested size: 246.0pt x 173.92352pt.
  [2 <./figures/fig1.pdf> <./figures/fig2.pdf> <./figures/two_band_cond.png>]
 
 LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix]
- on input line 266.
+ on input line 286.
 
-<figures/noneq_cond.png, id=178, 342.84888pt x 452.69928pt>
+<figures/noneq_cond.png, id=180, 342.84888pt x 452.69928pt>
 File: figures/noneq_cond.png Graphic file (type png)
 
 <use figures/noneq_cond.png>
-Package pdftex.def Info: figures/noneq_cond.png used on input line 288.
+Package pdftex.def Info: figures/noneq_cond.png used on input line 308.
 (pdftex.def)             Requested size: 246.0pt x 324.81728pt.
+ [3 <./figures/fig3.pdf> <./figures/gap_osci.png> <./figures/m-fig1.pdf
 
-<figures/leggett_oscillations.png, id=181, 1667.22874pt x 834.11626pt>
+pdfTeX warning: pdflatex (file ./figures/m-fig1.pdf): PDF inclusion: multiple p
+dfs with page group included in a single page
+>] <figures/leggett_oscillations.png, id=272, 1667.22874pt x 834.11626pt>
 File: figures/leggett_oscillations.png Graphic file (type png)
 
 <use figures/leggett_oscillations.png>
-Package pdftex.def Info: figures/leggett_oscillations.png used on input line 30
+Package pdftex.def Info: figures/leggett_oscillations.png used on input line 32
 9.
 (pdftex.def)             Requested size: 246.0pt x 123.0629pt.
- [3 <./figures/fig3.pdf> <./figures/gap_osci.png> <./figures/noneq_cond.png>]
-<figures/leggett_coupling.png, id=229, 1677.26625pt x 1088.065pt>
+
+<figures/leggett_coupling.png, id=273, 1677.26625pt x 1088.065pt>
 File: figures/leggett_coupling.png Graphic file (type png)
 
 <use figures/leggett_coupling.png>
-Package pdftex.def Info: figures/leggett_coupling.png used on input line 325.
+Package pdftex.def Info: figures/leggett_coupling.png used on input line 345.
 (pdftex.def)             Requested size: 246.0pt x 159.58336pt.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 333.
+(hyperref)                removing `math shift' on input line 353.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 333.
+(hyperref)                removing `subscript' on input line 353.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 333.
+(hyperref)                removing `math shift' on input line 353.
 
-(./paper_v1.bbl
+[4 <./figures/noneq_cond.png> <./figures/leggett_oscillations.png> <./figures/l
+eggett_coupling.png>] (./paper_v1.bbl
 
 Package natbib Warning: Empty `thebibliography' environment on input line 53.
 
-) <figures/influence_pump_pulse_freq.png, id=231, 1225.57875pt x 901.3675pt>
+) <figures/influence_pump_pulse_freq.png, id=285, 1225.57875pt x 901.3675pt>
 File: figures/influence_pump_pulse_freq.png Graphic file (type png)
 
 <use figures/influence_pump_pulse_freq.png>
 Package pdftex.def Info: figures/influence_pump_pulse_freq.png used on input li
-ne 416.
+ne 436.
 (pdftex.def)             Requested size: 246.0pt x 180.91672pt.
- [4 <./figures/leggett_oscillations.png> <./figures/leggett_coupling.png> <./fi
-gures/influence_pump_pulse_freq.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 423.
+ [5 <./figures/influence_pump_pulse_freq.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 443.
  (./paper_v1.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 423.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 423.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 443.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 443.
 Package rerunfilecheck Info: File `paper_v1.out' has not changed.
 (rerunfilecheck)             Checksum: 8474DE97040E66EC490459B35071F87B;2668.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 24126 strings out of 494811
- 422901 string characters out of 6178198
- 516546 words of memory out of 5000000
- 27109 multiletter control sequences out of 15000+600000
- 545945 words of font info for 112 fonts, out of 8000000 for 9000
+ 24135 strings out of 494811
+ 423031 string characters out of 6178198
+ 516177 words of memory out of 5000000
+ 27113 multiletter control sequences out of 15000+600000
+ 545996 words of font info for 113 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
  34i,11n,38p,10377b,1067s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf
@@ -1397,10 +1414,10 @@ pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texm
 f/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf/fonts/type1/publi
 c/amsfonts/cm/cmti9.pfb></usr/share/texmf/fonts/type1/public/amsfonts/symbols/m
 sbm10.pfb>
-Output written on paper_v1.pdf (4 pages, 2938803 bytes).
+Output written on paper_v1.pdf (5 pages, 3259409 bytes).
 PDF statistics:
- 324 PDF objects out of 1000 (max. 8388607)
- 217 compressed objects within 3 object streams
- 30 named destinations out of 1000 (max. 500000)
- 23718 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 375 PDF objects out of 1000 (max. 8388607)
+ 242 compressed objects within 3 object streams
+ 32 named destinations out of 1000 (max. 500000)
+ 23723 words of extra memory for PDF output out of 24883 (max. 10000000)
 

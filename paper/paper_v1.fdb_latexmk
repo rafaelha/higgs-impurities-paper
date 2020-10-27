@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex paper_v1"] 1603371491 "paper_v1.aux" "paper_v1.bbl" "paper_v1" 1603371492
+["bibtex paper_v1"] 1603789676 "paper_v1.aux" "paper_v1.bbl" "paper_v1" 1603789677
   "/usr/share/texmf/bibtex/bst/revtex/apsrev4-1.bst" 1480098436 71518 fec93f06df0c073f83d2330456bd19c2 ""
   "literature.bib" 1602685885 1 68b329da9893e34099c7d8ad5cb9c940 ""
-  "paper_v1.aux" 1603371492 8397 c98e993a298fc37b0e5ddc1d7615348e ""
-  "paper_v1Notes.bib" 1603371492 113 f6f1e61f47da2fae6b3993543b708044 ""
+  "paper_v1.aux" 1603789677 9249 fa02e2cb2680080b311b6dda76888d60 ""
+  "paper_v1Notes.bib" 1603789677 113 f6f1e61f47da2fae6b3993543b708044 ""
   (generated)
   "paper_v1.bbl"
   "paper_v1.blg"
-["pdflatex"] 1603371491 "paper_v1.tex" "paper_v1.pdf" "paper_v1" 1603371492
+["pdflatex"] 1603789676 "paper_v1.tex" "paper_v1.pdf" "paper_v1" 1603789677
   "/etc/texmf/web2c/texmf.cnf" 1603102486 33844 f4daaf6aec9d258ff6409b0290a0cc97 ""
   "/usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1480098698 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1480098698 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
@@ -162,15 +162,16 @@
   "figures/influence_pump_pulse_freq.png" 1602685885 106625 4da64d9771b5015b9b6d6542d36a134f ""
   "figures/leggett_coupling.png" 1602685885 112424 d79436ac27f906ec39e1cc41f6e53311 ""
   "figures/leggett_oscillations.png" 1602685885 261050 79fa9f9cb2a11e674e42a40c6f3e1d5b ""
+  "figures/m-fig1.pdf" 1603789490 387551 629335c41e5848f3b201071511254302 ""
   "figures/noneq_cond.png" 1602685885 130172 bc74ccf44ab132b520b64303ccfbf2d9 ""
   "figures/two_band_cond.png" 1602685885 76410 5039f9e3738853be0b69d3b4c48ab577 ""
-  "paper_v1.aux" 1603371492 8397 c98e993a298fc37b0e5ddc1d7615348e ""
-  "paper_v1.bbl" 1603371491 1985 e814c3ef18422c3bcf47d60b652affb1 "bibtex paper_v1"
-  "paper_v1.out" 1603371492 2668 8474de97040e66ec490459b35071f87b ""
-  "paper_v1.tex" 1603371488 15263 8819261598ad92762bbef4b7c44776e9 ""
+  "paper_v1.aux" 1603789677 9249 fa02e2cb2680080b311b6dda76888d60 ""
+  "paper_v1.bbl" 1603789676 1985 e814c3ef18422c3bcf47d60b652affb1 "bibtex paper_v1"
+  "paper_v1.out" 1603789677 2668 8474de97040e66ec490459b35071f87b ""
+  "paper_v1.tex" 1603789673 16013 3ebf3c9880549aa65fcfb187541c26a6 ""
   (generated)
-  "paper_v1.pdf"
   "paper_v1.out"
-  "paper_v1.aux"
   "paper_v1.log"
+  "paper_v1.pdf"
   "paper_v1Notes.bib"
+  "paper_v1.aux"

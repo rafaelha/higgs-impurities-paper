@@ -21,7 +21,7 @@ wd  = 5
 s = np.array([1,-1])
 m = np.array([0.85, 1.38])
 ef = np.array([290, 70])
-v_legget = 0.15
+v_legget = 0.2
 
 
 T=4/u_temp

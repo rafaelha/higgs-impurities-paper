@@ -239,6 +239,9 @@ INPUT ./figures/fig2.pdf
 INPUT figures/fig3.pdf
 INPUT ./figures/fig3.pdf
 INPUT ./figures/fig3.pdf
+INPUT figures/m-fig1.pdf
+INPUT ./figures/m-fig1.pdf
+INPUT ./figures/m-fig1.pdf
 INPUT figures/two_band_cond.png
 INPUT ./figures/two_band_cond.png
 INPUT ./figures/two_band_cond.png
