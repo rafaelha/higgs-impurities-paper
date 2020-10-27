@@ -55,9 +55,9 @@ def fft(t,f, inverse=False):
         idx = np.argsort(xw)
         xw = xw[idx]
         f = f[idx]
-        fw = scipy.ifft(f, axis=0)/np.sqrt(Nt)*Nt
+        fw = scipy.fft.ifft(f, axis=0)/np.sqrt(Nt)*Nt
     else:
-        fw = scipy.fft(f, axis=0)/np.sqrt(Nt)
+        fw = scipy.fft.fft(f, axis=0)/np.sqrt(Nt)
         xw = np.concatenate([xw[:Nt//2], xw[Nt//2:]-2*np.pi/dt])
         idx = np.argsort(xw)
         xw = xw[idx]
@@ -616,47 +616,57 @@ cc1 = []
 cc3 = []
 rr = []
 delays = delays[1:]
-s_imp = 8
+s_imp = 5
+meas1 = []
+meas3 = []
 for d in delays:
     r = sel(first=True, t_delay=d, A0_pr=A0_prs[0], g=gammas[s_imp])
     r_ = sel(first=True, t_delay=0, A0_pr=0, g=gammas[s_imp])
+
+    #1A are 2.38459E-7 Js/Cm
+    u_A = 2.38459E-7
+    A,e = getE(r)
+    Amax = np.max(np.abs(A))
+
+    ############################
+    A0 = 0.5E-8 # Js/Cm
+    ############################
+
+    Ascale = A0 / (Amax * u_A)
+    # Ascale = 0.1
+
     # r2 = sel(A0=r['A0'], g=r['g'], A0_pr=0)[0]
     t = r['t']
-    j1 = r['jp_1'] + r['jp_1']
-    j3 = r['jp_3'] + r['jp_3']
-    j1_ = r_['jp_1'] + r_['jp_1']
-    j3_ = r_['jp_3'] + r_['jp_3']
+    j1 = r['jp_1'] + r['jd_1']
+    j3 = r['jp_3'] + r['jd_3']
+    j1_ = r_['jp_1'] + r_['jd_1']
+    j3_ = r_['jp_3'] + r_['jd_3']
     j1 = j1 - j1_
     j3 = j3 - j3_
 
 
-    begin = t[0] + d - delays[0] + 60
-    end = (d-delays[0]) + t[-1] - (delays[-1] - delays[0]) - 220
+    begin = t[0] + d - delays[0]
+    end = (d-delays[0]) + t[-1] - (delays[-1] - delays[0])
     ch = np.logical_and(t>=begin,t<=end)
 
-    cc1.append(j1[ch][:500])
-    cc3.append(j3[ch][:500])
-    w = t[ch][:500]
-cc1 = np.stack(cc1)
-cc3 = np.stack(cc3)
+    j = - (j1*Ascale + j3*(Ascale**3) )
+    j = j[ch]
+    j1 = j1[ch]
+    j3 = j3[ch]
+    if d == delays[0]:
+        probe_index = np.argmin(j)
 
-##%%
+    val1 = j1[probe_index]
+    val3 = j3[probe_index]
 
-#1A are 2.38459E-7 Js/Cm
-u_A = 2.38459E-7
-A,e = getE(r)
-Amax = np.max(np.abs(A))
+    meas1.append(val1)
+    meas3.append(val3)
+    plt.plot(t[0:len(j)]*u_t,j1)
+    plt.xlim((-1,3))
 
-############################
-A0 = 0.5E-8 # Js/Cm
-############################
-
-Ascale = A0 / (Amax * u_A)
-cc = (cc1 + Ascale**2 * cc3)*u_conductivity
-
-ccm = cc - np.mean(cc,axis=0)
-w_delay,ccw = fft(delays, ccm.real)
-w_delay,ccwi = fft(delays, ccm.imag)
-
-# cond_3d()
-
+#%%
+plt.figure()
+meas1 = np.array(meas1)
+meas3 = np.array(meas3)
+for f in np.linspace(Ascale, 3*Ascale,5):
+    plt.plot(delays,f*meas1+ f**3 * meas3)

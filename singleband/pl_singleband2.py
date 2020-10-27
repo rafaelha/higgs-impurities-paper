@@ -55,9 +55,9 @@ def fft(t,f, inverse=False):
         idx = np.argsort(xw)
         xw = xw[idx]
         f = f[idx]
-        fw = scipy.ifft(f, axis=0)/np.sqrt(Nt)*Nt
+        fw = scipy.fft.ifft(f, axis=0)/np.sqrt(Nt)*Nt
     else:
-        fw = scipy.fft(f, axis=0)/np.sqrt(Nt)
+        fw = scipy.fft.fft(f, axis=0)/np.sqrt(Nt)
         xw = np.concatenate([xw[:Nt//2], xw[Nt//2:]-2*np.pi/dt])
         idx = np.argsort(xw)
         xw = xw[idx]
@@ -579,6 +579,7 @@ cc3 = []
 rr = []
 delays = delays[1:]
 s_imp = 8
+# s_imp = 3
 for d in delays:
     r = sel(first=True, t_delay=d, A0_pr=A0_prs[0], g=gammas[s_imp])
     rr.append(r)

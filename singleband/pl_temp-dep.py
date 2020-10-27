@@ -30,10 +30,10 @@ plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 folder = 'temp-dependence'
 files = glob.glob(f'{folder}/*.pickle')
 
-save_plots = True
+save_plots = False
 
-def savefig(fname, transparent=True):
-    if save_plots:
+def savefig(fname, transparent=True, plot=save_plots):
+    if plot:
         plt.savefig(fname, transparent=transparent)
 
 def nmax(x):
@@ -539,7 +539,7 @@ for g in gammas_all:
     if len(sel(g=g)) == 129:
         gammas.append(g)
 
-r0 = sel(t_delay=delays[-1])[0]
+r0 = sel(t_delay=delays[-1], T=temps[0])[0]
 d2_ref = r0['d_2'].real
 d_eq = r0['d_eq'][:,0,0]
 gap = np.max(d_eq)
@@ -562,7 +562,7 @@ cm = 'rainbow'
 
 #1A are 2.38459E-7 Js/Cm
 u_A = 2.38459E-7
-A,e = getE(r)
+A,e = getE(r0)
 Amax = np.max(np.abs(A))
 
 ############################
@@ -621,3 +621,50 @@ savefig('cond-temp-imag.pdf')
 
 plt.figure('cond-temp-legend')
 savefig('cond-temp-legend2.pdf')
+
+#%% temp dependence current
+
+plt.figure('j-temp', figsize=(3,2.8))
+plt.clf()
+plt.figure('j-temp-legend', figsize=(5,5))
+plt.clf()
+
+min_j = []
+delta = []
+
+# for temp in temps[[0,3,5,6,7]]:
+for temp in temps:
+    r = sel(first=True, T=temp, t_delay=0, A0_pr=0)
+
+    t = r['t']
+    j1 = r['jp_1'] + r['jd_1']
+    j3 = r['jp_3'] + r['jd_3']
+    j = Ascale*j1 + Ascale**3*j3
+    min_j.append(np.min(-j))
+    delta.append(r['d_eq'][0,0,0])
+
+    plt.figure('j-temp')
+    plt.plot(t*u_t,-j, label=f'$T={np.round(temp*u_temp,1)}$ K')
+    plt.xlabel('$t$ (ps)')
+    plt.xlim(-5,0)
+    # plt.ylim((0,5e4))
+    plt.ylabel('$j$ (a.u.)')
+    plt.ticklabel_format(axis="y", style="sci", scilimits=(2,4))
+    # plt.legend()
+
+
+    plt.figure('j-temp-legend')
+    plt.plot(t*u_t, j, label=f'$T={np.round(temp*u_temp,0)}$ K')
+    # plt.ylim((0,0.1))
+    plt.legend()
+
+plt.figure('j-temp')
+# plt.axvline(2*gap*u_e*meV_to_THz, c='k', lw=0.3)
+plt.tight_layout()
+savefig('j-temp.pdf', plot=True)
+
+plt.figure('j-temp-legend')
+savefig('j-temp-legend.pdf', plot=True)
+
+plt.figure()
+plt.plot(min_j, delta, '.-')

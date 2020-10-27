@@ -9,6 +9,7 @@ import os
 from mpl_toolkits.mplot3d import Axes3D
 from cycler import cycler
 import matplotlib as mpl
+from scipy.signal import find_peaks
 
 CB_color_cycle = ['#377eb8', '#ff7f00', '#4daf4a', '#f781bf', '#a65628', '#984ea3', '#999999', '#e41a1c', '#dede00']
 tableau10 = ['#4e79a7', '#f28e2b', '#e15759', '#76b7b2', '#59a14f', '#edc948', '#b07aa1', '#ff9da7', '#9c755f']#, '#bab0ac']
@@ -27,7 +28,8 @@ plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
-folder = 'leggett-driving'
+folder = 'leggett-driving4'
+# folder = 'driving'
 files = glob.glob(f'{folder}/*.pickle')
 
 save_plots = False
@@ -670,7 +672,7 @@ dirtyclean = np.array([gammas[1], gammas[0]])
 dirtydirty = np.array([gammas[1], gammas[1]])
 
 fourcases = [cleanclean, cleandirty, dirtyclean, dirtydirty]
-fourcases = [cleanclean]
+# fourcases = [cleanclean]
 lwc = 0.3
 lwd = 0.6
 lw_fourcases = [[lwc,lwc],[lwc,lwd],[lwd,lwc],[lwd,lwd]]
@@ -697,7 +699,8 @@ cm = 'rainbow'
 def z(array):
     return zip(np.arange(len(array)), array)
 
-
+vv = []
+en = []
 for j, v in z(vs):
     plt.pause(0.1)
     for i, case in z(fourcases):
@@ -712,15 +715,24 @@ for j, v in z(vs):
             r = r[0]
             j1 = r['jd_1'] + r['jp_1']
             j3 = r['jd_3'] + r['jp_3']
-            # plt.plot(t,nm(j1))
-            # plt.plot(t,nm(j3))
 
             tw, j1w = fft(t,j1)
             tw, j3w = fft(t,j3)
 
-            # plt.plot(tw/w, nm(np.abs(j3w)))
-            # plt.plot(tw/w, np.abs(j3w))
-            # plt.xlim((0,7))
+            if k==6:
+                plt.figure(figsize=(6,3))
+                plt.subplot(121)
+                plt.plot(t,nm(j1))
+                plt.plot(t,nm(j3))
+
+                plt.subplot(122)
+                plt.plot(tw/w, nm(np.abs(j3w)))
+                plt.plot(tw/w, np.abs(j3w))
+                plt.axvline(1)
+                plt.axvline(3)
+                plt.axvline(5)
+                plt.axvline(7)
+                plt.xlim((0,10))
 
             # y = nm(np.abs(j3w))
             y = np.abs(j3w)
@@ -729,35 +741,57 @@ for j, v in z(vs):
 
             xx.append(w)
             yy.append(np.max(y))
-        plt.figure()
+
+        plt.figure(figsize=(3,3))
         plt.plot(xx,yy, '.-')
-        plt.title(f'v={v}, g={case}')
+        plt.title(f'v={np.round(v,2)}, g={case}')
         lw = np.copy(case)
         lw[lw>0.01] = 2
         lw[lw<0.01] = 0.8
         plt.axvline(d_eq[0], c='gray', lw=lw[0])
         plt.axvline(d_eq[1], c='gray', lw=lw[1])
 
+        plt.xlabel('$\omega$ (of driving pulse)')
+        plt.ylabel('THG signal strength (a.u.)')
+
+        peaks, _ = find_peaks(yy, width=2, distance=5)
+        print(peaks)
+        plt.plot(np.array(xx)[peaks],np.array(yy)[peaks],'x')
+
+        if len(peaks) > 0:
+            vv.append(v)
+            en.append(xx[peaks[0]])
 
 
+        plt.tight_layout()
+        # plt.savefig(f'figs-driving/{folder}-v{j}-case{i}.pdf')
 
-
-#%%
-w = 0.7
-r = sel(first=True, w=w, v=0.02, g=dirtydirty)
-t = r['t']
-j1 = r['jd_1'] + r['jp_1']
-j3 = r['jd_3'] + r['jp_3']
-plt.plot(t,nm(j1))
-plt.plot(t,nm(j3))
-
-tw, j1w = fft(t,j1)
-tw, j3w = fft(t,j3)
 
 plt.figure()
-plt.plot(tw/w, nm(np.abs(j1w)))
-plt.plot(tw/w, nm(np.abs(j3w)))
-plt.xlim((0,4))
+plt.plot(vv,np.array(en)*2,'.-')
+plt.axhline(2*d_eq[0],c='gray',lw=0.5)
+plt.axhline(2*d_eq[1],c='gray',lw=0.5)
+plt.xlabel('$v$')
+plt.ylabel('$\omega$')
+# plt.savefig(f'figs-driving/{folder}-legget-energy.pdf')
+
+
+
+# #%%
+# w = 0.7
+# r = sel(first=True, w=w, v=0.02, g=dirtydirty)
+# t = r['t']
+# j1 = r['jd_1'] + r['jp_1']
+# j3 = r['jd_3'] + r['jp_3']
+# plt.plot(t,nm(j1))
+# plt.plot(t,nm(j3))
+
+# tw, j1w = fft(t,j1)
+# tw, j3w = fft(t,j3)
+
+# plt.figure()
+# plt.plot(tw/w, nm(np.abs(j1w)))
+# plt.plot(tw/w, nm(np.abs(j3w)))
+# plt.xlim((0,4))
 
 #%%
-r

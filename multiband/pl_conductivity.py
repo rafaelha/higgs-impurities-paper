@@ -214,7 +214,7 @@ def plotHiggsLast(r, offset=0):
 
 def conductivity(r, order=1, plot=True, begin=None, end=None, subtract=True, wlen=-1):
     r2 = sel(first=True, A0=r['A0'], g=r['g'], A0_pr=0, tau=r['tau'], w=r['w'], t_delay=r['t_delay'], v=r['v'])
-    r3 = sel(first=True, A0=0, g=r['g'], A0_pr=r['A0_pr'], tau=r['tau'], w=r['w'], t_delay=r['t_delay'], v=r['v'])
+    r3 = sel(first=True, A0=0, g=r['g'], A0_pr=r['A0_pr'], tau=r['tau'], w=r['w'], v=r['v'])
 
     if order == 1:
         jd = r['jd_1']
@@ -706,12 +706,13 @@ cleanclean= np.array([gammas[0], gammas[0]])
 cleandirty = np.array([gammas[0], gammas[1]])
 dirtyclean = np.array([gammas[1], gammas[0]])
 dirtydirty = np.array([gammas[1], gammas[1]])
+superdirty = np.array([gammas[2], gammas[2]])
 cc_ = cleanclean
 cd_ = cleandirty
 dc_ = dirtyclean
 dd_ = dirtydirty
 
-fourcases = [cleanclean, cleandirty, dirtyclean, dirtydirty]
+fourcases = [cleanclean, cleandirty, dirtyclean, dirtydirty, superdirty]
 lwc = 0.2
 lwd = 1
 lw_fourcases = [[lwc,lwc],[lwc,lwd],[lwd,lwc],[lwd,lwd]]
@@ -750,9 +751,11 @@ def lw_imp(lw):
     return a
 
 for i,pulse in z(pulses):
-    r0 = sel(first=True, A0=1, A0_pr=0, tau=pulse['tau'], w=pulse['w'])
+    pulse_tau = pulse['tau']
+    pulse_w = pulse['w']
+    r0 = sel(first=True, A0=1, A0_pr=0, tau=pulse_tau, w=pulse_w)
     plotA(r0)
-    plt.savefig(f'figs2/A{i}.pdf')
+    plt.savefig(f'figs3/A{i}.pdf')
     plt.pause(0.01)
     for j, v in z(vs):
         for k, case in z(fourcases):
@@ -760,7 +763,7 @@ for i,pulse in z(pulses):
             cc3 = []
             for d in delays:
                 # r = sel(t_delay=d, A0_pr=0.1, A0=1, g=dirtydirty, w=0.7, tau=4, v=0)
-                r = sel(t_delay=d, A0_pr=0.1, A0=1, g=case, w=pulse['w'], tau=pulse['tau'], v=v)
+                r = sel(t_delay=d, A0_pr=0.1, A0=1, g=case, w=pulse_w, tau=pulse_tau, v=v)
                 if len(r) == 0:
                     break
                 elif len(r) != 1:
@@ -781,18 +784,20 @@ for i,pulse in z(pulses):
 
                 r0 = sel(first=True, A0=1, A0_pr=0, tau=pulse['tau'], w=pulse['w'], v=v, g=case)
                 plotHiggsLeggett(r0)
-                plt.savefig(f'figs2/HL-A{i}-v{j}-imp{k}.pdf')
+                plt.suptitle(f'$v={v}, imp={case}, pulse(w={pulse_w}, \\tau={pulse_tau})$')
+                plt.tight_layout()
+                plt.savefig(f'figs3/HL-A{i}-v{j}-imp{k}.pdf')
                 cond_3d()
                 plt.figure('cc3d')
                 plt.savefig(f'figs2/cond3d_real-A{i}-v{j}-imp{k}.pdf')
                 plt.figure('cc3dim')
-                plt.savefig(f'figs2/cond3d_imag-A{i}-v{j}-imp{k}.pdf')
+                plt.savefig(f'figs3/cond3d_imag-A{i}-v{j}-imp{k}.pdf')
                 cond_pcolor(lw_imp(case))
-                plt.savefig(f'figs2/cond_pcolor-A{i}-v{j}-imp{k}.pdf')
+                plt.savefig(f'figs3/cond_pcolor-A{i}-v{j}-imp{k}.pdf')
                 # plt.title(f'$\gamma/2\Delta={gammas[s_imp][0]/2/gap}$')
                 # plt.tight_layout()
                 cond_w_pcolor()
-                plt.savefig(f'figs2/cond_w_pcolor-A{i}-v{j}-imp{k}.pdf')
+                plt.savefig(f'figs3/cond_w_pcolor-A{i}-v{j}-imp{k}.pdf')
                 plt.pause(0.01)
 
 
