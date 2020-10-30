@@ -251,6 +251,12 @@ INPUT ./figures/gap_osci.png
 INPUT figures/noneq_cond.png
 INPUT ./figures/noneq_cond.png
 INPUT ./figures/noneq_cond.png
+INPUT figures/2_a.pdf
+INPUT ./figures/2_a.pdf
+INPUT ./figures/2_a.pdf
+INPUT figures/2_b.pdf
+INPUT ./figures/2_b.pdf
+INPUT ./figures/2_b.pdf
 INPUT figures/leggett_oscillations.png
 INPUT ./figures/leggett_oscillations.png
 INPUT ./figures/leggett_oscillations.png
