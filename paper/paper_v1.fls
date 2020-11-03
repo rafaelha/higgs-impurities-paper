@@ -228,11 +228,11 @@ INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmbsy9.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm
 INPUT /usr/share/texmf/tex/latex/base/omscmr.fd
 INPUT /usr/share/texmf/tex/latex/base/omscmr.fd
-INPUT /usr/share/texmf/fonts/tfm/public/cm/cmti10.tfm
 INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map
 INPUT figures/fig1.pdf
 INPUT ./figures/fig1.pdf
 INPUT ./figures/fig1.pdf
+INPUT /usr/share/texmf/fonts/tfm/public/cm/cmti10.tfm
 INPUT figures/fig2.pdf
 INPUT ./figures/fig2.pdf
 INPUT ./figures/fig2.pdf
@@ -265,10 +265,10 @@ INPUT ./paper_v1.out
 INPUT ./paper_v1.out
 INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx5.pfb
 INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx7.pfb
 INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx9.pfb
 INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmex10.pfb
-INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cmextra/cmex9.pfb
 INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi5.pfb
 INPUT /usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi6.pfb

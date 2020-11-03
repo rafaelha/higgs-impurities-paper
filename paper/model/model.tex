@@ -1,0 +1,399 @@
+\documentclass[a4paper]{article}
+\usepackage[margin = 0.8in]{geometry}
+\setlength{\parskip}{0.7\baselineskip}
+\linespread{1.4}
+\usepackage[]{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{braket}
+\usepackage{siunitx}
+ \usepackage{verbatim}
+%\usepackage{physics}
+%\usepackage{tikz-feynman}
+%\usepackage{slashed}
+%\usepackage{simpler-wick}
+\usepackage{xcolor}
+%\usepackage[style=footnote-dw]{biblatex}
+\newcommand{\normord}[1]{:\mathrel{#1}:}
+% Package biblatex: '\bibliography' must be given in preamble.
+\begin{document}
+
+\begin{eqnarray}
+  \mathcal{H}_0 = \sum_{i\mathbf{k}\sigma}  
+	\varepsilon_{i\mathbf{k}}c_{i\mathbf{k}\sigma}^\dagger
+	c_{i\mathbf{k}\sigma} + \sum_{i\mathbf{k}}^{}
+	\left( \Delta_i c_{i\mathbf{-k}\uparrow }^\dagger
+	c_{i\mathbf{k}\downarrow }^\dagger  \right) \,,
+\end{eqnarray}
+
+where $\varepsilon_{i\mathbf{k}} = s_i \left(\mathbf{k}^2/2m_i -
+\varepsilon_{F_i}\right)$ and the superconducting order parameter is self-consistently determined by 
+$\Delta_i = \sum_{j\mathbf{k}}^{}U_{ij} \langle c_{j-\mathbf{k}\downarrow
+}c_{j\mathbf{k}\uparrow }\rangle$.
+
+\begin{eqnarray*}
+	\mathcal{H}_1 = -\sum_{i\mathbf{kk'}\sigma}^{}
+	\mathbf{J}_{i\mathbf{kk'}} \cdot \mathbf{A} \,
+	c_{i\mathbf{k}\sigma}^\dagger  c_{i\mathbf{k}'\sigma} +
+	\sum_{i\mathbf{k}\sigma}^{} \frac{s_i e^2}{2m_i} \mathbf{A}^2 \,
+	c_{i\mathbf{k}\sigma}^\dagger c_{i\mathbf{k}\sigma}
+\end{eqnarray*}
+
+\begin{eqnarray*}
+	\langle \left|\mathbf{e} \cdot
+	\mathbf{J}_{i\mathbf{kk'}}\right|^2\rangle_{\text{Av}}
+	&=& \int \frac{d\Omega_\mathbf{k}}{4\pi} \frac{d\Omega_\mathbf{k}'}{4\pi}
+	\left|\mathbf{e} \cdot \mathbf{J}_{i\mathbf{kk'}}\right|^2
+	\\
+	&\approx& \frac{(e v_{F_i})^2}{3 \pi N_i(0)} 
+	\frac{\gamma_i}{(\varepsilon-\varepsilon')^2 + \gamma_i^2}
+\end{eqnarray*}
+
+Discussion of $A, A^2$.
+
+The full Hamiltonian is given by $\mathcal{H} = \mathcal{H}_0 +
+\mathcal{H}_1$.
+
+\begin{eqnarray*}
+  \mathbf{j} = - \bigg\langle \frac{\delta\mathcal{H}}{\delta
+  \mathbf{A}}\bigg\rangle = \mathbf{j}_P + \mathbf{j}_D
+\end{eqnarray*}
+\begin{eqnarray*}
+  \mathbf{j}_p = \sum_{i\mathbf{kk'}\sigma}^{}
+	\mathbf{J}_{i\mathbf{kk'}} \cdot \mathbf{A} \,
+	\langle 
+	c_{i\mathbf{k}\sigma}^\dagger  c_{i\mathbf{k}'\sigma}
+	\rangle
+\end{eqnarray*}
+\begin{eqnarray*}
+  \mathbf{j}_D = -\sum_{i\mathbf{k}\sigma}^{} \frac{s_i e^2}{2m_i} 
+  \mathbf{A} \,
+  \langle 
+  c_{i\mathbf{k}\sigma}^\dagger c_{i\mathbf{k}\sigma}
+  \rangle
+\end{eqnarray*}
+
+Next we construct the density matrix
+\begin{eqnarray*}
+  \rho = \ket{\psi_0}\bra{\psi_0} = 
+  \begin{pmatrix}
+    \rho_{i\mathbf{kk'}}^{11} &
+    \rho_{i\mathbf{kk'}}^{12} \\
+    \rho_{i\mathbf{kk'}}^{21} &
+    \rho_{i\mathbf{kk'}}^{22}
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    \langle c_{i\mathbf{k}\uparrow }^\dagger c_{i\mathbf{k}'\uparrow }\rangle
+    &
+    \langle c_{i\mathbf{k}\uparrow }^\dagger c_{i-\mathbf{k}'\downarrow
+    }^\dagger \rangle
+    \\
+    \langle 
+    c_{i-\mathbf{k}\downarrow }c_{i\mathbf{k'}\uparrow }
+    \rangle
+    &
+    \langle 
+    c_{i-\mathbf{k}\downarrow }c_{i\mathbf{-k'}\downarrow }^\dagger 
+    \rangle
+  \end{pmatrix}
+\end{eqnarray*}
+Writing the density matrix in vector form,
+\begin{eqnarray*}
+  \rho = 
+  \begin{pmatrix}
+    \rho_{i\mathbf{kk'}}^{11} \\
+    \rho_{i\mathbf{kk'}}^{12} \\
+    \rho_{i\mathbf{kk'}}^{21} \\
+    \rho_{i\mathbf{kk'}}^{22}
+  \end{pmatrix} \,,
+\end{eqnarray*}
+the Heisenberg equation of motion can be calculated as follows
+\begin{eqnarray*}
+  i\frac{d \rho_{i\mathbf{k}\mathbf{k}'}}{dt}
+  =
+  \sum_{\mathbf{q}}^{}
+  \left[ 
+    H_{i\mathbf{k}' \mathbf{q}}^{(1)} \rho_{i\mathbf{kq}} -
+    H_{i\mathbf{qk}}^{(2)}
+    \rho_{i\mathbf{qk'}}
+  \right]
+\end{eqnarray*}
+where we have defined the following two matrices:
+\begin{eqnarray*}
+  H_{i\mathbf{kk'}}^{(1)}
+  =
+  \begin{pmatrix}
+    h_{i\mathbf{kk'}}^{11} & h_{i\mathbf{kk'}}^{12} & & \\
+    h_{i\mathbf{kk'}}^{21} & h_{i\mathbf{kk'}}^{22} & & \\
+    && h_{i\mathbf{kk'}}^{11} & h_{i\mathbf{kk'}}^{12} \\
+    && h_{i\mathbf{kk'}}^{21} & h_{i\mathbf{kk'}}^{22} & 
+  \end{pmatrix}
+\end{eqnarray*}
+\begin{eqnarray*}
+  H_{i\mathbf{kk'}}^{(2)}
+  =
+  \begin{pmatrix}
+    h_{i\mathbf{kk'}}^{11} && h_{i\mathbf{kk'}}^{21} & \\
+    & h_{i\mathbf{kk'}}^{11} && h_{i\mathbf{kk'}}^{21} \\
+    h_{i\mathbf{kk'}}^{12} && h_{i\mathbf{kk'}}^{22} & \\
+    & h_{i\mathbf{kk'}}^{12} && h_{i\mathbf{kk'}}^{22}
+  \end{pmatrix}
+\end{eqnarray*}
+Let us multiply this out:
+\begin{eqnarray*}
+  i \frac{d}{dt}
+  \begin{pmatrix}
+    \rho_{i\mathbf{kk'}}^{11} &
+    \rho_{i\mathbf{kk'}}^{12} \\
+    \rho_{i\mathbf{kk'}}^{21} &
+    \rho_{i\mathbf{kk'}}^{22}
+  \end{pmatrix}
+  =
+  \sum_{\mathbf{q}}^{}
+  \begin{pmatrix}
+    h_{i\mathbf{k'q}}^{11} \rho_{i\mathbf{kq}}^{11}
+    + h_{i\mathbf{k'q}}^{12} \rho_{i\mathbf{kq}}^{12}
+    -h_{i\mathbf{qk}}^{11} \rho_{i\mathbf{qk'}}^{11}
+    -h_{i\mathbf{qk}}^{21} \rho_{i\mathbf{qk'}}^{21}
+    &
+    h_{i\mathbf{k'q}}^{21} \rho_{i\mathbf{kq}}^{11}
+    + h_{i\mathbf{k'q}}^{22} \rho_{i\mathbf{kq}}^{12}
+    -h_{i\mathbf{qk}}^{11} \rho_{i\mathbf{qk'}}^{12}
+    -h_{i\mathbf{qk}}^{21} \rho_{i\mathbf{qk'}}^{22}
+    \\
+    h_{i\mathbf{k'q}}^{11} \rho_{i\mathbf{kq}}^{21}
+    + h_{i\mathbf{k'q}}^{12} \rho_{i\mathbf{kq}}^{22}
+    -h_{i\mathbf{qk}}^{12} \rho_{i\mathbf{qk'}}^{11}
+    -h_{i\mathbf{qk}}^{22} \rho_{i\mathbf{qk'}}^{21}
+    &
+    h_{i\mathbf{k'q}}^{21} \rho_{i\mathbf{kq}}^{21}
+    + h_{i\mathbf{k'q}}^{22} \rho_{i\mathbf{kq}}^{22}
+    -h_{i\mathbf{qk}}^{12} \rho_{i\mathbf{qk'}}^{12}
+    -h_{i\mathbf{qk}}^{22} \rho_{i\mathbf{qk'}}^{22}
+  \end{pmatrix}
+\end{eqnarray*}
+
+Now we expand the equation of motion in orders of $\mathbf{A}$. The zeroth-order
+components are:
+\begin{eqnarray*}
+  \rho_{i\mathbf{kk'}}\big|_0 = \delta_{kk'} 
+  \begin{pmatrix}
+    \frac{1}{2}\left(1-\frac{\varepsilon_{i\mathbf{k}}}{E_{i\mathbf{k}}}\right)
+    +\frac{\varepsilon_{i\mathbf{k}}}{ E_{i\mathbf{k}}}f_{i\mathbf{k}}
+    \\
+    -\frac{\Delta^{eq}_i}{2}(1-2f_{i\mathbf{k}})
+    \\
+    -\frac{\Delta^{eq}_i}{2}(1-2f_{i\mathbf{k}})
+    \\
+    \frac{1}{2}\left(1+\frac{\varepsilon_{i\mathbf{k}}}{E_{i\mathbf{k}}}\right)
+    -\frac{\varepsilon_{i\mathbf{k}}}{ E_{i\mathbf{k}}}f_{i\mathbf{k}}
+  \end{pmatrix}
+\end{eqnarray*}
+\begin{eqnarray*}
+  H_{i\mathbf{kk'}}^{(1)}\big|_0
+  =
+  \delta_{\mathbf{kk'}}
+  \begin{pmatrix}
+    \varepsilon_{i\mathbf{k}} & \Delta^{eq}_i & & \\
+    \Delta^{eq}_i & -\varepsilon_{i\mathbf{k}} & & \\
+    && \varepsilon_{i\mathbf{k}} & \Delta^{eq}_i \\
+    && \Delta^{eq}_i & -\varepsilon_{i\mathbf{k}} & 
+  \end{pmatrix}
+\end{eqnarray*}
+\begin{eqnarray*}
+  H_{i\mathbf{kk'}}^{(2)}\big|_0
+  =
+  \delta_{\mathbf{kk'}}
+  \begin{pmatrix}
+    \varepsilon_{i\mathbf{k}} && \Delta^{eq}_i & \\
+    & \varepsilon_{i\mathbf{k}} && \Delta^{eq}_i \\
+    \Delta^{eq}_i && -\varepsilon_{i\mathbf{k}} & \\
+    & \Delta^{eq}_i && -\varepsilon_{i\mathbf{k}}
+  \end{pmatrix}
+\end{eqnarray*}
+
+Now we proceed with the first order.
+
+\begin{eqnarray*}
+i\frac{d}{dt} \rho_{i\mathbf{k}\mathbf{k}'}\big|_1
+  =
+  \left( 
+    H_{i\mathbf{k}' \mathbf{k'}}^{(1)} 
+    -
+    H_{i\mathbf{kk}}^{(2)}
+  \right)\bigg|_0
+    \rho_{i\mathbf{kk'}}\big|_1
+  +
+  \left(
+    H_{i\mathbf{k}' \mathbf{k}}^{(1)}\big|_1 \rho_{i\mathbf{kk}}\big|_0 
+    -
+    H_{i\mathbf{k'k}}^{(2)}\big|_1
+    \rho_{i\mathbf{k'k'}}\big|_0
+  \right)
+\end{eqnarray*}
+\begin{eqnarray*}
+  H_{i\mathbf{kk'}}^{(1)}\big|_0
+  =
+  -\mathbf{J}_{i\mathbf{kk'}} \cdot \mathbf{A} \,
+  \begin{pmatrix}
+    1 &  & & \\
+     & -1 & & \\
+    && 1 &  \\
+    &&  & -1& 
+  \end{pmatrix}
+\end{eqnarray*}
+\begin{eqnarray*}
+  H_{i\mathbf{kk'}}^{(2)}\big|_0
+  =
+  -\mathbf{J}_{i\mathbf{kk'}} \cdot \mathbf{A} \,
+  \begin{pmatrix}
+    1 &&  & \\
+    & 1 &&  \\
+     && -1 & \\
+    &  &&-1 
+  \end{pmatrix}
+\end{eqnarray*}
+
+The second order is
+
+\begin{eqnarray*}
+  i\frac{d \rho_{i\mathbf{k}\mathbf{k}}}{dt}
+  =
+    \left( 
+      H_{i\mathbf{kk}}^{(1)}  - H_{i\mathbf{kk}}^{(2)} 
+    \right)\bigg|_0
+    \rho_{i\mathbf{kk}}\big|_2
+    +
+    \sum_{\mathbf{q}}^{}
+    \left( 
+    H_{i\mathbf{kq}}^{(1)}\big|_1 \rho_{i\mathbf{kq}}\big|_1 -
+    H_{i\mathbf{qk}}^{(2)}\big|_1 \rho_{i\mathbf{qk}}\big|_1
+    \right)
+    +
+    \left( 
+      H_{i\mathbf{kk}}^{(1)} - H_{i\mathbf{kk}}^{(2)} 
+    \right)\bigg|_2
+      \rho_{i\mathbf{kk}}\big|_0
+\end{eqnarray*}
+\begin{eqnarray*}
+  H_{i\mathbf{kk}}^{(1,2)}\big|_2 = 
+  H_{i\mathbf{kk}}^{(1,2)}\big|_{2,D}
+  +H_{i\mathbf{kk}}^{(1,2)}\big|_{2,H}
+  +H_{i\mathbf{kk}}^{(1,2)}\big|_{2,L}
+\end{eqnarray*}
+Diamagnetic quasiparticle current contribution
+\begin{eqnarray*}
+  H_{i\mathbf{kk'}}^{(1)}\big|_{0,D}
+  =
+  \delta_{\mathbf{kk'}} \frac{s_ie^2}{2m_i}\mathbf{A}^2
+  \begin{pmatrix}
+    1 &  & & \\
+     & -1 & & \\
+    && 1 &  \\
+    &&  & -1& 
+  \end{pmatrix}
+\end{eqnarray*}
+\begin{eqnarray*}
+  H_{i\mathbf{kk'}}^{(2)}\big|_{0,D}
+  =
+  \delta_{\mathbf{kk'}} \frac{s_ie^2}{2m_i}\mathbf{A}^2
+  \begin{pmatrix}
+    1 &&  & \\
+    & 1 &&  \\
+     && -1 & \\
+    &  &&-1 
+  \end{pmatrix}
+\end{eqnarray*}
+Higgs contribution
+\begin{eqnarray*}
+  H_{i\mathbf{kk'}}^{(1)}\big|_{0,D}
+  =
+  \delta_{\mathbf{kk'}} \delta \Delta'\big|_2
+  \begin{pmatrix}
+     & 1 & & \\
+    1 &  & & \\
+    &&  & 1 \\
+    && 1 &  & 
+  \end{pmatrix}
+\end{eqnarray*}
+\begin{eqnarray*}
+  H_{i\mathbf{kk'}}^{(2)}\big|_{0,D}
+  =
+  \delta_{\mathbf{kk'}} \delta \Delta'\big|_2
+  \begin{pmatrix}
+     && 1 & \\
+    &  && 1 \\
+    1 &&  & \\
+    & 1 && 
+  \end{pmatrix}
+\end{eqnarray*}
+Leggett contribution
+\begin{eqnarray*}
+  H_{i\mathbf{kk'}}^{(1)}\big|_{0,D}
+  =
+  \delta_{\mathbf{kk'}} \delta \Delta''\big|_2
+  \begin{pmatrix}
+     & i & & \\
+    -i &  & & \\
+    &&  & i \\
+    && -i &  & 
+  \end{pmatrix}
+\end{eqnarray*}
+\begin{eqnarray*}
+  H_{i\mathbf{kk'}}^{(2)}\big|_{0,D}
+  =
+  \delta_{\mathbf{kk'}} \delta \Delta''\big|_2
+  \begin{pmatrix}
+     && -i & \\
+    &  && -i \\
+    i &&  & \\
+    & i && 
+  \end{pmatrix}
+\end{eqnarray*}
+
+And third order
+\begin{eqnarray*}
+i\frac{d}{dt} \rho_{i\mathbf{k}\mathbf{k}'}\big|_3
+  =
+  \left( 
+    H_{i\mathbf{k'k'}}^{(1)} - H_{i\mathbf{kk} }^{(2)} 
+  \right)\bigg|_0
+    \rho_{i\mathbf{kk'}}\big|_3
+	+
+  \sum_{\mathbf{q}}^{}
+  \left( 
+    H_{i\mathbf{k'q}}^{(1)}\big|_1 \rho_{i\mathbf{kq }}\big|_2 -
+    H_{i\mathbf{qk} }^{(2)}\big|_1 \rho_{i\mathbf{qk'}}\big|_2
+  \right)
+	+
+  \left( 
+    H_{i\mathbf{k'k'}}^{(1)} - H_{i\mathbf{kk} }^{(2)} 
+  \right)\bigg|_2
+    \rho_{i\mathbf{kk'}}\big|_1
+\end{eqnarray*}
+
+\end{document}
+ 
+ 
+\begin{eqnarray*}
+  H_{i\mathbf{kk'}}^{(1)}\big|_{0,D}
+  =
+  \begin{pmatrix}
+    h11 & h12 & & \\
+    h21 & h22 & & \\
+    && h11 & h12 \\
+    && h21 & h22 & 
+  \end{pmatrix}
+\end{eqnarray*}
+\begin{eqnarray*}
+  H_{i\mathbf{kk'}}^{(2)}\big|_{0,D}<++>
+  =
+  \begin{pmatrix}
+    h11 && h21 & \\
+    & h11 && h21 \\
+    h12 && h22 & \\
+    & h12 && h22
+  \end{pmatrix}
+\end{eqnarray*}
