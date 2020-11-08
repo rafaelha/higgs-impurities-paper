@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex paper_v1"] 1604432068 "paper_v1.aux" "paper_v1.bbl" "paper_v1" 1604432068
+["bibtex paper_v1"] 1604479666 "paper_v1.aux" "paper_v1.bbl" "paper_v1" 1604479807
   "/usr/share/texmf/bibtex/bst/revtex/apsrev4-1.bst" 1480098436 71518 fec93f06df0c073f83d2330456bd19c2 ""
   "literature.bib" 1602685885 1 68b329da9893e34099c7d8ad5cb9c940 ""
-  "paper_v1.aux" 1604432066 7715 c396ba92be2ad66c9c27673876d4b1cf ""
-  "paper_v1Notes.bib" 1604432066 113 f6f1e61f47da2fae6b3993543b708044 ""
+  "paper_v1.aux" 1604479664 7913 12c8614ba193f17b063fb2343f3e3095 ""
+  "paper_v1Notes.bib" 1604479664 113 f6f1e61f47da2fae6b3993543b708044 ""
   (generated)
   "paper_v1.blg"
   "paper_v1.bbl"
-["pdflatex"] 1604432066 "paper_v1.tex" "paper_v1.pdf" "paper_v1" 1604432068
+["pdflatex"] 1604479807 "paper_v1.tex" "paper_v1.pdf" "paper_v1" 1604479807
   "/etc/texmf/web2c/texmf.cnf" 1603102486 33844 f4daaf6aec9d258ff6409b0290a0cc97 ""
   "/usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1480098698 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/share/texmf/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1480098698 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
@@ -37,7 +37,6 @@
   "/usr/share/texmf/fonts/tfm/public/cm/cmmib10.tfm" 1480098701 1524 554068197b70979a55370e6c6495f441 ""
   "/usr/share/texmf/fonts/tfm/public/cm/cmr10.tfm" 1480098701 1296 45809c5a464d5f32c8f98ba97c1bb47f ""
   "/usr/share/texmf/fonts/tfm/public/cm/cmr12.tfm" 1480098701 1288 655e228510b4c2a1abe905c368440826 ""
-  "/usr/share/texmf/fonts/tfm/public/cm/cmr17.tfm" 1480098701 1292 296a67155bdbfc32aa9c636f21e91433 ""
   "/usr/share/texmf/fonts/tfm/public/cm/cmr6.tfm" 1480098701 1300 b62933e007d01cfd073f79b963c01526 ""
   "/usr/share/texmf/fonts/tfm/public/cm/cmr9.tfm" 1480098701 1292 6b21b9c2c7bebb38aa2273f7ca0fb3af ""
   "/usr/share/texmf/fonts/tfm/public/cm/cmss10.tfm" 1480098701 1316 b636689f1933f24d1294acdf6041daaa ""
@@ -62,7 +61,6 @@
   "/usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi7.pfb" 1480098733 36281 c355509802a035cadc5f15869451dcee ""
   "/usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi9.pfb" 1480098733 36094 798f80770b3b148ceedd006d487db67c ""
   "/usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1480098733 35752 024fb6c41858982481f6968b5fc26508 ""
-  "/usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1480098733 32362 179c33bbf43f19adbb3825bb4e36e57a ""
   "/usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1480098733 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "/usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1480098733 32762 224316ccc9ad3ca0423a14971cfa7fc1 ""
   "/usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr9.pfb" 1480098733 33993 9b89b85fd2d9df0482bd47194d1d3bf3 ""
@@ -164,10 +162,10 @@
   "figures/fig2.pdf" 1603063060 374262 e881925f3cc1ca356c660727624db180 ""
   "figures/fig3.pdf" 1603143034 1395155 f43cebbb96fdd3a0d8e6435dc2e2e63d ""
   "figures/m-fig1.pdf" 1603808395 397074 be07aa93861ff52f8d0e8bf015efefbe ""
-  "paper_v1.aux" 1604432066 7715 c396ba92be2ad66c9c27673876d4b1cf ""
-  "paper_v1.bbl" 1604432068 1985 e814c3ef18422c3bcf47d60b652affb1 "bibtex paper_v1"
-  "paper_v1.out" 1604432066 2819 0346bef87fa249be595ba6d9871d1ef7 ""
-  "paper_v1.tex" 1604432065 41640 6edb1782a9dc6c7fc740ab76f7f52269 ""
+  "paper_v1.aux" 1604479664 7913 12c8614ba193f17b063fb2343f3e3095 ""
+  "paper_v1.bbl" 1604479666 1985 e814c3ef18422c3bcf47d60b652affb1 "bibtex paper_v1"
+  "paper_v1.out" 1604479664 2562 25ae70a51cd956636a5d636d9cba5bfe ""
+  "paper_v1.tex" 1604479806 44179 474ad306cdbc55bdb58ceba39b1f3072 ""
   (generated)
   "paper_v1.log"
   "paper_v1Notes.bib"

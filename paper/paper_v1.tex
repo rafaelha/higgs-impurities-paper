@@ -76,10 +76,6 @@
 \label{sec:introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{itemize}
-	\item This work: 1) Higgs oscillations in two-band sc. with bands in different limits, 2) Nonequilibrium optical conductivity, 3) Leggett mode in dirty-limit, 4) Prediction for MgB$_2$
-\end{itemize}
-
 When a global symmetry is spontaneously broken, collective excitations emerge.
 In the case of a superconductor, where the local order parameter $\Delta
 e^{i\varphi}$ acquires a
@@ -226,6 +222,7 @@ respectively.
 The full Hamiltonian is given by $\mathcal{H} = \mathcal{H}_{0} + \mathcal{H}_{1}$.
 
 \subsection{Impurity scattering}
+\label{sec:MB}
 In a clean system momentum conservation yields $\mathbf{J}_{i\mathbf{kk'}} \sim
 \delta_{\mathbf{kk'}}$, or $\mathbf{J}_{i\mathbf{kk'}} \sim
 \delta_{\mathbf{k,k'}\pm\mathbf{q}}$ if a photon wavevector $\mathbf{q}$ is
@@ -235,7 +232,7 @@ approach of Murotani and Shimano [] and model the effects of impurities by
 means of the Mattis-Bardeen (MB) substitution []. It relies on approximating the
 transition matrix elements $J_{i\mathbf{kk'}}$ as a
 Lorentzian in momentum transfer space, explicitly written as
-\begin{eqnarray*}
+\begin{eqnarray}
 	\langle \left|\mathbf{e} \cdot
 	\mathbf{J}_{i\mathbf{kk'}}\right|^2\rangle_{\text{Av}}
 	&=& \int \frac{d\Omega_\mathbf{k}}{4\pi} \frac{d\Omega_\mathbf{k}'}{4\pi}
@@ -244,7 +241,8 @@ Lorentzian in momentum transfer space, explicitly written as
 	&\approx& \frac{(e v_{F_i})^2}{3 \pi N_i(0)} 
 	\frac{\gamma_i}{\left(\varepsilon_{i|\mathbf{k}|}-\varepsilon_{i|\mathbf{k}'|}\right)^2
 	+ \gamma_i^2} \,,
-\end{eqnarray*}
+	\label{eq:MB}
+\end{eqnarray}
 with Fermi velocity $v_{F_i}$ density of states of the Fermi level $N_i(0)$ and
 impurity scattering rate $\gamma_i$. Note that we are considering an effectively
 one-dimensional quantity
@@ -252,7 +250,7 @@ where all angular degrees of freedom have been averaged out.
 Physically, this means that impurity scattering occurs with equal probability
 between all states within a shell around the Fermi sphere.
 A derivation of this matrix element
-following [Murotani] is reviewed in Appendix X.
+following [Murotani] is reviewed in Appendix \ref{apdx:MB}.
 
 An optical transition can be resonantly driven only if (1) an energy matching
 condition and (2) a momentum 
@@ -361,7 +359,7 @@ and we compute the dynamics of the superconducting order parameter
 \end{eqnarray*}
 To apply the MB substitution we further expand above equation of motions in
 orders of $A(t)$. To account for effects of a THG response, we consider terms up to
-third order. As detailed in Appendix X, the current only has odd order
+third order. As detailed in Appendix \ref{apdx:model}, the current only has odd order
 components $\mathbf{j} = \mathbf{j}\big|_0 +\mathbf{j}\big|_3 + \dots$ and the
 gap only contains even contributions of $A$, $\Delta = \Delta\big|_0 +
 \Delta\big|_2 +\dots$. 
@@ -393,7 +391,7 @@ $\varepsilon_{|\mathbf{k}_i|}$ of up to $10^3$ points in the interval $\left[
   -\omega_D, \omega_D
 \right]$ (why do we use $\omega_D$???).
 A detailed derivation and an explicit presentation of the full equations of
-motion is given in Appendix X.
+motion is given in Appendix \ref{apdx:model}.
 
 
 
@@ -428,9 +426,9 @@ $\Delta_{\text{eq}}=\SI{1.3}{\milli\electronvolt}$,
 $\varepsilon_{F}=\SI{1}{\electronvolt}$, $m=0.78 m_e$, $s=1$ that reflect
 measurements and ab-initio calculations on NbN [DFT-reference].
 The Debye energy for NbN is order order of 
-$\omega_D = \SI{5}{\milli\electronvolt}$, but
+$\omega_D = \SI{50}{\milli\electronvolt}$, but
 for better numerical resolvability we choose $\omega_D =
-\SI{2}{\milli\electronvolt}$.
+\SI{20}{\milli\electronvolt}$.
 
 We choose the electromagnetic pulse form $A(t) = A_0 \exp\left( -(t-t')^2/2\tau^2
 \right)\cos \Omega t$ and choose coefficients to match the reported data 
@@ -483,23 +481,15 @@ $\Delta_{\infty}$. [$\left|\Delta^{eq}-\Delta_{\infty}\right| \propto
 Discussion why it does not oscillate with $\Delta_{\infty}$] 
 
 Both the oscillation amplitude and $\Delta_{\infty}$ show a
-strong dependence on the impurity scattering rate. For $\gamma\rightarrow 0$
-they both vanish while they peak at $\gamma\approx
-\Delta^{eq}$, see Fig. \ref{fig:singleband-gap}(f). These results underline the
+strong dependence on the impurity scattering rate peaked at $\gamma\approx
+\Delta^{eq}$, see Fig. \ref{fig:singleband-gap}(f). For $\gamma\rightarrow 0$
+the Higgs resonance vanishes. [Discussion photon $\mathbf{q}$ and $A^2$ term] These results underline the
 importance of impurity scattering for the excitation efficiency of collective
-Higgs modes already uncovered by Refs. [].
-In agreement with the argument from Sec. X this dependence is well approximated by
+Higgs modes uncovered recently [].
+We can understand this result by examining the matrix elements of the current
+operator, Eq. (\ref{eq:MB}), following the discussion of Sec. \ref{sec:MB}.
+Indeed, the $\gamma$-dependence closely follows
 the functional form $\gamma/(\Delta_{eq}^2+\gamma^2)$.
-
-
-Next we compute the optical conductivity
-\begin{eqnarray*}
-\sigma(\omega)=\frac{j(\omega)}{i\omega A(\omega)}
-\end{eqnarray*}
-and plot its real and
-imaginary part in Figs. \ref{fig:cond-lin}(a-b) for various impurity
-concentrations. 
-
 
 
 \begin{figure}[t]
@@ -523,52 +513,111 @@ $\sigma' $ which was average-subtracted and normalized to show the oscillations.
 A phase shift occurs across the resonance at $2\Delta_{\text{eq}}$ of the quench pulse
 frequency. (D) Fourier spectrum of panel (C) showing that frequency of
 conductivity oscillation is peaked at $2\Delta_{\text{eq}}$.}
+\label{fig:cond-pp}
 \end{figure}
+
+Next we compute the optical conductivity in linear response
+\begin{eqnarray*}
+  \sigma_0(\omega)\big=\frac{j(\omega)\big|_1}{i\omega A(\omega)} \,.
+\end{eqnarray*}
+Real and
+imaginary parts $\sigma'(\omega),\sigma''(\omega)$ are plotted 
+in Fig. \ref{fig:cond-lin}(a-b) for various impurity
+concentrations and in Fig. \ref{fig:cond-lin} for various temperatures.
+At low temperatures $\sigma'$ shows a clear conductivity gap below $2\Delta^{eq}$. 
+In the clean limit, a pronounced coherence peak is observed around $2\Delta$,
+reflecting the additional density of states amassed above the quasiparticle gap. 
+The above-gap absorption reaches a maximum at $\gamma \sim 2\Delta$ and broadens
+into the characteristic dome shape for which the original analytical MB
+expression has been derived []. In the $T\rightarrow 0$ limit, the
+conductivty shows a condensate peak $\sigma'(\omega)
+= \delta(\omega)$ below the gap which is broadened at
+finite temperatures.
+
+Higher orders of the optical conductivity include
+contributions of collective modes that smooth out the absorption
+edge and add spectral weight inside the conductivity gap.
+Here, we calculate the non-linear contribution,
+$$\sigma(\omega, \delta t_{pp})=\frac{j(\omega)\big|_1+j(\omega)\big|_3}{i\omega
+A(\omega)} \,,$$
+in a pump-probe setting. To this end, we pump the system with an intense 
+pulse of fluence $A=X$ and after a delay of $\delta t_{pp}$, apply a probe
+pulse. Following experimental schemes [], we perform two simulations modelling
+both pump and probe, $j_{p-p}$, and a pump only $j_{p}$e. 
+We then compute the optical conductivity
+from the difference in currents $j=j_{p-p}-j_{p}$. This ensures that resilient
+components of the pump do not contribute to the optical conductivity.
+
+Figures \ref{fig:cond-pp}(a-b) show the real and imaginary part of the optical
+conductivity $\sigma(\omega,\delta t_{pp}$ as a function of frequency and
+  pump-probe delay. It can be seen that the additive third-order contribution
+  $j\big|_3$ add spectral weight to the conductivity that slightly fills the
+  absorption gap. These contributions show clear oscillations for all
+  frequencies $\omega$, as can be seen from Fig. \ref{fig:cond-pp}(c) where
+  the dome-shaped envelope has been subtracted. A Fourier transform of these
+  oscillations is shown in Fig. \ref{fig:cond-pp}(e) indicating that the
+  oscillation frequency matches $2\Delta^{eq}$, the resonance frequency of the
+  Higgs mode. Our results show that signatures of the Higgs mode are measureable
+  in the pump-probe response of the optical conductivity. All features are
+  resolvable by present-day experimental techniques. [Discuss agreement with
+  experiment]
+
+
+
+
+
+
+
 %\begin{comment}
 \section{Multi-band superconductivity}
 \label{sec:multiband}
 
-\begin{figure}[ht]
+\begin{figure}[t]
 	\centering
 	\includegraphics[width=\columnwidth]{figures/m-fig1.pdf}
-	\caption{Real part $\sigma'$ (A,C) and imaginary part $\sigma''$ (B,D)
+	\caption{Real part $\sigma'$ (a,c) and imaginary part $\sigma''$ (b,d)
 		of optical conductivities to first order in $A$ 
 	for various impurity scattering rates at $T=\SI{4}{\kelvin}$ (A,B) and
 various temperatures at $\gamma/2\Delta=10$. $\sigma'$ show a characteristic
-conductivity gap below $T_C$ and both $\sigma'$, $\sigma''$ diverge in the
-static limit.}
-\label{fig:singleband-gap}
+conductivity gap below $T_C$ and both $\sigma'$, $\sigma''$ diverges as
+$1/\omega$ in the static limit.}
+\label{fig:cond-lin2}
 \end{figure}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Higgs oscillations}
-\label{sec:higgs_oscillations}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{itemize}
-	\item Equation for Current
-	\item Equation for optical conductivity
-	\item Present and discuss equilibrium optical conductivity in Fig. 1 for the four different limit cases, used in the rest of the paper
-\end{itemize}
-
-
-\begin{figure}[ht]
+\begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/fig-cond-2d-fourcases}
-  \caption{Caption}
+  \caption{Time-resolved optical conductivity for the case were bands are in the
+  limit (a) clean-clean, (b) clean-dirty, (c) dirty-clean, (d) dirty-dirty.}
 \end{figure}
+
+Motivation by the good agreement of the theory with experimental data, we now
+discuss the case of a two-band superconductor. Here, the superconducting state
+of MgB$_2$ is likely the most widely studied example and we adopt it as a
+reference material. We loosely model the
+$\pi$- and $\sigma$-bands believed to be responsible for superconductivity by
+choosing material parameters 
+$\Delta_{\pi}=\SI{3}{\milli\electronvolt}$,
+$\Delta_{\sigma}=\SI{7}{\milli\electronvolt}$, 
+$\varepsilon_{F,\pi}=\SI{2.9}{\electronvolt}$,
+$\varepsilon_{F,\sigma}=\SI{0.7}{\electronvolt}$, 
+$m_\pi=0.85m_e$,
+$m_\sigma=1.38 m_e$, 
+$\omega_D=\SI{50}{\milli\electronvolt}$,
+$s_\pi=1$,
+$s_\sigma=-1$.
+
+\subsection{Optical conductivity}
+
+
+
+
+
 \begin{figure*}[ht]
   \centering
   \includegraphics[width=\textwidth]{figures/fig-three-pulses}
-  \caption{Caption}
+  \caption{Time-resolved optical conductivity for three different pulses.}
 \end{figure*}
 
-\begin{itemize}
-	\item Equation for $\delta\Delta(t)$
-	\item Show and discuss Higgs oscillations in Fig. 2 of the four cases with a suitable pump pulse (refer to appendix B for details about the pump pulse)
-\end{itemize}
-
-
 
 
 
@@ -578,22 +627,7 @@ static limit.}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Nonequilibrium optical conductivity}
-\label{sec:noneq_cond}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{itemize}
-	\item Equation for nonequilibrium optical conductivity with two pulses. Maybe here more details (instead of appendix), as this is not covered by the Murotani paper
-	\item Show and discuss nonequlibrium conductivity in Fig. 3.
-	\item More figures of nonequilibrium conductivity? Suggestions: Imaginary part, maybe appendix. Nice 3d plot. Oscillations along cuts.
-\end{itemize}
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Leggett mode} 
+\subsection{Leggett mode and THG} 
 \label{sec:leggett_mode}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -610,10 +644,23 @@ static limit.}
 
 \begin{itemize}
 	\item Definition, equation of Leggett mode
-	\item Parameters for Fig.4 where Leggett mode occurs
-	\item Discuss Fig. 4
-	\item Maybe rethink what exactly to show in Fig. 4
-	\item New plot of time-resolved conductivity showing Leggett mode?
+	\item Leggett equation of motion (equation for imaginary part of gap)
+	  completely decouples from the remaining system of equations!
+	\item In light of this - does Leggett mode really couple with Higgs
+	  mode? Here the issue of the Fourier-transform comes up again. Is it
+	  possible that the Fourier-transform of the whole time-range is the
+	  correct approach. A point is that Leggett mode is peaked in between
+	  the two gaps, but all oscillation contirbutions above $2\Delta_1$ are
+	  damped very fast (exponential) so that at later times it looks like
+	  the energy of the mode is $2\Delta_1$.
+	\item TGH experiment. Here, let's decompose the THG signal in
+	  quasiparticle, Higgs, Leggett contributions and show the THG in two
+	  ways. First, a plot as a function of frequency for the four impurity
+	  cases. Second, a plot as a function of temperature for the four cases.
+	  The two plots should agree qualitatively, since changing the
+	  temperature changes the gap (this is what experimentalists do).
+	  Additionally, however, thermal effects contribute which might make
+	  things a bit harder to see.
 \end{itemize}
 
 
@@ -624,26 +671,6 @@ static limit.}
 Leggett mode has been potentially measured in between the two gaps. Discuss this
 and also refer to Schnyder Nature Comm. 
  
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{MgB$_2$}
-\label{sec:mgb2}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{itemize}
-	\item Parameters which match MgB$_s$
-	\item Show prediction in Fig. 6 of equilibrium conductivity, Higgs oscillations, nonequilibrium conductivity
-\end{itemize}
-
-\begin{figure}[H]
-    \centering
-    %\includegraphics[width=\columnwidth]{figures/mgb2.png}
-    \Huge{TODO}
-    \caption{\label{fig:mgb2}%
-    Result with parameters for MgB$_2$ a) Equilibrium optical conductivity, b) Higgs oscillations, c) pump-probe conductivity and spectra}
-\end{figure}%
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion}
@@ -678,9 +705,11 @@ and also refer to Schnyder Nature Comm.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\end{comment}
+\newpage
 \appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Mattis-Bardeen substitution}
+\label{apdx:MB}
 
 One starts with the following assumption:
 
@@ -813,6 +842,8 @@ yields
 \end{eqnarray*}
 
 \section{Model}
+
+\label{apdx:model}
 \begin{eqnarray}
   \mathcal{H}_0 = \sum_{i\mathbf{k}\sigma}  
 	\varepsilon_{i\mathbf{k}}c_{i\mathbf{k}\sigma}^\dagger

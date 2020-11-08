@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/TeX Live for SUSE Linux) (preloaded format=pdflatex 2020.10.19)  3 NOV 2020 20:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/TeX Live for SUSE Linux) (preloaded format=pdflatex 2020.10.19)  4 NOV 2020 09:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1065,11 +1065,7 @@ Class revtex4-1 Info: Robustifying \LaTeX's \boldmath command on input line 36.
 Class revtex4-1 Info: cite was not loaded (OK!) on input line 36.
 Class revtex4-1 Info: mcite was not loaded (OK!) on input line 36.
 Class revtex4-1 Info: multicol was not loaded (OK!) on input line 36.
-(./paper_v1.aux
-
-LaTeX Warning: Label `fig:singleband-gap' multiply defined.
-
-)
+(./paper_v1.aux)
 \openout1 = `paper_v1.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
@@ -1276,26 +1272,27 @@ Package microtype Info: Loading generic settings for font family
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\\' on input line 71.
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 80.
-(/usr/share/texmf/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 80.
 
-Underfull \hbox (badness 1205) in paragraph at lines 109--113
+Underfull \hbox (badness 1205) in paragraph at lines 105--109
 []\OT1/cmr/m/n/10 (+20) Recent de-vel-op-ments in ul-tra-fast Ter-a-hertz spec-
 
  []
 
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-<figures/fig1.pdf, id=106, 458.63043pt x 269.86018pt>
-File: figures/fig1.pdf Graphic file (type pdf)
- <use figures/fig1.pdf>
-Package pdftex.def Info: figures/fig1.pdf used on input line 410.
-(pdftex.def)             Requested size: 246.0pt x 144.74641pt.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 142.
 
-[3 <./figures/fig1.pdf>]
+(/usr/share/texmf/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 142.
+ [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] <figures/fig1.pdf, 
+id=102, 458.63043pt x 269.86018pt>
+File: figures/fig1.pdf Graphic file (type pdf)
+
+<use figures/fig1.pdf>
+Package pdftex.def Info: figures/fig1.pdf used on input line 408.
+(pdftex.def)             Requested size: 246.0pt x 144.74641pt.
+ [3 <./figures/fig1.pdf>]
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
@@ -1308,111 +1305,104 @@ Package pdftex.def Info: figures/fig1.pdf used on input line 410.
 ! For immediate help type H <return>.
 !...............................................  
                                                   
-l.478 ... frequency $2\Delta=\SI{6.x}{\tera\hertz}
+l.476 ... frequency $2\Delta=\SI{6.x}{\tera\hertz}
                                                   $ as shown in Figs.
 |'''''''''''''''''''''''''''''''''''''''''''''''
 | A number cannot end with a product token.
 |...............................................
 
-<figures/fig2.pdf, id=152, 481.13051pt x 386.12756pt>
+<figures/fig2.pdf, id=148, 481.13051pt x 386.12756pt>
 File: figures/fig2.pdf Graphic file (type pdf)
  <use figures/fig2.pdf>
-Package pdftex.def Info: figures/fig2.pdf used on input line 507.
+Package pdftex.def Info: figures/fig2.pdf used on input line 497.
 (pdftex.def)             Requested size: 246.0pt x 197.42325pt.
 
-<figures/fig3.pdf, id=153, 481.13051pt x 515.10944pt>
+<figures/fig3.pdf, id=149, 481.13051pt x 515.10944pt>
 File: figures/fig3.pdf Graphic file (type pdf)
  <use figures/fig3.pdf>
-Package pdftex.def Info: figures/fig3.pdf used on input line 519.
+Package pdftex.def Info: figures/fig3.pdf used on input line 509.
 (pdftex.def)             Requested size: 246.0pt x 263.37044pt.
 
-<figures/m-fig1.pdf, id=154, 481.13051pt x 386.12756pt>
+! Missing delimiter (. inserted).
+<to be read again> 
+                   =
+l.521   \sigma_0(\omega)\big=
+                             \frac{j(\omega)\big|_1}{i\omega A(\omega)} \,.
+I was expecting to see something like `(' or `\{' or
+`\}' here. If you typed, e.g., `{' instead of `\{', you
+should probably delete the `{' by typing `1' now, so that
+braces don't get unbalanced. Otherwise just proceed.
+Acceptable delimiters are characters whose \delcode is
+nonnegative, or you can use `\delimiter <delimiter code>'.
+
+[4 <./figures/fig2.pdf> <./figures/fig3.pdf
+
+pdfTeX warning: pdflatex (file ./figures/fig3.pdf): PDF inclusion: multiple pdf
+s with page group included in a single page
+>] <figures/m-fig1.pdf, id=241, 481.13051pt x 386.12756pt>
 File: figures/m-fig1.pdf Graphic file (type pdf)
 
 <use figures/m-fig1.pdf>
-Package pdftex.def Info: figures/m-fig1.pdf used on input line 533.
+Package pdftex.def Info: figures/m-fig1.pdf used on input line 577.
 (pdftex.def)             Requested size: 246.0pt x 197.42325pt.
 
-<figures/fig-cond-2d-fourcases.pdf, id=155, 656.11824pt x 682.88426pt>
+<figures/fig-cond-2d-fourcases.pdf, id=242, 656.11824pt x 682.88426pt>
 File: figures/fig-cond-2d-fourcases.pdf Graphic file (type pdf)
 
 <use figures/fig-cond-2d-fourcases.pdf>
 Package pdftex.def Info: figures/fig-cond-2d-fourcases.pdf used on input line 5
-57.
+88.
 (pdftex.def)             Requested size: 246.0pt x 256.02887pt.
 
-<figures/fig-three-pulses.pdf, id=156, 858.87575pt x 684.43204pt>
+<figures/fig-three-pulses.pdf, id=243, 858.87575pt x 684.43204pt>
 File: figures/fig-three-pulses.pdf Graphic file (type pdf)
 
 <use figures/fig-three-pulses.pdf>
-Package pdftex.def Info: figures/fig-three-pulses.pdf used on input line 562.
+Package pdftex.def Info: figures/fig-three-pulses.pdf used on input line 617.
 (pdftex.def)             Requested size: 510.0pt x 406.4223pt.
 
-<figures/fig-driving.pdf, id=157, 367.84929pt x 330.66737pt>
+<figures/fig-driving.pdf, id=244, 367.84929pt x 330.66737pt>
 File: figures/fig-driving.pdf Graphic file (type pdf)
 
 <use figures/fig-driving.pdf>
-Package pdftex.def Info: figures/fig-driving.pdf used on input line 602.
+Package pdftex.def Info: figures/fig-driving.pdf used on input line 636.
 (pdftex.def)             Requested size: 246.0pt x 221.1373pt.
- <figures/2_a.pdf, id=158, 433.62pt x 289.08pt>
+ <figures/2_a.pdf, id=245, 433.62pt x 289.08pt>
 File: figures/2_a.pdf Graphic file (type pdf)
 
 <use figures/2_a.pdf>
-Package pdftex.def Info: figures/2_a.pdf used on input line 607.
+Package pdftex.def Info: figures/2_a.pdf used on input line 641.
 (pdftex.def)             Requested size: 246.0pt x 164.00096pt.
- <figures/2_b.pdf, id=159, 433.62pt x 289.08pt>
+ <figures/2_b.pdf, id=246, 433.62pt x 289.08pt>
 File: figures/2_b.pdf Graphic file (type pdf)
 
 <use figures/2_b.pdf>
-Package pdftex.def Info: figures/2_b.pdf used on input line 608.
+Package pdftex.def Info: figures/2_b.pdf used on input line 642.
 (pdftex.def)             Requested size: 246.0pt x 164.00096pt.
+ [5 <./figures/m-fig1.pdf> <./figures/fig-cond-2d-fourcases.pdf
 
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 629.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 629.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 629.
-
-[4 <./figures/fig2.pdf>]
-
-LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix]
- on input line 645.
-
-(./paper_v1.bbl
+pdfTeX warning: pdflatex (file ./figures/fig-cond-2d-fourcases.pdf): PDF inclus
+ion: multiple pdfs with page group included in a single page
+>] (./paper_v1.bbl
 
 Package natbib Warning: Empty `thebibliography' environment on input line 53.
 
 )
-Overfull \hbox (65.21132pt too wide) in alignment at lines 696--776
+Overfull \hbox (65.21132pt too wide) in alignment at lines 725--805
  [][][] []
  []
 
-[5 <./figures/fig3.pdf>]
+[6 <./figures/fig-three-pulses.pdf>]
 
 LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix]
- on input line 784.
+ on input line 813.
 
 
-Overfull \hbox (26.09918pt too wide) in alignment at lines 872--895
+Overfull \hbox (26.09918pt too wide) in alignment at lines 903--926
  [][][] []
  []
 
-[6 <./figures/m-fig1.pdf> <./figures/fig-cond-2d-fourcases.pdf
-
-pdfTeX warning: pdflatex (file ./figures/fig-cond-2d-fourcases.pdf): PDF inclus
-ion: multiple pdfs with page group included in a single page
->] Excluding 'comment' comment. [7 <./figures/fig-three-pulses.pdf>]
-
-LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix]
- on input line 1032.
-
-[8 <./figures/fig-driving.pdf> <./figures/2_a.pdf
+[7 <./figures/fig-driving.pdf> <./figures/2_a.pdf
 
 pdfTeX warning: pdflatex (file ./figures/2_a.pdf): PDF inclusion: multiple pdfs
  with page group included in a single page
@@ -1420,25 +1410,21 @@ pdfTeX warning: pdflatex (file ./figures/2_a.pdf): PDF inclusion: multiple pdfs
 
 pdfTeX warning: pdflatex (file ./figures/2_b.pdf): PDF inclusion: multiple pdfs
  with page group included in a single page
->] [9]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1178.
+>] Excluding 'comment' comment. [8]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1209.
  (./paper_v1.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1178.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1178.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1209.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1209.
 
 Package rerunfilecheck Info: File `paper_v1.out' has not changed.
-(rerunfilecheck)             Checksum: 0346BEF87FA249BE595BA6D9871D1EF7;2819.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
+(rerunfilecheck)             Checksum: 25AE70A51CD956636A5D636D9CBA5BFE;2562.
  ) 
 Here is how much of TeX's memory you used:
- 24173 strings out of 494811
- 423035 string characters out of 6178198
- 523589 words of memory out of 5000000
- 27111 multiletter control sequences out of 15000+600000
- 546971 words of font info for 131 fonts, out of 8000000 for 9000
+ 24167 strings out of 494811
+ 422940 string characters out of 6178198
+ 603599 words of memory out of 5000000
+ 27109 multiletter control sequences out of 15000+600000
+ 546672 words of font info for 130 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
  34i,15n,38p,10377b,1069s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf
@@ -1450,20 +1436,19 @@ fb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf
 pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texm
 f/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf/fonts/type1/public
 /amsfonts/cm/cmmi9.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr10.p
-fb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf
-/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf/fonts/type1/public/a
-msfonts/cm/cmr7.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr9.pfb><
-/usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fo
-nts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf/fonts/type1/public/ams
-fonts/cm/cmsy6.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy7.pfb><
-/usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf/fon
-ts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf/fonts/type1/public/ams
-fonts/cm/cmti9.pfb></usr/share/texmf/fonts/type1/public/amsfonts/symbols/msbm10
-.pfb>
-Output written on paper_v1.pdf (9 pages, 7848374 bytes).
+fb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf/
+fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf/fonts/type1/public/am
+sfonts/cm/cmr9.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+</usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf/fo
+nts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texmf/fonts/type1/public/ams
+fonts/cm/cmsy7.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy9.pfb><
+/usr/share/texmf/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf/fo
+nts/type1/public/amsfonts/cm/cmti9.pfb></usr/share/texmf/fonts/type1/public/ams
+fonts/symbols/msbm10.pfb>
+Output written on paper_v1.pdf (8 pages, 7843171 bytes).
 PDF statistics:
- 584 PDF objects out of 1000 (max. 8388607)
- 349 compressed objects within 4 object streams
- 37 named destinations out of 1000 (max. 500000)
- 23742 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 574 PDF objects out of 1000 (max. 8388607)
+ 341 compressed objects within 4 object streams
+ 34 named destinations out of 1000 (max. 500000)
+ 23214 words of extra memory for PDF output out of 24883 (max. 10000000)
 
