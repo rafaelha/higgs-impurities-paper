@@ -20,27 +20,29 @@ code_version = {
     "1.2": "U calculated from gap and v (gap and v are input parameters), r21e r21o saved"
 }
 
-
+job_ID = -1
+task_ID = job_ID
+task_count = 0
 
 u_temp = 116.032
 params_ = [
     {
-        "Ne": [500],
-        "tmin": [-40],
-        "tmax": [200],
+        "Ne": [1000],
+        "tmin": [-80],
+        "tmax": [300],
         # "tmax": [450],
         "Nt": 450,
-        "T": [4/u_temp],#,0.5,0.54,0.56],
-        "wd":  [0.15],
+        "T": [0.001/u_temp],#,0.5,0.54,0.56],
+        "wd":  [5],
         "s": np.array([1,-1]),
         "m": [ np.array([0.85, 1.38]) ],
         "ef": [ np.array([290, 70]) ],
         "g": [ np.array([10,5])],
         "pre_d0": np.array([0.3,0.7]),
-        "v": [0.01],
+        "v": [0.1],#np.linspace(0.0002,1,40),
         "A0": [1],
         "tau": [10],
-        "w":  [0.3],
+        "w":  [0.2],
         "A0_pr": [0],
         "te": 0,
         "tau_pr": [1.5],
@@ -49,6 +51,7 @@ params_ = [
         "te_pr": 0
     }
 ]
+sc=1
 
 
 params = []
@@ -97,7 +100,7 @@ for p in params_:
                                                                         })
 
 print(len(params),'parameters generated')
-params = [params[0]]
+# params = [params[0]]
 
 
 for p in params:
@@ -155,6 +158,8 @@ for p in params:
         return np.array([xf*2*np.pi, 1.0/N_t*yplot])
 
     def rfft(t,f, inverse=False):
+        # a different implementatation of the fourier transform,
+        # I checked that both versions agree with each other
         T = max(t) - min(t)
         Nt = len(t)
         dt = T/Nt
@@ -239,10 +244,11 @@ for p in params:
             UN0 = U[0]*N0
             d = 1
             d_new = UN0*d*integrate.quad(d0_integrand, -wd, wd, (d,))[0]
-            while (np.linalg.norm(d - d_new) > 1e-12):
+            while (np.linalg.norm(d - d_new) > 1e-15):
                 d = d_new
                 d_new = UN0*d*integrate.quad(d0_integrand, -wd, wd, (d,))[0]
             return d_new
+
     def find_d02(U):
         delta_guess = np.array([1,1])
         while True:
@@ -254,36 +260,8 @@ for p in params:
                 return dd
             delta_guess = dd
 
-    def find_U(v, d0, I):
-        # this probably isn't valid as it results in U12 neq U21, but i was trying to investigate the v= infty (intraband=0) case...
-        if v == np.inf:
-            return np.array([[0, (d0[1]/d0[0]*N0[1]*integrate.simps(np.tanh(B/2*np.sqrt(ep**2+d0[1]**2))/(2*np.sqrt(ep**2+d0[1]**2)), ep))**-1],
-                            [(d0[0]/d0[1]*N0[0]*integrate.simps(np.tanh(B/2*np.sqrt(ep**2+d0[0]**2))/(2*np.sqrt(ep**2+d0[0]**2)), ep))**-1, 0]])
 
-        # regular calculation of remaining U parameters:
-        if nb == 2:
-            U = np.array([[1, 1],
-                        [1, 1]])
-
-            U11 = d0[0]/(N0[0]*d0[0]*I[0]+v*N0[1]*d0[1]*I[1])
-            U22 = (d0[1]-v*U11*N0[0]*d0[0]*I[0])/(N0[1]*I[1]*d0[1])
-            U12 = v*U11
-            U_new = np.array([[U11, U12],
-                            [U12, U22]])
-
-            # while (U_new != U).all():
-            #     print('heh-ho')
-            #     U = U_new
-            #     U11 = d0[0]/(N0[0]*d0[0]*I[0]+v*N0[1]*d0[1]*I[1])
-            #     U22 = (d0[1]-v*U[0, 0]*N0[0]*d0[0]*I[0])/(N0[1]*I[1]*d0[1])
-            #     U12 = v*U11
-            #     U_new = np.array([[U11, U12],
-            #                     [U12, U22]])
-            return U_new
-        else:
-            return("Leggett mode only for multiband")
-
-    def find_U2(deq,v):
+    def find_U(deq,v):
         #calculation of remaining U parameters:
         if nb==2:
             U = np.array([[1,1],
@@ -313,23 +291,35 @@ for p in params:
         else:
             return("Leggett mode only for multiband")
 
+    def find_U2(d0, v):
+        I = np.zeros(2)
+        for j in [0, 1]:
+            I[j] = integrate.quad(d0_integrand, -wd, wd, (d0[j],))[0]
+
+        U11 = d0[0]/(N0[0]*d0[0]*I[0]+v*N0[1]*d0[1]*I[1])
+        U22 = (d0[1]-v*U11*N0[0]*d0[0]*I[0])/(N0[1]*I[1]*d0[1])
+        U12 = v*U11
+        U = np.array([[U11, U12],
+                        [U12, U22]])
+        return U
+
+
+
     B = 1/(kb*0.000001)
     ep = np.linspace(-wd, wd, Ne)
-    I = integrate.simps(0.5*1/np.sqrt(ep**2+pre_d0.reshape(2,1)**2)*np.tanh(B/2*np.sqrt(ep**2+pre_d0.reshape(2,1)**2)),ep)
-    U = find_U(v_legget, pre_d0, integrate.simps(0.5*1/np.sqrt(ep**2+pre_d0.reshape(2,1)**2)*np.tanh(B/2*np.sqrt(ep**2+pre_d0.reshape(2,1)**2)),ep))
-    print('old',U)
     U = find_U2(pre_d0,v_legget)
-    print('new',U)
     UN0 = U*N0[:, np.newaxis]
     print('U=',U)
     print('UN0=',UN0)
-    d_eq0_T0 = find_d0(UN0)
-    print('gap=',d_eq0_T0, 'at T=0')
+    # d_eq0_T0 = find_d0(UN0)
+    # print('gap=',d_eq0_T0, 'at T=0 (computed with old function)')
     d_eq0_T0 = find_d02(U)
-    print('gap=',d_eq0_T0, 'at T=0')
+    print('gap=',d_eq0_T0, 'at T=0 (computed with new function)')
     B = 1/(kb*T)
-    d_eq0 = find_d0(UN0)
-    print('gap=',d_eq0, 'at T=',T)
+    # d_eq0 = find_d0(UN0)
+    # print('gap=',d_eq0, 'at T=',T, ' (computed with old function)')
+    d_eq0 = find_d02(U)
+    print('gap=',d_eq0, 'at T=',T, ' (computed with new function)')
 
     # if gscale.any() != None:
         # g = gscale*(2*d_eq0)
@@ -445,7 +435,7 @@ for p in params:
         d2 = d[:,ax, ax]
 
         # second order
-        d_r21e = -2*1j*E1 * r21e - 1j*(1-2*f1)/E1 * e_charge**2 * A(t)**2 / 2 * d_eq1 * s1/m1 - (1-2*f1)*d1.imag
+        d_r21e = -2*1j*E1 * r21e - 1j*(1-2*f1)/E1 * e_charge**2 * A(t)**2 / 2 * d_eq1 * s1/m1 - (1-2*f1)*d1.imag*sc
 
         # reshape and repack into ds
         ds = d_r21e
@@ -515,14 +505,17 @@ for p in params:
     plt.clf()
     plt.subplot(121)
 
+    tc_ = 0
+    tc = tc_
+
     plt.plot(t,d_2.imag)
-    tc = 30
     plt.axvspan(tc, np.max(t), facecolor='gray', alpha=0.2)
     sel = (t>tc)
     dp_ = d_2[sel]
     t_ = t[sel]
     dp_ -= np.mean(dp_, axis=0)
     plt.xlabel(f'$t$')
+    plt.ylabel('Imag$[\delta\Delta]$')
 
     plt.subplot(122)
     w_, dpw_ = rfft(t_, dp_)
@@ -531,24 +524,40 @@ for p in params:
     plt.plot(w_, np.abs(dpw_))
     plt.xlim((0,4*d_eq[1]))
     plt.xlabel(f'$\omega$')
+    plt.ylabel('Imag$[\delta\Delta]$')
     plt.tight_layout()
+    plt.pause(0.01)
 
 
     plt.figure('Leggett')
     plt.clf()
-    plt.subplot(121)
+
+    plt.subplot(131)
+    plt.title(f'v={v_legget}')
+    tc = tc_
     dphase = d_2[:,0].imag/d_eq[0,0,0] - d_2[:,1].imag/d_eq[1,0,0]
-    tc = t[ np.argmax(np.abs(dphase)) ]
-    tc = -20
     plt.axvspan(tc, np.max(t), facecolor='gray', alpha=0.2)
-    sel = np.logical_and((tp>tc), tp<250)
     dp_ = dphase[sel]
-    t_ = t[sel]
     dp_ -= np.mean(dp_, axis=0)
     plt.plot(t,dphase)
     plt.xlabel(f'$t$')
+    plt.ylabel('$\\varphi$')
 
-    plt.subplot(122)
+    plt.subplot(132)
+    plt.title(f'v={v_legget}')
+    tc = tc_
+    dphase = d_2[:,0].imag/d_eq[0,0,0] - d_2[:,1].imag/d_eq[1,0,0]
+    plt.axvspan(tc, np.max(t), facecolor='gray', alpha=0.2)
+    dp_ = dphase[sel]
+    dp_ -= np.mean(dp_, axis=0)
+    # plt.plot(t,dphase)
+    dphase2 = np.copy(dphase)
+    dphase2[t<0] = 1
+    plt.plot(t,np.log(np.abs(dphase2)))
+    plt.xlabel(f'$t$')
+    plt.ylabel('log$\\varphi$')
+
+    plt.subplot(133)
     w_, dpw_ = rfft(t_, dp_)
     print(w_[w_>0][np.argmax(np.abs(dpw_[w_>0]))])
     plt.axvline(d_eq[0]*2, c='gray', lw=1)
@@ -556,56 +565,94 @@ for p in params:
     plt.plot(w_, np.abs(dpw_))
     plt.xlim((0,4*d_eq[1]))
     plt.xlabel(f'$\omega$')
-
-    [plt.axvline(res, c='blue') for res in ev];
+    plt.ylabel('$\\varphi$')
 
     plt.tight_layout()
+    plt.pause(0.01)
+
+
+    # save as dictionary using pickle
+    res = {'Ne': Ne,
+            'T': T,
+            'wd': wd,
+            's': s,
+            'm': m,
+            'ef': ef,
+            #'gscale': gscale,
+            'g': g,
+            'U': U,
+            'v':v_legget,
+            'd_eq0_T0': d_eq0_T0,
+            'd_eq0': d_eq0,
+            'd_eq': d_eq,
+            'nb': nb,
+            'A0': A0,
+            'tau': tau,
+            'w': w,
+            'te': te,
+            'A0_pr': A0_pr,
+            'tau_pr': tau_pr,
+            'w_pr': w_pr,
+            'te_pr': te_pr,
+            't_delay': t_delay,
+            't': t,
+            'A': A(t),
+            'd_2': d_2,
+            'dphase': dphase,
+            'efield': efield,
+            'duration': duration,
+            'hbar': hbar,
+            'kb': kb,
+            'e_charge': e_charge,
+            'job_ID': job_ID,
+            'task_ID': task_ID,
+            'task_count': task_count,
+            'version': code_version}
+
+
+    f1 = open(f'{job_ID}_{task_ID}.pickle', 'ab')
+    pickle.dump(res, f1)
+    f1.close()
 
 #%%
-# plt.figure(figsize=(15,5))
-# plt.subplot(131)
-# plt.pcolormesh(e1_,t,r21e[:,0,:].real)
-# plt.xlabel('$\epsilon$')
-# plt.ylabel('$t$')
-# plt.colorbar()
+# dphases = []
+# vs = []
 
-# plt.subplot(132)
-# plt.pcolormesh(e1_,t,r21e[:,0,:].imag)
-# plt.xlabel('$\epsilon$')
-# plt.ylabel('$t$')
-# plt.colorbar()
+# reader = open(f'{job_ID}_{task_ID}.pickle','rb')
+# try:
+#     while True:
+#         a = pickle.load(reader)
+#         dphases.append(a['dphase'])
+#         vs.append(a['v'])
+# except:
+#     reader.close()
 
-# plt.subplot(133)
-# plt.pcolormesh(e1_,t,np.abs(r21e[:,0,:]))
-# plt.xlabel('$\epsilon$')
-# plt.ylabel('$t$')
-# plt.colorbar()
-
-
-# plt.figure(figsize=(15,5))
-# plt.subplot(131)
-# plt.pcolormesh(e1_,t,r21e[:,1,:].real)
-# plt.xlabel('$\epsilon$')
-# plt.ylabel('$t$')
-# plt.colorbar()
-
-# plt.subplot(132)
-# plt.pcolormesh(e1_,t,r21e[:,1,:].imag)
-# plt.xlabel('$\epsilon$')
-# plt.ylabel('$t$')
-# plt.colorbar()
-
-# plt.subplot(133)
-# plt.pcolormesh(e1_,t,np.abs(r21e[:,1,:]))
-# plt.xlabel('$\epsilon$')
-# plt.ylabel('$t$')
-# plt.colorbar()
 # #%%
+# t = a['t']
+# temp = a['T']
+# dphases = np.stack(dphases)
+# vs = np.array(vs)
 
-# plt.figure(figsize=(15,5))
-# plt.subplot(131)
-# plt.plot(t,np.sum(r21e,axis=2).real)
-# plt.subplot(132)
-# plt.plot(t,np.sum(r21e,axis=2).imag)
-# plt.subplot(133)
-# plt.plot(t,np.abs(np.sum(r21e,axis=2)))
+# tc = 0
+# sel = (t>tc)
+# dp_ = dphases[:,sel]
+# t_ = t[sel]
+# w_, dpw_ = rfft(t_, dp_.T)
+# # plt.figure('1')
+# def nm(x):
+#     return x/np.max(x,axis=0)
+
+# plt.figure('1')
+# plt.clf()
+# plt.pcolormesh(vs,w_,nm(np.abs(dpw_)), vmin=0.5, vmax=0.50000000001)
+# plt.axhline(2*d_eq0[0], c='r')
+# plt.plot(vs,np.abs(w_[np.argmax(np.abs(dpw_),axis=0)]),'.')
+# plt.title(f'T={temp*u_temp}K')
+# # plt.colorbar()
+
+# plt.ylim((0,4*d_eq[0]))
+# plt.xlabel('$v$')
+# plt.ylabel('$\omega$')
+# plt.savefig(f'{job_ID}-tc{tc}.pdf')
+
+

@@ -95,7 +95,7 @@ plt.xlabel('$t$ (ps)')
 plt.tight_layout()
 plt.savefig('pulse.pdf', transparent=True)
 
-plt.figure('pulse-w', figsize=(2.5,1.8))
+plt.figure('pulse-w', figsize=(2.1,1.8))
 plt.clf()
 ww, ew = fft(t, A(t)**2)
 plt.plot(ww/u_t/(2*np.pi),np.abs(ew), 'k')
@@ -106,6 +106,18 @@ plt.xlabel('Frequency (THz)')
 plt.ylabel('$|A^2(\omega)|$')
 plt.tight_layout()
 plt.savefig('pulse_w.pdf', transparent=True)
+
+plt.figure('pulse1-w', figsize=(2.1,1.8))
+plt.clf()
+ww, ew = fft(t, A(t))
+plt.plot(ww/u_t/(2*np.pi),np.abs(ew), 'k')
+plt.xlim((0,3))
+# plt.axvline(d0*u_e*meV_to_THz, c='k', lw=0.7)
+plt.axvspan(2*d0*u_e*meV_to_THz, 5, facecolor='gray', alpha=0.3)
+plt.xlabel('Frequency (THz)')
+plt.ylabel('$|A(\omega)|$')
+plt.tight_layout()
+plt.savefig('pulse1_w.pdf', transparent=True)
 #%%
 from scipy.optimize import curve_fit
 
