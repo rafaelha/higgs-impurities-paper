@@ -29,7 +29,7 @@ plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 folder = 'leggett-driving4'
-# folder = 'driving'
+folder = 'driving'
 files = glob.glob(f'{folder}/*.pickle')
 
 save_plots = False
@@ -722,8 +722,10 @@ for j, v in z(vs):
             if k==6:
                 plt.figure(figsize=(6,3))
                 plt.subplot(121)
-                plt.plot(t,nm(j1))
-                plt.plot(t,nm(j3))
+                plt.plot(t,nm(j1),label='$j_1$')
+                plt.plot(t,nm(j3),label='$j_3$')
+                plt.xlabel('t')
+                plt.legend()
 
                 plt.subplot(122)
                 plt.plot(tw/w, nm(np.abs(j3w)))
@@ -732,12 +734,13 @@ for j, v in z(vs):
                 plt.axvline(3)
                 plt.axvline(5)
                 plt.axvline(7)
-                plt.xlim((0,10))
+                plt.xlim((0,6))
+                plt.xlabel('$\omega/\Omega$')
 
             # y = nm(np.abs(j3w))
             y = np.abs(j3w)
             twn = tw/w
-            y[np.abs(twn-3)>1] = 0
+            y[np.abs(twn-3)>0.2] = 0
 
             xx.append(w)
             yy.append(np.max(y))
