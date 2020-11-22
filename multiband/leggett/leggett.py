@@ -615,44 +615,47 @@ for p in params:
     f1.close()
 
 #%%
-# dphases = []
-# vs = []
+job_ID = 0
+task_ID = 0
+dphases = []
+vs = []
 
-# reader = open(f'{job_ID}_{task_ID}.pickle','rb')
-# try:
-#     while True:
-#         a = pickle.load(reader)
-#         dphases.append(a['dphase'])
-#         vs.append(a['v'])
-# except:
-#     reader.close()
+reader = open(f'{job_ID}_{task_ID}.pickle','rb')
+try:
+    while True:
+        a = pickle.load(reader)
+        dphases.append(a['dphase'])
+        vs.append(a['v'])
+except:
+    reader.close()
 
-# #%%
-# t = a['t']
-# temp = a['T']
-# dphases = np.stack(dphases)
-# vs = np.array(vs)
+#%%
+t = a['t']
+temp = a['T']
+dphases = np.stack(dphases)
+vs = np.array(vs)
 
-# tc = 0
-# sel = (t>tc)
-# dp_ = dphases[:,sel]
-# t_ = t[sel]
-# w_, dpw_ = rfft(t_, dp_.T)
-# # plt.figure('1')
-# def nm(x):
-#     return x/np.max(x,axis=0)
-
+tc = 0
+sel = (t>tc)
+dp_ = dphases[:,sel]
+t_ = t[sel]
+w_, dpw_ = rfft(t_, dp_.T)
 # plt.figure('1')
-# plt.clf()
-# plt.pcolormesh(vs,w_,nm(np.abs(dpw_)), vmin=0.5, vmax=0.50000000001)
-# plt.axhline(2*d_eq0[0], c='r')
-# plt.plot(vs,np.abs(w_[np.argmax(np.abs(dpw_),axis=0)]),'.')
-# plt.title(f'T={temp*u_temp}K')
-# # plt.colorbar()
 
-# plt.ylim((0,4*d_eq[0]))
-# plt.xlabel('$v$')
-# plt.ylabel('$\omega$')
+def nm(x):
+    return x/np.max(x,axis=0)
+
+plt.figure('1')
+plt.clf()
+plt.pcolormesh(vs,w_,nm(np.abs(dpw_)), vmin=0.5, vmax=0.50000000001)
+plt.axhline(2*d_eq0[0], c='r')
+plt.plot(vs,np.abs(w_[np.argmax(np.abs(dpw_),axis=0)]),'.')
+plt.title(f'T={temp*u_temp}K')
+# plt.colorbar()
+
+plt.ylim((0,4*d_eq[0]))
+plt.xlabel('$v$')
+plt.ylabel('$\omega$')
 # plt.savefig(f'{job_ID}-tc{tc}.pdf')
 
 
