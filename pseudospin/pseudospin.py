@@ -11,26 +11,32 @@ import sys
 import os
 import gc
 
-A0 = 0.2
+A0 = 0.2*0
 w = 0.3
 tau = 1
 te = 0
 
-Ne = 1000
+Ne = 3000
+# Ne = 403
 
 tmin = -10
-tmax = 500
-Nt = 450
+tmax = 100
+Nt = 1700
 
 nb = 2
 u_temp = 116.032
 T = 0.001/u_temp
 wd = 5
-s = np.array([1,-1])
+# wd = 0.4
+s = np.array([-1,1])
 m = np.array([0.85, 1.38])
 ef = np.array([290, 70])
 pre_d0 = np.array([0.3,0.7])
-v_leggett = 0.0
+v_leggett = 0
+Amode = 0
+
+quench = np.array([[0.95, 1],
+                    [1,1]])
 
 #Constants
 hbar=1
@@ -145,7 +151,11 @@ def plotA(t,A):
     plt.tight_layout()
 
 def A(t):
-    return A0*np.exp(-(t-te)**2/(2*tau**2))*np.cos(w*t)
+    if Amode==0:
+        return A0*np.exp(-(t-te)**2/(2*tau**2))*np.cos(w*t)
+    if Amode==1:
+        return (t>0)*A0
+    # return np.abs(t-50)<50
 
 
 
@@ -197,12 +207,23 @@ Ep = np.sqrt(ep**2 + d_eq**2)
 b = np.zeros((3,nb,Ne))
 b[2] = 2*e1
 
+
 s0 = np.zeros((3,nb,Ne))
 s0[0] = d_eq1.real / 2 / E1 * np.tanh(E1 / (2 * kb * T))
 s0[1] = -d_eq1.imag / 2 / E1 * np.tanh(E1 / (2 * kb * T))
 s0[2] = -e1 / 2 / E1 * np.tanh(E1 / (2 * kb * T))
 
+delta = U @ (N0 * integ(s0[0] - 1j * s0[1], axis=1))
+b0 = np.zeros((3,nb,Ne))
+b0[2] = 2*e1
+b0[0] = -2*delta[:,ax].real
+b0[1] = 2*delta[:,ax].imag
+
+s0_ = np.copy(s0)
+
 s0 = s0.reshape((3*nb*Ne,))
+
+U *= quench
 
 def ds(t, s):
     s_ = np.copy(s).reshape(3,nb,Ne)
@@ -210,9 +231,11 @@ def ds(t, s):
     delta = U @ (N0 * integ(s_[0] - 1j * s_[1], axis=1))
     b[0] = -2*delta[:,ax].real
     b[1] = 2*delta[:,ax].imag
-    b[2] = 2*e1 + s1 * A(t)[ax,ax]**2 / (2*m1) #* (1+e1/np.max(e1)*0.3)
+    b[2] = 2*e1 + s1 * A(t)**2 / (2*m1) #* (1+e1/np.max(e1)*0.3)
 
-    ds_ = np.cross(b,s_,axisa=0,axisb=0,axisc=0).reshape((3*nb*Ne,))
+    # ds_ = np.cross(b,s_,axisa=0,axisb=0,axisc=0).reshape((3*nb*Ne,))
+    ds_ = np.cross(b-b0,s0_,axisa=0,axisb=0,axisc=0).reshape((3*nb*Ne,)) \
+        + np.cross(b0,s_-s0_,axisa=0,axisb=0,axisc=0).reshape((3*nb*Ne,))
     return ds_
 
 
@@ -242,15 +265,17 @@ dp_ = d[sel].real
 t_ = t[sel]
 dp_ -= np.mean(dp_, axis=0)
 plt.xlabel(f'$t$')
-plt.ylabel('Imag$[\delta\Delta]$')
+plt.ylabel('Real$[\delta\Delta]$')
 plt.subplot(122)
 w_, dpw_ = rfft(t_, dp_)
 plt.axvline(d_eq[0]*2, c='gray', lw=1)
 plt.axvline(d_eq[1]*2, c='gray', lw=1)
+plt.axvline(np.mean(d[:-100,0]).real*2, c='r')
+plt.axvline(np.mean(d[:-100,1]).real*2, c='r')
 plt.plot(w_, np.abs(dpw_))
 plt.xlim((0,4*d_eq[1]))
 plt.xlabel(f'$\omega$')
-plt.ylabel('Imag$[\delta\Delta]$')
+plt.ylabel('Real$[\delta\Delta]$')
 plt.tight_layout()
 plt.pause(0.01)
 
@@ -269,6 +294,7 @@ plt.subplot(122)
 w_, dpw_ = rfft(t_, dp_)
 plt.axvline(d_eq[0]*2, c='gray', lw=1)
 plt.axvline(d_eq[1]*2, c='gray', lw=1)
+plt.axvline(np.mean(d[:-100,0]).real, c='r')
 plt.plot(w_, np.abs(dpw_))
 plt.xlim((0,4*d_eq[1]))
 plt.xlabel(f'$\omega$')
@@ -287,14 +313,57 @@ dp_ = dp[sel]
 t_ = t[sel]
 dp_ -= np.mean(dp_, axis=0)
 plt.xlabel(f'$t$')
-plt.ylabel('Imag$[\delta\Delta]$')
+plt.ylabel('$\\varphi$')
 plt.subplot(122)
 w_, dpw_ = rfft(t_, dp_)
 plt.axvline(d_eq[0]*2, c='gray', lw=1)
 plt.axvline(d_eq[1]*2, c='gray', lw=1)
+plt.axvline(np.mean(d[:-100,0]).real*2, c='r')
+plt.axvline(np.mean(d[:-100,1]).real*2, c='r')
 plt.plot(w_, np.abs(dpw_))
 plt.xlim((0,4*d_eq[1]))
 plt.xlabel(f'$\omega$')
-plt.ylabel('Imag$[\delta\Delta]$')
+plt.ylabel('$\\varphi$')
 plt.tight_layout()
+# plt.savefig(f'phi-v{v_leggett}-Amode{Amode}.pdf')
 plt.pause(0.01)
+
+#%%
+for band in [0,1]:
+    plt.figure(band)
+    plt.clf()
+    ee = ep_[0]
+    Nesel = np.abs(ee) < 5
+    spins = np.arange(0,Ne)[Nesel]
+    spins = spins[::(len(spins)//11)]
+    eeval = ee[spins]
+    de = eeval[1]-eeval[0]
+    tsel = np.logical_and(t>-20,t<150)
+
+    first = True
+    for spin in spins:
+        x = Y[0,band,spin, tsel]
+        y = Y[1,band,spin, tsel]
+
+        if first:
+            dx = (np.max(x) - np.min(x)) * 1.1
+            xx = np.copy(x)
+            yy = np.copy(y)
+        x0 = ee[spin] / de * dx
+
+        plt.scatter(x0,y[0], s=0.2, c='k')
+        plt.scatter((x-x[0])+x0,y, s=0.1)
+
+        if first:
+            first = False
+            plt.xlim((x0-1*dx,-x0+1*dx))
+            # plt.xlim((-3*x0,x0*3))
+
+    # plt.scatter(d[tsel,band].real-d[tsel,band][0].real, -2*d[tsel,band].imag, c='k', s=0.3)
+    # plt.scatter(0, -2*d[tsel,band][0].imag, marker='x', c='orange', s=5.5)
+    plt.xlabel('$\langle s_x\\rangle^{(2)}$')
+    plt.ylabel('$\langle s_y\\rangle^{(2)}$')
+    plt.title(f'v={v_leggett}')
+    # plt.axis('equal')
+    # plt.savefig(f'band{band}-v{v_leggett}-Amode{Amode}.pdf')
+
