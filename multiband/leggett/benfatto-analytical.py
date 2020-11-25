@@ -30,7 +30,6 @@ s = np.array([1,-1])
 m = np.array([0.85, 1.38])
 ef = np.array([290, 70])
 pre_d0 = np.array([0.3,0.7])
-v_leggett = 0.002
 
 #Constants
 hbar=1
@@ -148,59 +147,134 @@ def A(t):
     return A0*np.exp(-(t-te)**2/(2*tau**2))*np.cos(w*t)
 
 
+v_leggett = 0.1
+chis = []
+vs = np.linspace(0,1,300)
+il = 0
+for v_leggett in vs:
+    print(il)
+    il += 1
+    B = 1/(kb*0.000001)
+    ep = np.linspace(-wd, wd, Ne)
+    U = find_U2(pre_d0,v_leggett)
+    UN0 = U*N0[:, np.newaxis]
+    print('U=',U)
+    print('UN0=',UN0)
+    # d_eq0_T0 = find_d0(UN0)
+    # print('gap=',d_eq0_T0, 'at T=0 (computed with old function)')
+    d_eq0_T0 = find_d02(U)
+    print('gap=',d_eq0_T0, 'at T=0 (computed with new function)')
+    B = 1/(kb*T)
+    # d_eq0 = find_d0(UN0)
+    # print('gap=',d_eq0, 'at T=',T, ' (computed with old function)')
+    d_eq0 = find_d02(U)
+    print('gap=',d_eq0, 'at T=',T, ' (computed with new function)')
+    N = N0
 
-B = 1/(kb*0.000001)
-ep = np.linspace(-wd, wd, Ne)
-U = find_U2(pre_d0,v_leggett)
-UN0 = U*N0[:, np.newaxis]
-print('U=',U)
-print('UN0=',UN0)
-# d_eq0_T0 = find_d0(UN0)
-# print('gap=',d_eq0_T0, 'at T=0 (computed with old function)')
-d_eq0_T0 = find_d02(U)
-print('gap=',d_eq0_T0, 'at T=0 (computed with new function)')
-B = 1/(kb*T)
-# d_eq0 = find_d0(UN0)
-# print('gap=',d_eq0, 'at T=',T, ' (computed with old function)')
-d_eq0 = find_d02(U)
-print('gap=',d_eq0, 'at T=',T, ' (computed with new function)')
-N = N0
+    def ref_less(x):
+        return 2 / (x*sqrt(1-x**2)) * np.arctan(x/sqrt(1-x**2))
+    def ref_greater(x):
+        return - 1 / (x*sqrt(x**2-1)) * np.log( (x+sqrt(x**2-1)) / (x-sqrt(x**2-1)))\
+        + 1j* np.pi / (x*sqrt(x**2-1))
+    def F(w,i):
+        d = d_eq0[i]
+        x = np.array(w/(2*d),dtype=complex)
+        return np.piecewise(x, [x<1,x>=1], [ref_less, ref_greater])
 
-def ref_less(x):
-     return 2 / (x*sqrt(1-x**2)) * np.arctan(x/sqrt(1-x**2))
-def ref_greater(x):
-    return - 1 / (x*sqrt(x**2-1)) * np.log( (x+sqrt(x**2-1)) / (x-sqrt(x**2-1)))\
-    + 1j* np.pi / (x*sqrt(x**2-1))
-def F(w,i):
-    d = d_eq0[i]
-    x = np.array(w/(2*d),dtype=complex)
-    return np.piecewise(x, [x<1,x>=1], [ref_less, ref_greater])
+    k = 8*d_eq0[0]*d_eq0[1]*U[0,1]/np.linalg.det(U)
+    def F_L(w):
+        return k*(N[0]*F(w,0)+N[1]*F(w,1)) / (N[0]*F(w,0)*N[1]*F(w,1))
 
-k = 8*d_eq0[0]*d_eq0[1]*U[0,1]/np.linalg.det(U)
-def F_L(w):
-    return k*(N[0]*F(w,0)+N[1]*F(w,1)) / (N[0]*F(w,0)*N[1]*F(w,1))
+    def nm(x, axis=-1):
+        return x/np.max(x, axis=axis)
+    w = np.linspace(0.0001,1.2,800)
+    w_ = w + 1j*0.01*d_eq0[0]
+    chi = 1/(w_**2-F_L(w))
+    chis.append(chi)
+    # plt.figure('leggett')
+    # plt.clf()
+
+    # plt.plot(w, nm(np.abs(np.real(chi))), label='$\\chi\'$')
+    # plt.plot(w, nm(np.abs(np.imag(chi))), label='$\\chi\'\' $')
+    # plt.plot(w, nm(np.abs(chi)), label='$|\\chi| $')
+
+    # plt.axvline(sqrt(k*(N[0]+N[1])/(2*N[0]*N[1])))
+    # plt.axvline(2*d_eq0[0], c='r')
+    # plt.axvline(2*d_eq0[1], c='r')
+    # plt.plot(w, nm(np.abs(1/chi)), label='$\omega^2-F_L(\omega)$')
+    # plt.legend()
+    # plt.xlim((0,2))
+    # plt.title(f'k={k}')
+
+#%%
+plt.figure('cd',figsize=(5,2.7))
+plt.clf()
+def nm(x, axis=-1):
+    return x/np.max(x, axis=axis)
+pc = nm(np.abs(chis).T,axis=0)
+plt.pcolormesh(vs,w_,pc, cmap='Blues')
+
+peaks_analytical = np.abs(w_[np.argmax(pc,axis=0)])
+plt.axhline(2*d_eq0[0], c='gray', lw=1.1, ls='-')
+plt.ylim((0,1.2))
+plt.xlabel('$v$')
+plt.ylabel('$\omega$')
+
+job_ID = 0
+task_ID = 0
+dphases = []
+vsn = []
+
+reader = open(f'{job_ID}_{task_ID}.pickle','rb')
+try:
+    while True:
+        a = pickle.load(reader)
+        dphases.append(a['dphase'])
+        vsn.append(a['v'])
+except:
+    reader.close()
+
+t = a['t']
+temp = a['T']
+dphases = np.stack(dphases)
+vsn = np.array(vsn)
+
+tc = 0
+sel = (t>tc)
+dp_ = dphases[:,sel]
+t_ = t[sel]
+w_n, dpw_ = rfft(t_, dp_.T)
+# plt.figure('1')
 
 def nm(x):
-    print(np.max(x))
-    return x/np.max(x)
-w = np.linspace(0.0001,3,300)
-w_ = w + 1j*0.01*d_eq0[0]
-plt.figure('leggett')
-plt.clf()
-plt.plot(w, nm(np.abs(np.real(1/(w_**2-F_L(w))))), label='$\\chi\'$')
-plt.plot(w, nm(np.abs(np.imag(1/(w_**2-F_L(w))))), label='$\\chi\'\' $')
-plt.plot(w, nm(np.abs(1/(w_**2-F_L(w)))), label='$\\|chi| $')
-plt.axvline(sqrt(k*(N[0]+N[1])/(2*N[0]*N[1])))
-plt.axvline(2*d_eq0[0], c='r')
-plt.axvline(2*d_eq0[1], c='r')
-# plt.plot(w, np.imag(1/(w**2-F_L(w))))
-plt.plot(w, nm(np.abs(w**2-F_L(w))), label='$\omega^2-F_L(\omega)$')
-# plt.plot(w, F_L(w).imag)
+    return x/np.max(x,axis=0)
 
-x = np.linspace(0,2,100)
-# plt.plot(x,ref_less(x), 'k')
-# plt.plot(x,ref_greater(x), 'k')
+# plt.figure('1')
+# plt.clf()
+# plt.pcolormesh(vs,w_,nm(np.abs(dpw_)))#, vmin=0.5, vmax=0.50000000001)
+# plt.axhline(2*d_eq0[0], c='r')
 
-# plt.plot(x,np.imag(ref_greater(x)), 'r')
-plt.legend()
-plt.title(f'k={k}')
+wg = w>=2*d_eq0[0]
+mm = np.min(np.abs(pc[wg]-0.5),axis=0)
+FWHM1 = np.abs(w_[wg][np.argmin(np.abs(pc[wg]-0.5),axis=0)])
+selm = mm<0.1
+plt.plot(vs[selm],FWHM1[selm],c='g', ls='--', lw=1.5)
+
+wg = w<=2*d_eq0[0]
+mm = np.min(np.abs(pc[wg]-0.5),axis=0)
+FWHM2 = np.abs(w_[wg][np.argmin(np.abs(pc[wg]-0.5),axis=0)])
+selm = mm<0.1
+plt.plot(vs[selm],FWHM2[selm],c='g', ls='--', lw=1.5)
+
+plt.plot(vs,peaks_analytical,c='g', lw=1.5)
+peaks_numerical = np.abs(w_n[np.argmax(np.abs(dpw_),axis=0)])
+plt.plot(vsn[vsn<0.24],peaks_numerical[vsn<0.24],'D', markersize=3, c='red')
+plt.plot(vsn[vsn>0.24][::3],peaks_numerical[vsn>0.24][::3],'D', markersize=3, c='red')
+# plt.title(f'T={temp*u_temp}K')
+plt.colorbar()
+plt.text(0.01,0.62,'$2\Delta_1$',fontsize=9)
+plt.text(0.45,1,'FWHM',fontsize=8)
+plt.text(0.45,0.766,'$\omega_L$',fontsize=9, color='w')
+plt.tight_layout()
+# plt.legend('a','b')
+plt.savefig('legget-dispersion.png', dpi=600)
