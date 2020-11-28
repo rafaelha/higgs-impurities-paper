@@ -24,23 +24,25 @@ job_ID = -1
 task_ID = job_ID
 task_count = 0
 
-dim = 2
+dim = 3
 
 u_temp = 116.032
 params_ = [
     {
-        "Ne": [680],
+        "Ne": [1500],
         "tmin": [-80],
         "tmax": [300],
         # "tmax": [450],
         "Nt": 450,
-        "T": [0.001/u_temp],#,0.5,0.54,0.56],
+        "T": [60/u_temp],#,0.5,0.54,0.56],
         "wd":  [5],
         "s": np.array([1,-1]),
         "m": [ np.array([0.85, 1.38]) ],
         "ef": [ np.array([290, 70]) ],
-        "g": [ np.array([10,10])],
+        # "g": [ np.array([0.3,2])],
+        "g": [ r['g'] ],
         "pre_d0": np.array([0.3,0.7]),
+        # "pre_d0": np.array([0.29817841,0.70076507]),
         "v": [0.1],#np.linspace(0.0002,1,40),
         "A0": [1],
         "tau": [10],
@@ -356,30 +358,66 @@ Ep = np.sqrt(ep**2 + d_eq**2)
 W = 1/np.pi*g[:,ax,ax]/((e-ep)**2+g[:,ax,ax]**2)
 
 # indices are:  [band,k1,k2,k3]
-if dim == 3:
-    ek = e1_[ax,:,ax,ax]
-    ek2 = e1_[ax,ax,:,ax]
-    ek3 = e1_[ax,ax,ax,:]
+def genE(dim):
+    if dim == 3:
+        ek = e1_[ax,:,ax,ax]
+        ek2 = e1_[ax,ax,:,ax]
+        ek3 = e1_[ax,ax,ax,:]
 
-    eek = E1[:,:,ax,ax]
-    eek2 = E1[:,ax,:,ax]
-    eek3 = E1[:,ax,ax,:]
+        eek = E1[:,:,ax,ax]
+        eek2 = E1[:,ax,:,ax]
+        eek3 = E1[:,ax,ax,:]
 
-    d = d_eq0[:,ax,ax,ax]
+        d = d_eq0[:,ax,ax,ax]
 
-    W12 = W[:,:,:,ax]
-    W13 = W[:,:,ax,:]
-    W23 = W[:,ax,:,:]
-elif dim == 2:
-    ek = e1_[ax,:,ax]
-    ek2 = e1_[ax,ax,:]
+        W12 = W[:,:,:,ax]
+        W13 = W[:,:,ax,:]
+        W23 = W[:,ax,:,:]
 
-    eek = E1[:,:,ax]
-    eek2 = E1[:,ax,:]
+        nfeek = 1.0/(np.exp(B*eek) + 1)
+        nfeek2 = 1.0/(np.exp(B*eek2) + 1)
+        nfeek3 = 1.0/(np.exp(B*eek3) + 1)
+        nfeekm = 1.0/(np.exp(-B*eek) + 1)
+        nfeek2m = 1.0/(np.exp(-B*eek2) + 1)
+        nfeek3m = 1.0/(np.exp(-B*eek3) + 1)
 
-    d = d_eq0[:,ax,ax]
+        fk = 1.0/(np.exp(B*ek) + 1)
+        fk2 = 1.0/(np.exp(B*ek2) + 1)
+        fk3 = 1.0/(np.exp(B*ek3) + 1)
 
-    W12 = W[:,:,:]
+        return ek,ek2,ek3,eek,eek2,eek3,d,W12,W13,W23,nfeek,nfeek2,nfeek3,nfeekm,nfeek2m,nfeek3m,fk,fk2,fk3
+
+    elif dim == 2:
+        ek = e1_[ax,:,ax]
+        ek2 = e1_[ax,ax,:]
+
+        eek = E1[:,:,ax]
+        eek2 = E1[:,ax,:]
+
+        d = d_eq0[:,ax,ax]
+
+        W12 = W[:,:,:]
+
+        nfeek = 1.0/(np.exp(B*eek) + 1)
+        nfeek2 = 1.0/(np.exp(B*eek2) + 1)
+        nfeekm = 1.0/(np.exp(-B*eek) + 1)
+        nfeek2m = 1.0/(np.exp(-B*eek2) + 1)
+
+        fk = 1.0/(np.exp(B*ek) + 1)
+        fk2 = 1.0/(np.exp(B*ek2) + 1)
+
+        return ek,ek2,eek,eek2,d,W12,nfeek,nfeek2,nfeekm,nfeek2m,fk,fk2
+
+    elif dim == 1:
+        ek = e1_[ax,:]
+        eek = E1
+        d = d_eq0[:,ax]
+
+        nfeek = 1.0/(np.exp(B*eek) + 1)
+        nfeekm = 1.0/(np.exp(-B*eek) + 1)
+
+        return ek,eek,d,nfeek,nfeekm
+
 
 
 def integ(x, axis):
@@ -405,52 +443,120 @@ def A(t):
         +  A0_pr*np.exp(-(t-te-t_delay)**2/(2*tau_pr**2))*np.cos(w_pr*(t-t_delay))
 
 #%%
-ws = np.linspace(0.001,max(d_eq0)*4,100)
-# ws = np.linspace(0,1,20)
-current = []
-eta = 0.01
-for ww in ws:
-    print(ww)
-    w = ww + 1j*eta
-    # expression = -((d**4 + eek2**4 + ek**2*ek2*ek3 - 4*eek2**3*w + ek2*(4*ek + ek3)*w**2 - d**2*(-6*eek2**2 + ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3) + 12*eek2*w - 5*w**2) - 2*eek2*w*(ek*(ek + 3*ek2) + (ek + ek2)*ek3 + w**2) + eek2**2*(ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3) + 5*w**2))/(eek2*(eek2 - eek3 - 2*w)*(eek2 + eek3 - 2*w)*(eek + eek2 - w)**2*(eek - eek2 + w)**2)) - (d**4 + eek3**4 + ek**2*ek2*ek3 + 4*eek3**3*w + (4*ek + ek2)*ek3*w**2 + 2*eek3*w*(ek*(ek + ek2) + (3*ek + ek2)*ek3 + w**2) + eek3**2*(ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3) + 5*w**2) + d**2*(6*eek3**2 - ek**2 - ek2*ek3 + 2*ek*(ek2 + ek3) + 12*eek3*w + 5*w**2))/(eek3*(eek**2 - (eek3 + w)**2)**2*(-eek2**2 + (eek3 + 2*w)**2)) + (eek**8 + 4*eek**5*(-eek2**2 + eek3**2 + 2*ek*(-ek2 + ek3))*w + eek**6*(eek2**2 + eek3**2 + 3*ek**2 + 3*ek2*ek3 + 6*ek*(ek2 + ek3) - w**2) - 4*eek*(eek2 - eek3)*(eek2 + eek3)*ek**2*w*(-(ek2*ek3) + w**2) + ek**2*(eek2 - w)*(eek2 + w)*(-eek3**2 + w**2)*(-(ek2*ek3) + w**2) + 4*eek**3*ek*(ek2 - ek3)*w*(eek2**2 + eek3**2 + 2*w**2) - eek**4*(-5*ek**2*ek2*ek3 + (7*ek**2 + 2*ek2*ek3 + 4*ek*(ek2 + ek3))*w**2 + w**4 + eek3**2*(ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3) - 4*w**2) + eek2**2*(3*eek3**2 + ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3) - 4*w**2)) + d**4*(5*eek**4 + 4*eek*(eek2 - eek3)*(eek2 + eek3)*w + (eek2 - w)*(eek3 - w)*(eek2 + w)*(eek3 + w) - 3*eek**2*(eek2**2 + eek3**2 + 2*w**2)) - eek**2*(6*ek**2*ek2*ek3*w**2 + (-5*ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3))*w**4 - w**6 + eek3**2*(3*ek**2*ek2*ek3 - (4*ek**2 + 6*ek*ek2 - 2*ek*ek3 + ek2*ek3)*w**2 + w**4) + eek2**2*(3*ek**2*ek2*ek3 - (4*ek**2 - 2*ek*ek2 + 6*ek*ek3 + ek2*ek3)*w**2 + w**4 + eek3**2*(ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3) - w**2))) + d**2*(18*eek**6 - 4*eek*(eek2 - eek3)*(eek2 + eek3)*w*(ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3) + w**2) + (eek2 - w)*(eek2 + w)*(-eek3**2 + w**2)*(ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3) + w**2) - eek**4*(6*eek2**2 + 6*eek3**2 + 5*(ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3)) + 17*w**2) + 3*eek**2*(2*(ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3))*w**2 + eek3**2*(ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3) + 3*w**2) + eek2**2*(-2*eek3**2 + ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3) + 3*w**2))))/(2.*eek**3*(eek + eek3 - w)**2*(eek - eek2 + w)**2*(eek + eek2 + w)**2*(-eek + eek3 + w)**2)
-    # integral = integ(W12 * W13 * expression, axis=(1,2,3))
+d = 3
+eta = 0.005
+ws1 = np.linspace(0,1.4*4,20)
+ws2 = np.logspace(-1.5,0.5,30)
+ws = np.sort(np.concatenate([ws1,ws2]))
+ws = ws2
 
-    # expression = -((d**2 + eek**2 + ek*ek2 - eek*w)/(eek*(eek**2 - eek2**2 - 2*eek*w + w**2))) - (d**2 + eek2**2 + ek*ek2 + eek2*w)/(eek2*(-eek**2 + eek2**2 + 2*eek2*w + w**2))
-    expression = ((eek + eek2)*(d**2 - eek*eek2 + ek*ek2))/(eek*eek2*(eek + eek2 - w)*(eek + eek2 + w))
-    integral = integ(W12 * expression, axis=(1,2))
+w = ws + 1j*eta
+# expression = -((d**4 + eek2**4 + ek**2*ek2*ek3 - 4*eek2**3*w + ek2*(4*ek + ek3)*w**2 - d**2*(-6*eek2**2 + ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3) + 12*eek2*w - 5*w**2) - 2*eek2*w*(ek*(ek + 3*ek2) + (ek + ek2)*ek3 + w**2) + eek2**2*(ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3) + 5*w**2))/(eek2*(eek2 - eek3 - 2*w)*(eek2 + eek3 - 2*w)*(eek + eek2 - w)**2*(eek - eek2 + w)**2)) - (d**4 + eek3**4 + ek**2*ek2*ek3 + 4*eek3**3*w + (4*ek + ek2)*ek3*w**2 + 2*eek3*w*(ek*(ek + ek2) + (3*ek + ek2)*ek3 + w**2) + eek3**2*(ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3) + 5*w**2) + d**2*(6*eek3**2 - ek**2 - ek2*ek3 + 2*ek*(ek2 + ek3) + 12*eek3*w + 5*w**2))/(eek3*(eek**2 - (eek3 + w)**2)**2*(-eek2**2 + (eek3 + 2*w)**2)) + (eek**8 + 4*eek**5*(-eek2**2 + eek3**2 + 2*ek*(-ek2 + ek3))*w + eek**6*(eek2**2 + eek3**2 + 3*ek**2 + 3*ek2*ek3 + 6*ek*(ek2 + ek3) - w**2) - 4*eek*(eek2 - eek3)*(eek2 + eek3)*ek**2*w*(-(ek2*ek3) + w**2) + ek**2*(eek2 - w)*(eek2 + w)*(-eek3**2 + w**2)*(-(ek2*ek3) + w**2) + 4*eek**3*ek*(ek2 - ek3)*w*(eek2**2 + eek3**2 + 2*w**2) - eek**4*(-5*ek**2*ek2*ek3 + (7*ek**2 + 2*ek2*ek3 + 4*ek*(ek2 + ek3))*w**2 + w**4 + eek3**2*(ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3) - 4*w**2) + eek2**2*(3*eek3**2 + ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3) - 4*w**2)) + d**4*(5*eek**4 + 4*eek*(eek2 - eek3)*(eek2 + eek3)*w + (eek2 - w)*(eek3 - w)*(eek2 + w)*(eek3 + w) - 3*eek**2*(eek2**2 + eek3**2 + 2*w**2)) - eek**2*(6*ek**2*ek2*ek3*w**2 + (-5*ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3))*w**4 - w**6 + eek3**2*(3*ek**2*ek2*ek3 - (4*ek**2 + 6*ek*ek2 - 2*ek*ek3 + ek2*ek3)*w**2 + w**4) + eek2**2*(3*ek**2*ek2*ek3 - (4*ek**2 - 2*ek*ek2 + 6*ek*ek3 + ek2*ek3)*w**2 + w**4 + eek3**2*(ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3) - w**2))) + d**2*(18*eek**6 - 4*eek*(eek2 - eek3)*(eek2 + eek3)*w*(ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3) + w**2) + (eek2 - w)*(eek2 + w)*(-eek3**2 + w**2)*(ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3) + w**2) - eek**4*(6*eek2**2 + 6*eek3**2 + 5*(ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3)) + 17*w**2) + 3*eek**2*(2*(ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3))*w**2 + eek3**2*(ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3) + 3*w**2) + eek2**2*(-2*eek3**2 + ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3) + 3*w**2))))/(2.*eek**3*(eek + eek3 - w)**2*(eek - eek2 + w)**2*(eek + eek2 + w)**2*(-eek + eek3 + w)**2)
+# integral = N0**3 * integ(W12 * W13 * expression, axis=(1,2,3))
+# expression = -((d**2 + eek**2 + ek*ek2 - eek*w)/(eek*(eek**2 - eek2**2 - 2*eek*w + w**2))) - (d**2 + eek2**2 + ek*ek2 + eek2*w)/(eek2*(-eek**2 + eek2**2 + 2*eek2*w + w**2))
+# expression = (nfeek2*(d**2 + eek2**2 + ek*ek2 - eek2*w))/(eek2*(-eek**2 + (eek2 - w)**2)) - (nfeekm*(d**2 + eek**2 + ek*ek2 - eek*w))/(eek*(eek**2 - eek2**2 - 2*eek*w + w**2)) + (nfeek*(d**2 + ek*ek2 + eek*(eek + w)))/(eek*(eek - eek2 + w)*(eek + eek2 + w)) - (nfeek2m*(d**2 + ek*ek2 + eek2*(eek2 + w)))/(eek2*(-eek**2 + (eek2 + w)**2))
 
-    j = N0 * integral / ww
+ek,ek2,ek3,eek,eek2,eek3,d,W12,W13,W23,nfeek,nfeek2,nfeek3,nfeekm,nfeek2m,nfeek3m,fk,fk2,fk3=genE(3)
+# zero temp
+# x00_ = (1-(ek*ek2+d**2)/(eek*eek2)) * (eek+eek2)/(w**2-(eek+eek2)**2)
+# finite temp
+x00_ = (nfeek2*(d**2 + eek2**2 + ek*ek2 - eek2*w))/(eek2*(-eek**2 + (eek2 - w)**2)) - (nfeekm*(d**2 + eek**2 + ek*ek2 - eek*w))/(eek*(eek**2 - eek2**2 - 2*eek*w + w**2)) + (nfeek*(d**2 + ek*ek2 + eek*(eek + w)))/(eek*(eek - eek2 + w)*(eek + eek2 + w)) - (nfeek2m*(d**2 + ek*ek2 + eek2*(eek2 + w)))/(eek2*(-eek**2 + (eek2 + w)**2))
+x00 = - N0[:,ax]**2 * integ(W12 * x00_, axis=(1,2)) #sign!!!
+jp_1 = vf[:,ax]**2/3/N0[:,ax] * x00
 
-    # j = N0 * integ(W*(1- (e*ep+d_eq**2)/(E*Ep) ) * (E+Ep)/((w+eta*1j)**2-(E+Ep)**2), axis=(1,2)) / w
 
-    current.append(j)
-current = np.stack(current)
+ek,ek2,eek,eek2,d,W12,nfeek,nfeek2,nfeekm,nfeek2m,fk,fk2=genE(2)
+eep = (ek - ek2) * np.ones((nb,1,1))
+for i in np.arange(nb):
+    np.fill_diagonal(eep[i], 1)
+jd_1 = (n/m) * integ( (fk-fk2)  / eep * W12, axis=(1,2))
+jd_1 = jd_1[:,ax]
+
+j_1 = jd_1+jp_1
+
+cond = np.sum(j_1, axis=0) / (1j * ws)
+
 #%%
 
-plt.figure('current')
+# np.sum(jd_1)
+# np.max(sigma.imag-(a+b))
+
+#%%
+
+
+u_t = 6.58285E-2
+u_e = 10
+u_conductivity = 881.553 #Ohm^-1 cm-1
+meV_to_THz = 0.2417990504024
+u_w = u_e*meV_to_THz
+
+sigma = cond*u_conductivity
+
+plt.figure('cond-imp-real', figsize=(3.2,2.8))
 plt.clf()
 plt.subplot(121)
-plt.axvline(2*d_eq0[0], c='gray', lw=0.5)
-plt.axvline(2*d_eq0[1], c='gray', lw=0.5)
-# plt.plot(ws, -np.imag(np.sum(current, axis=1)))
-plt.plot(ws, -np.imag(current))
-plt.xlabel('$\omega$')
-plt.ylabel('$\sigma\'$')
-plt.ylim((-0.5,0.3))
+plt.plot(wg*u_w,np.abs(c.real), label=f'$\gamma/2\Delta={str(np.round(g[0]/2/gap,1))}$')
+g = r['g']
+plt.title(f'$\gamma_1={g[0]}, \gamma_2={g[1]}$')
+plt.xlim((0,6))
+plt.axvline(2*d_eq0[0]*u_w, c='gray', lw=0.5)
+plt.axvline(2*d_eq0[1]*u_w, c='gray', lw=0.5)
 
-plt.subplot(122)
-plt.axvline(2*d_eq0[0], c='gray', lw=0.5)
-plt.axvline(2*d_eq0[1], c='gray', lw=0.5)
-# plt.plot(ws, -np.real(np.sum(current, axis=1)))
-plt.plot(ws, -np.real(current))
-plt.xlabel('$\omega$')
-plt.ylabel('$\sigma\'\'$')
+plt.plot(ws*u_e*meV_to_THz, sigma.real, '.')
+plt.ylabel('$\sigma\,\'$ ($\Omega^{-1}$cm$^{-1}$)')
+plt.xlabel('Frequency (THz)')
+plt.ticklabel_format(axis="y", style="sci", scilimits=(2,4))
+plt.ylim((0,np.max(np.nan_to_num(np.abs(sigma.real))[ws*u_w<6])*1.2))
 plt.tight_layout()
 
-s1 = 'dirty'
-s2 = 'dirty'
-if g[0] < 0.1:
-    s1='clean'
-if g[1] < 0.1:
-    s2='clean'
-# plt.savefig(s1+s2+'.pdf')
+# plt.figure('cond-imp-imag', figsize=(3.2,2.8))
+# plt.clf()
+plt.subplot(122)
+# plt.plot(wg*u_w,c.imag, '.-', label=f'$\gamma/2\Delta={str(np.round(g[0]/2/gap,1))}$')
+plt.xlim((0,6))
+plt.axvline(2*d_eq0[0]*u_w, c='gray', lw=0.5)
+plt.axvline(2*d_eq0[1]*u_w, c='gray', lw=0.5)
+
+plt.plot(ws*u_w, sigma.imag, '.')
+plt.ylabel('$\sigma\,\'\'$ ($\Omega^{-1}$cm$^{-1}$)')
+plt.xlabel('Frequency (THz)')
+# plt.ticklabel_format(axis="y", style="sci", scilimits=(2,4))
+# plt.ylim((0,0.5e5))
+plt.xlim((-2,6))
+plt.tight_layout()
+
+# plt.plot(ws*u_w, np.sum(current.real,axis=1).real/(1j*w))
+# cond = np.sum(current, axis=1) / (1j * ws)
+
+
+#%%
+
+# dim = 2
+# ws = np.linspace(0,2,200)
+
+# eta = 0.002
+# w = ws[ax,ax,:] + 1j*eta
+
+# # expression = (nfeek2*(d**2 + eek2**2 + ek*ek2 - eek2*w))/(eek2*(-eek**2 + (eek2 - w)**2)) - (nfeekm*(d**2 + eek**2 + ek*ek2 - eek*w))/(eek*(eek**2 - eek2**2 - 2*eek*w + w**2)) + (nfeek*(d**2 + ek*ek2 + eek*(eek + w)))/(eek*(eek - eek2 + w)*(eek + eek2 + w)) - (nfeek2m*(d**2 + ek*ek2 + eek2*(eek2 + w)))/(eek2*(-eek**2 + (eek2 + w)**2))
+# x11_ = (-2*(-d**2 + eek**2 + ek**2))/(4*eek**3 - eek*w**2)
+# x11 = integ(x11_, axis=1)
+# dU = U[0,0]*U[1,1]-U[0,1]**2
+# det = (x11[0]+2*U[1,1]/dU)*(x11[1]+2*U[0,0]/dU) - (2*U[0,1]/dU)**2
+
+
+
+# plt.figure('chi')
+# plt.clf()
+# chi = np.stack(chi)
+
+# # plt.plot(ws, np.real(x11.T) + np.array([2/U[0,0], 2/U[1,1]]))
+# # plt.plot(ws,np.abs(det.real))
+# # plt.plot(ws,np.abs(det.imag))
+# plt.plot(ws,1/np.abs(det))
+# plt.axvline(2*d_eq0[0], c='gray', lw=0.5)
+# plt.axvline(2*d_eq0[1], c='gray', lw=0.5)
+# # plt.plot(ws,chi.real)
+# # plt.plot(ws,chi.imag)
+
+
+# %%
