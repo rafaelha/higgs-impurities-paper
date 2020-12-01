@@ -647,9 +647,10 @@ def nm(x):
 
 plt.figure('1')
 plt.clf()
-plt.pcolormesh(vs,w_,nm(np.abs(dpw_)), vmin=0.5, vmax=0.50000000001)
+plt.pcolormesh(vs,w_,nm(np.abs(dpw_)))#, vmin=0.5, vmax=0.50000000001)
 plt.axhline(2*d_eq0[0], c='r')
-plt.plot(vs,np.abs(w_[np.argmax(np.abs(dpw_),axis=0)]),'.')
+peaks_numerical = np.abs(w_[np.argmax(np.abs(dpw_),axis=0)])
+plt.plot(vs,peaks_numerical,'.')
 plt.title(f'T={temp*u_temp}K')
 # plt.colorbar()
 
@@ -659,3 +660,9 @@ plt.ylabel('$\omega$')
 # plt.savefig(f'{job_ID}-tc{tc}.pdf')
 
 
+#%%
+plt.figure('slice')
+plt.clf()
+pl = nm(np.abs(dpw_))
+plt.plot(w_,pl[:,::3])#, vmin=0.5, vmax=0.50000000001)
+plt.xlim((0,2))

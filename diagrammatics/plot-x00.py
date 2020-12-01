@@ -34,7 +34,7 @@ u_w = u_e*meV_to_THz
 u_temp = 116.032
 params_ = [
     {
-        "Ne": [700],
+        "Ne": [1200],
         "tmin": [-80],
         "tmax": [300],
         # "tmax": [450],
@@ -44,11 +44,10 @@ params_ = [
         "s": np.array([1,-1]),
         "m": [ np.array([0.85, 1.38]) ],
         "ef": [ np.array([290, 70]) ],
-        # "g": [ np.array([0.3,2])],
-        "g": [ r['g'] ],
+        "g": [ np.array([0.3,2])],
         "pre_d0": np.array([0.3,0.7]),
         # "pre_d0": np.array([0.29817841,0.70076507]),
-        "v": [0.1],#np.linspace(0.0002,1,40),
+        "v": [0],#np.linspace(0.0002,1,40),
         "A0": [1],
         "tau": [10],
         "w":  [0.2],
@@ -449,113 +448,38 @@ def A(t):
 
 #%% optical conductivity first order
 
-eta = 0.005
-ws1 = np.linspace(0,1.4*4,20)
-ws2 = np.logspace(-1.5,0.5,30)
-ws = np.sort(np.concatenate([ws1,ws2]))
-
-w = ws + 1j*eta
-# expression = -((d**4 + eek2**4 + ek**2*ek2*ek3 - 4*eek2**3*w + ek2*(4*ek + ek3)*w**2 - d**2*(-6*eek2**2 + ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3) + 12*eek2*w - 5*w**2) - 2*eek2*w*(ek*(ek + 3*ek2) + (ek + ek2)*ek3 + w**2) + eek2**2*(ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3) + 5*w**2))/(eek2*(eek2 - eek3 - 2*w)*(eek2 + eek3 - 2*w)*(eek + eek2 - w)**2*(eek - eek2 + w)**2)) - (d**4 + eek3**4 + ek**2*ek2*ek3 + 4*eek3**3*w + (4*ek + ek2)*ek3*w**2 + 2*eek3*w*(ek*(ek + ek2) + (3*ek + ek2)*ek3 + w**2) + eek3**2*(ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3) + 5*w**2) + d**2*(6*eek3**2 - ek**2 - ek2*ek3 + 2*ek*(ek2 + ek3) + 12*eek3*w + 5*w**2))/(eek3*(eek**2 - (eek3 + w)**2)**2*(-eek2**2 + (eek3 + 2*w)**2)) + (eek**8 + 4*eek**5*(-eek2**2 + eek3**2 + 2*ek*(-ek2 + ek3))*w + eek**6*(eek2**2 + eek3**2 + 3*ek**2 + 3*ek2*ek3 + 6*ek*(ek2 + ek3) - w**2) - 4*eek*(eek2 - eek3)*(eek2 + eek3)*ek**2*w*(-(ek2*ek3) + w**2) + ek**2*(eek2 - w)*(eek2 + w)*(-eek3**2 + w**2)*(-(ek2*ek3) + w**2) + 4*eek**3*ek*(ek2 - ek3)*w*(eek2**2 + eek3**2 + 2*w**2) - eek**4*(-5*ek**2*ek2*ek3 + (7*ek**2 + 2*ek2*ek3 + 4*ek*(ek2 + ek3))*w**2 + w**4 + eek3**2*(ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3) - 4*w**2) + eek2**2*(3*eek3**2 + ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3) - 4*w**2)) + d**4*(5*eek**4 + 4*eek*(eek2 - eek3)*(eek2 + eek3)*w + (eek2 - w)*(eek3 - w)*(eek2 + w)*(eek3 + w) - 3*eek**2*(eek2**2 + eek3**2 + 2*w**2)) - eek**2*(6*ek**2*ek2*ek3*w**2 + (-5*ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3))*w**4 - w**6 + eek3**2*(3*ek**2*ek2*ek3 - (4*ek**2 + 6*ek*ek2 - 2*ek*ek3 + ek2*ek3)*w**2 + w**4) + eek2**2*(3*ek**2*ek2*ek3 - (4*ek**2 - 2*ek*ek2 + 6*ek*ek3 + ek2*ek3)*w**2 + w**4 + eek3**2*(ek**2 + ek2*ek3 + 2*ek*(ek2 + ek3) - w**2))) + d**2*(18*eek**6 - 4*eek*(eek2 - eek3)*(eek2 + eek3)*w*(ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3) + w**2) + (eek2 - w)*(eek2 + w)*(-eek3**2 + w**2)*(ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3) + w**2) - eek**4*(6*eek2**2 + 6*eek3**2 + 5*(ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3)) + 17*w**2) + 3*eek**2*(2*(ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3))*w**2 + eek3**2*(ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3) + 3*w**2) + eek2**2*(-2*eek3**2 + ek**2 + ek2*ek3 - 2*ek*(ek2 + ek3) + 3*w**2))))/(2.*eek**3*(eek + eek3 - w)**2*(eek - eek2 + w)**2*(eek + eek2 + w)**2*(-eek + eek3 + w)**2)
-# integral = N0**3 * integ(W12 * W13 * expression, axis=(1,2,3))
-# expression = -((d**2 + eek**2 + ek*ek2 - eek*w)/(eek*(eek**2 - eek2**2 - 2*eek*w + w**2))) - (d**2 + eek2**2 + ek*ek2 + eek2*w)/(eek2*(-eek**2 + eek2**2 + 2*eek2*w + w**2))
-# expression = (nfeek2*(d**2 + eek2**2 + ek*ek2 - eek2*w))/(eek2*(-eek**2 + (eek2 - w)**2)) - (nfeekm*(d**2 + eek**2 + ek*ek2 - eek*w))/(eek*(eek**2 - eek2**2 - 2*eek*w + w**2)) + (nfeek*(d**2 + ek*ek2 + eek*(eek + w)))/(eek*(eek - eek2 + w)*(eek + eek2 + w)) - (nfeek2m*(d**2 + ek*ek2 + eek2*(eek2 + w)))/(eek2*(-eek**2 + (eek2 + w)**2))
-
-ek,ek2,ek3,eek,eek2,eek3,d,W12,W13,W23,nfeek,nfeek2,nfeek3,nfeekm,nfeek2m,nfeek3m,fk,fk2,fk3=genE(3)
-# zero temp
-# x00_ = (1-(ek*ek2+d**2)/(eek*eek2)) * (eek+eek2)/(w**2-(eek+eek2)**2)
-# finite temp
-x00_ = (nfeek2*(d**2 + eek2**2 + ek*ek2 - eek2*w))/(eek2*(-eek**2 + (eek2 - w)**2)) - (nfeekm*(d**2 + eek**2 + ek*ek2 - eek*w))/(eek*(eek**2 - eek2**2 - 2*eek*w + w**2)) + (nfeek*(d**2 + ek*ek2 + eek*(eek + w)))/(eek*(eek - eek2 + w)*(eek + eek2 + w)) - (nfeek2m*(d**2 + ek*ek2 + eek2*(eek2 + w)))/(eek2*(-eek**2 + (eek2 + w)**2))
-x00 = - N0[:,ax]**2 * integ(W12 * x00_, axis=(1,2)) #sign!!!
-jp_1 = vf[:,ax]**2/3/N0[:,ax] * x00
-
+eta = 0.1
+w = 4
+w = w + 1j*eta
 
 ek,ek2,eek,eek2,d,W12,nfeek,nfeek2,nfeekm,nfeek2m,fk,fk2=genE(2)
-eep = (ek - ek2) * np.ones((nb,1,1))
-for i in np.arange(nb):
-    np.fill_diagonal(eep[i], 1)
-jd_1 = (n/m) * integ( (fk-fk2)  / eep * W12, axis=(1,2))
-jd_1 = jd_1[:,ax]
+# finite temp
+x00_ = (nfeek2*(d**2 + eek2**2 + ek*ek2 - eek2*w))/(eek2*(-eek**2 + (eek2 - w)**2)) - (nfeekm*(d**2 + eek**2 + ek*ek2 - eek*w))/(eek*(eek**2 - eek2**2 - 2*eek*w + w**2)) + (nfeek*(d**2 + ek*ek2 + eek*(eek + w)))/(eek*(eek - eek2 + w)*(eek + eek2 + w)) - (nfeek2m*(d**2 + ek*ek2 + eek2*(eek2 + w)))/(eek2*(-eek**2 + (eek2 + w)**2))
 
-j_1 = jd_1+jp_1
-cond = np.sum(j_1, axis=0) / (1j * ws)
-sigma = cond*u_conductivity
-
-plt.figure('cond-imp-real', figsize=(3.2,2.8))
+plt.figure('x00', figsize=(3.2,2.8))
 plt.clf()
-plt.subplot(121)
-# plt.plot(wg*u_w,np.abs(c.real), label=f'$\gamma/2\Delta={str(np.round(g[0]/2/gap,1))}$')
-# g = r['g']
-# plt.title(f'$\gamma_1={g[0]}, \gamma_2={g[1]}$')
-plt.xlim((0,6))
-plt.axvline(2*d_eq0[0]*u_w, c='gray', lw=0.5)
-plt.axvline(2*d_eq0[1]*u_w, c='gray', lw=0.5)
-
-plt.plot(ws*u_w, sigma.real, '.')
-plt.ylabel('$\sigma\,\'$ ($\Omega^{-1}$cm$^{-1}$)')
-plt.xlabel('Frequency (THz)')
-plt.ticklabel_format(axis="y", style="sci", scilimits=(2,4))
-plt.ylim((0,np.max(np.nan_to_num(np.abs(sigma.real))[ws*u_w<6])*1.2))
+data = -x00_[1].imag
+m = np.max(data)
+plt.pcolormesh(e1_,e1_,data, cmap='OrRd')#,vmin=-m, vmax=m)
+plt.axis('equal')
+plt.colorbar()
+plt.xlabel('$\epsilon$')
+plt.ylabel('$\epsilon\'$')
+plt.text(-4,4,'$\omega=4$')
 plt.tight_layout()
-
-plt.subplot(122)
-# plt.loglog(wg*u_w,c.imag, '.-', label=f'$\gamma/2\Delta={str(np.round(g[0]/2/gap,1))}$')
-plt.xlim((0,6))
-plt.axvline(2*d_eq0[0]*u_w, c='gray', lw=0.5)
-plt.axvline(2*d_eq0[1]*u_w, c='gray', lw=0.5)
-plt.plot(ws*u_w, sigma.imag, '.')
-plt.ylabel('$\sigma\,\'\'$ ($\Omega^{-1}$cm$^{-1}$)')
-plt.xlabel('Frequency (THz)')
-# plt.ticklabel_format(axis="y", style="sci", scilimits=(2,4))
-# plt.ylim((0,0.5e5))
-plt.xlim((-2,6))
-plt.tight_layout()
-
-#%% Leggett current third order
-
-eta = 0.005
-ws1 = np.linspace(0,1.4*4,20)
-ws2 = np.logspace(-1.5,0.5,30)
-ws = np.sort(np.concatenate([ws1,ws2]))
-
-w = ws + 1j*eta
-
-ek,ek2,eek,eek2,d,W12,nfeek,nfeek2,nfeekm,nfeek2m,fk,fk2 = genE(2)
-x33_ = (-2*(d**2 + eek**2 - ek**2))/(4*eek**3 - eek*w**2)
-x33 =  N0[:,ax] * integ(x33_, axis=1)
-kappa = 8*d_eq0[0]*d_eq0[1]/np.linalg.det(U)
-
-det = x33[0]*x33[1] - kappa/w**2*(x33[0]+x33[1])
-A = 1/w**2 * np.array([[-x33[1]+kappa/w**2,  kappa/w**2], \
-                       [kappa/w**2,          -x33[0]+kappa/w**2]]) / det
+plt.savefig('x00.png', dpi=800)
 
 #%%
+eta = 0.01
+ws = np.linspace(0,4,50)
+w = ws + 1j*eta
 
-# dim = 2
-# ws = np.linspace(0,2,200)
+ek,ek2,ek3,eek,eek2,eek3,d,W12,W13,W23,nfeek,nfeek2,nfeek3,nfeekm,nfeek2m,nfeek3m,fk,fk2,fk3=genE(3)
+# finite temp
+x00_ = (nfeek2*(d**2 + eek2**2 + ek*ek2 - eek2*w))/(eek2*(-eek**2 + (eek2 - w)**2)) - (nfeekm*(d**2 + eek**2 + ek*ek2 - eek*w))/(eek*(eek**2 - eek2**2 - 2*eek*w + w**2)) + (nfeek*(d**2 + ek*ek2 + eek*(eek + w)))/(eek*(eek - eek2 + w)*(eek + eek2 + w)) - (nfeek2m*(d**2 + ek*ek2 + eek2*(eek2 + w)))/(eek2*(-eek**2 + (eek2 + w)**2))
+integral = integ(x00_[1], axis=(0,1))
 
-# eta = 0.002
-# w = ws[ax,ax,:] + 1j*eta
-
-# # expression = (nfeek2*(d**2 + eek2**2 + ek*ek2 - eek2*w))/(eek2*(-eek**2 + (eek2 - w)**2)) - (nfeekm*(d**2 + eek**2 + ek*ek2 - eek*w))/(eek*(eek**2 - eek2**2 - 2*eek*w + w**2)) + (nfeek*(d**2 + ek*ek2 + eek*(eek + w)))/(eek*(eek - eek2 + w)*(eek + eek2 + w)) - (nfeek2m*(d**2 + ek*ek2 + eek2*(eek2 + w)))/(eek2*(-eek**2 + (eek2 + w)**2))
-# x11_ = (-2*(-d**2 + eek**2 + ek**2))/(4*eek**3 - eek*w**2)
-# x11 = integ(x11_, axis=1)
-# dU = U[0,0]*U[1,1]-U[0,1]**2
-# det = (x11[0]+2*U[1,1]/dU)*(x11[1]+2*U[0,0]/dU) - (2*U[0,1]/dU)**2
-
-
-
-# plt.figure('chi')
-# plt.clf()
-# chi = np.stack(chi)
-
-# # plt.plot(ws, np.real(x11.T) + np.array([2/U[0,0], 2/U[1,1]]))
-# # plt.plot(ws,np.abs(det.real))
-# # plt.plot(ws,np.abs(det.imag))
-# plt.plot(ws,1/np.abs(det))
-# plt.axvline(2*d_eq0[0], c='gray', lw=0.5)
-# plt.axvline(2*d_eq0[1], c='gray', lw=0.5)
-# # plt.plot(ws,chi.real)
-# # plt.plot(ws,chi.imag)
-
-
-# %%
+#%%
+plt.figure('22')
+plt.clf()
+plt.plot(ws, -integral.imag)

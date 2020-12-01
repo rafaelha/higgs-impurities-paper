@@ -212,14 +212,14 @@ def plotHiggsLast(r, offset=0):
     plt.ylabel(f'Re$\delta \Delta$')
     title(r)
 
-def conductivity(r, order=1, plot=True, begin=None, end=None, subtract=True):
+def conductivity(r, order=1, plot=True, begin=None, end=None, subtract=False):
     r2 = sel(A0=r['A0'], g=r['g'], A0_pr=0)[0]
     # r3 = sel(T=0.22, t_delay=r['t_delay'], A0=0, A0_pr=r['A0_pr'])[0]
 
     if order == 1:
-        jd = r['jd_1']*0
+        jd = r['jd_1']
         jp = r['jp_1']
-        jd2 = r2['jd_1']*0
+        jd2 = r2['jd_1']
         jp2 = r2['jp_1']
         # jd3 = r3['jd_1']
         # jp3 = r3['jp_1']
@@ -715,7 +715,8 @@ cm = 'rainbow'
 
 
 
-conductivity(res[0],subtract=False)
+conductivity(r,subtract=False)
+plt.tight_layout()
 
 #%%
 # cc1 = []
@@ -959,8 +960,8 @@ plt.figure('cond-imp-imag', figsize=(3,2.8))
 plt.clf()
 plt.figure('cond-imp-legend', figsize=(5,5))
 plt.clf()
-gammas1 = gammas[np.array([24])]
-gammas2 = gammas[np.array([22])]
+gammas1 = gammas[np.array([16])]
+gammas2 = gammas[np.array([1])]
 for g1 in gammas1:
     for g2 in gammas2:
         g = np.array([g1,g2])
@@ -973,13 +974,32 @@ for g1 in gammas1:
             ls='--'
         else:
             ls='-'
-        plt.plot(wg*u_e*meV_to_THz,np.abs(c.real), label=f'$\gamma/2\Delta={str(np.round(g[0]/2/gap,1))}$',ls=ls)
+        u_w = u_e*meV_to_THz
+        plt.plot(wg*u_w,np.abs(c.real), label=f'$\gamma/2\Delta={str(np.round(g[0]/2/gap,1))}$',ls=ls)
         plt.xlabel('Frequency (THz)')
-        plt.xlim((0,5.5))
-        plt.ylim((0,0.5e5))
+        # plt.xlim((0,5.5))
+        plt.ylim((0,2e5))
         plt.ylabel('$\sigma\,\'$ ($\Omega^{-1}$cm$^{-1}$)')
         plt.ticklabel_format(axis="y", style="sci", scilimits=(2,4))
         # plt.legend()
+
+
+        d1 = d_eq[0]
+        d2 = d_eq[1]
+
+        y = np.abs(c.real)
+        def f(w, g, d):
+            return np.heaviside(w-2*d,0) * (w-2*d)/w * g/(w**2+g**2)
+
+        fit = f(wg, g1,d1)*u_conductivity
+        sl = wg*u_w>2.5
+        a = (fit[sl][0])/(y[sl][0])
+        z = np.argmax(y[wg*u_w<7])
+        a = np.max(fit)/np.max(y[wg*u_w<7])
+        # a = (fit[z])/(y[z])
+        print(1/a)
+        plt.plot(wg*u_w, fit/a,'k')
+
 
         plt.figure('cond-imp-imag')
         plt.plot(wg*u_e*meV_to_THz,np.abs(c.imag), label=f'$\gamma/2\Delta={str(np.round(g[0]/2/gap,1))}$',ls=ls)
@@ -1015,3 +1035,4 @@ t,d, d_im, w_, dw_ = plotHiggs(r,plot=True)
 plt.figure()
 plt.plot(w_,dw_)
 plt.xlim((0,5))
+# %%

@@ -16,7 +16,7 @@ w = 0.3
 tau = 1
 te = 0
 
-Ne = 1000
+Ne = 10000
 
 tmin = -10
 tmax = 500
@@ -30,6 +30,7 @@ s = np.array([1,-1])
 m = np.array([0.85, 1.38])
 ef = np.array([290, 70])
 pre_d0 = np.array([0.3,0.7])
+g = np.array([10,5])
 
 #Constants
 hbar=1
@@ -42,8 +43,102 @@ vf = kf/m
 n = kf**3/(3*np.pi**2)
 N0 = m*kf/(2*np.pi**2)
 
-
 e = np.linspace(-wd,wd,Ne)
+
+ne_ = Ne # number of equations per band
+ne = nb * ne_ # number of equations
+
+ax = np.newaxis
+
+d_eq0 = pre_d0
+
+d_eq1 = d_eq0[:,ax]
+d_eq = d_eq0[:,ax,ax]
+d = d_eq0[:,ax, ax,ax]
+s1 = s[:,ax]
+m1 = m[:,ax]
+vf1 = vf[:,ax]
+
+e1_ = np.linspace(-wd, wd, Ne)
+
+de = e1_[1] - e1_[0]
+de2 = de**2
+
+e1 = e1_[ax,:]
+e_ = e1_[:,ax]
+ep_ = e1_[ax,:]
+
+e = e1_[ax,:,ax]
+ep = e1_[ax,ax,:]
+
+E1 = np.sqrt(e1**2 + d_eq1**2)
+E = np.sqrt(e**2 + d_eq**2)
+Ep = np.sqrt(ep**2 + d_eq**2)
+
+W = 1/np.pi*g[:,ax,ax]/((e-ep)**2+g[:,ax,ax]**2)
+
+
+def genE(dim):
+    if dim == 3:
+        ek = e1_[ax,:,ax,ax]
+        ek2 = e1_[ax,ax,:,ax]
+        ek3 = e1_[ax,ax,ax,:]
+
+        eek = E1[:,:,ax,ax]
+        eek2 = E1[:,ax,:,ax]
+        eek3 = E1[:,ax,ax,:]
+
+        d = d_eq0[:,ax,ax,ax]
+
+        W12 = W[:,:,:,ax]
+        W13 = W[:,:,ax,:]
+        W23 = W[:,ax,:,:]
+
+        nfeek = 1.0/(np.exp(B*eek) + 1)
+        nfeek2 = 1.0/(np.exp(B*eek2) + 1)
+        nfeek3 = 1.0/(np.exp(B*eek3) + 1)
+        nfeekm = 1.0/(np.exp(-B*eek) + 1)
+        nfeek2m = 1.0/(np.exp(-B*eek2) + 1)
+        nfeek3m = 1.0/(np.exp(-B*eek3) + 1)
+
+        fk = 1.0/(np.exp(B*ek) + 1)
+        fk2 = 1.0/(np.exp(B*ek2) + 1)
+        fk3 = 1.0/(np.exp(B*ek3) + 1)
+
+        return ek,ek2,ek3,eek,eek2,eek3,d,W12,W13,W23,nfeek,nfeek2,nfeek3,nfeekm,nfeek2m,nfeek3m,fk,fk2,fk3
+
+    elif dim == 2:
+        ek = e1_[ax,:,ax]
+        ek2 = e1_[ax,ax,:]
+
+        eek = E1[:,:,ax]
+        eek2 = E1[:,ax,:]
+
+        d = d_eq0[:,ax,ax]
+
+        W12 = W[:,:,:]
+
+        nfeek = 1.0/(np.exp(B*eek) + 1)
+        nfeek2 = 1.0/(np.exp(B*eek2) + 1)
+        nfeekm = 1.0/(np.exp(-B*eek) + 1)
+        nfeek2m = 1.0/(np.exp(-B*eek2) + 1)
+
+        fk = 1.0/(np.exp(B*ek) + 1)
+        fk2 = 1.0/(np.exp(B*ek2) + 1)
+
+        return ek,ek2,eek,eek2,d,W12,nfeek,nfeek2,nfeekm,nfeek2m,fk,fk2
+
+    elif dim == 1:
+        ek = e1_[ax,:]
+        eek = E1
+        d = d_eq0[:,ax]
+
+        nfeek = 1.0/(np.exp(B*eek) + 1)
+        nfeekm = 1.0/(np.exp(-B*eek) + 1)
+
+        return ek,eek,d,nfeek,nfeekm
+
+
 
 def d0_integrand(x, d):
     # This is an auxiliary function used in find_d0 to calculate an integral
@@ -102,7 +197,10 @@ def rfft(t,f, inverse=False):
 def integ(x, axis):
     """ Integrate the function 'x' over the axis 'axis'. The integration can be performed over one or two dimensions """
     if hasattr(axis, "__len__"):
-        return integrate.simps(integrate.simps(x, dx=de, axis=axis[1]), dx=de, axis=axis[0])
+        if len(axis) == 2:
+            return integrate.simps(integrate.simps(x, dx=de, axis=axis[1]), dx=de, axis=axis[0])
+        elif len(axis) == 3:
+            return integrate.simps(integrate.simps(integrate.simps(x, dx=de, axis=axis[2]), dx=de, axis=axis[1]), dx=de, axis=axis[0])
     else:
         return integrate.simps(x, dx=de, axis=axis)
 
@@ -146,31 +244,49 @@ def plotA(t,A):
 def A(t):
     return A0*np.exp(-(t-te)**2/(2*tau**2))*np.cos(w*t)
 
+Us = []
+d_eq0s = []
+empty = True
 
+#%%
 v_leggett = 0.1
 chis = []
+chi_Higgs = []
+chi_Leggett = []
 vs = np.linspace(0,1,300)
-il = 0
-for v_leggett in vs:
-    print(il)
-    il += 1
-    B = 1/(kb*0.000001)
-    ep = np.linspace(-wd, wd, Ne)
-    U = find_U2(pre_d0,v_leggett)
-    UN0 = U*N0[:, np.newaxis]
-    print('U=',U)
-    print('UN0=',UN0)
-    # d_eq0_T0 = find_d0(UN0)
-    # print('gap=',d_eq0_T0, 'at T=0 (computed with old function)')
-    d_eq0_T0 = find_d02(U)
-    print('gap=',d_eq0_T0, 'at T=0 (computed with new function)')
-    B = 1/(kb*T)
-    # d_eq0 = find_d0(UN0)
-    # print('gap=',d_eq0, 'at T=',T, ' (computed with old function)')
-    d_eq0 = find_d02(U)
-    print('gap=',d_eq0, 'at T=',T, ' (computed with new function)')
-    N = N0
 
+il = -1
+for v_leggett in vs:
+    il += 1
+    print(il)
+    #### find U paramerters
+    if empty:
+        B = 1/(kb*0.000001)
+        ep = np.linspace(-wd, wd, Ne)
+        U = find_U2(pre_d0,v_leggett)
+        Us.append(U)
+        UN0 = U*N0[:, np.newaxis]
+        print('U=',U)
+        print('UN0=',UN0)
+        # d_eq0_T0 = find_d0(UN0)
+        # print('gap=',d_eq0_T0, 'at T=0 (computed with old function)')
+        d_eq0_T0 = find_d02(U)
+        print('gap=',d_eq0_T0, 'at T=0 (computed with new function)')
+        B = 1/(kb*T)
+        # d_eq0 = find_d0(UN0)
+        # print('gap=',d_eq0, 'at T=',T, ' (computed with old function)')
+        d_eq0 = find_d02(U)
+        d_eq0s.append(d_eq0)
+        print('gap=',d_eq0, 'at T=',T, ' (computed with new function)')
+        N = N0
+    else:
+        U = Us[il]
+        UN0 = U*N0[:, np.newaxis]
+        B = 1/(kb*T)
+        d_eq0 = d_eq0s[il]
+        N = N0
+
+    #### Leggett mode
     def ref_less(x):
         return 2 / (x*sqrt(1-x**2)) * np.arctan(x/sqrt(1-x**2))
     def ref_greater(x):
@@ -205,18 +321,24 @@ for v_leggett in vs:
     # plt.legend()
     # plt.xlim((0,2))
     # plt.title(f'k={k}')
+empty = False
 
-#%%
+u_t = 6.58285E-2
+u_e = 10
+u_conductivity = 881.553 #Ohm^-1 cm-1
+meV_to_THz = 0.2417990504024
+u_w = u_e*meV_to_THz
+
 plt.figure('cd',figsize=(5,2.7))
 plt.clf()
 def nm(x, axis=-1):
     return x/np.max(x, axis=axis)
 pc = nm(np.abs(chis).T,axis=0)
-plt.pcolormesh(vs,w_,pc, cmap='Blues')
+plt.pcolormesh(vs,w_*u_w,pc, cmap='Blues')
 
 peaks_analytical = np.abs(w_[np.argmax(pc,axis=0)])
-plt.axhline(2*d_eq0[0], c='gray', lw=1.1, ls='-')
-plt.ylim((0,1.2))
+plt.axhline(2*d_eq0[0]*u_w, c='gray', lw=1.1, ls='-')
+plt.ylim((0,1.2*u_w))
 plt.xlabel('$v$')
 plt.ylabel('$\omega$')
 
@@ -225,7 +347,7 @@ task_ID = 0
 dphases = []
 vsn = []
 
-reader = open(f'{job_ID}_{task_ID}.pickle','rb')
+reader = open(f'../multiband/leggett/{job_ID}_{task_ID}.pickle','rb')
 try:
     while True:
         a = pickle.load(reader)
@@ -258,23 +380,109 @@ wg = w>=2*d_eq0[0]
 mm = np.min(np.abs(pc[wg]-0.5),axis=0)
 FWHM1 = np.abs(w_[wg][np.argmin(np.abs(pc[wg]-0.5),axis=0)])
 selm = mm<0.1
-plt.plot(vs[selm],FWHM1[selm],c='g', ls='--', lw=1.5)
+plt.plot(vs[selm],FWHM1[selm]*u_w,c='g', ls='--', lw=1.5)
 
 wg = w<=2*d_eq0[0]
 mm = np.min(np.abs(pc[wg]-0.5),axis=0)
 FWHM2 = np.abs(w_[wg][np.argmin(np.abs(pc[wg]-0.5),axis=0)])
 selm = mm<0.1
-plt.plot(vs[selm],FWHM2[selm],c='g', ls='--', lw=1.5)
+plt.plot(vs[selm],FWHM2[selm]*u_w,c='g', ls='--', lw=1.5)
 
-plt.plot(vs,peaks_analytical,c='g', lw=1.5)
+plt.plot(vs,peaks_analytical*u_w,c='g', lw=1.5)
 peaks_numerical = np.abs(w_n[np.argmax(np.abs(dpw_),axis=0)])
-plt.plot(vsn[vsn<0.24],peaks_numerical[vsn<0.24],'D', markersize=3, c='red')
-plt.plot(vsn[vsn>0.24][::3],peaks_numerical[vsn>0.24][::3],'D', markersize=3, c='red')
+plt.plot(vsn[vsn<0.24],peaks_numerical[vsn<0.24]*u_w,'D', markersize=3, c='red')
+plt.plot(vsn[vsn>0.24][::3],peaks_numerical[vsn>0.24][::3]*u_w,'D', markersize=3, c='red')
 # plt.title(f'T={temp*u_temp}K')
 plt.colorbar()
-plt.text(0.01,0.62,'$2\Delta_1$',fontsize=9)
-plt.text(0.45,1,'FWHM',fontsize=8)
-plt.text(0.45,0.766,'$\omega_L$',fontsize=9, color='w')
+plt.text(0.01,0.62*u_w,'$2\Delta_1$',fontsize=9)
+plt.text(0.45,1*u_w,'FWHM',fontsize=8)
+plt.text(0.45,0.766*u_w,'$\omega_L$',fontsize=9, color='w')
+plt.ylabel('$\omega$ (THz)')
 plt.tight_layout()
 # plt.legend('a','b')
 plt.savefig('legget-dispersion.png', dpi=600)
+
+#%% Higgs
+
+
+
+dim = 2
+ek,ek2,eek,eek2,d,W12,nfeek,nfeek2,nfeekm,nfeek2m,fk,fk2 = genE(dim)
+
+ws = np.linspace(0.01,2,500)
+eta = 0.004
+w = ws[ax,ax,:] + 1j*eta
+
+x11_ = (-2*(-d**2 + eek**2 + ek**2))/(4*eek**3 - eek*w**2)
+x11 = integ(x11_, axis=1)
+
+il = -1
+det_higgs = []
+
+for v_leggett in vs:
+    il += 1
+    #### find U paramerters
+    U = Us[il]
+    UN0 = U*N0[:, np.newaxis]
+    B = 1/(kb*T)
+    d_eq0 = d_eq0s[il]
+    N = N0
+    dU = U[0,0]*U[1,1]-U[0,1]**2
+    det = (x11[0]+2*U[1,1]/dU)*(x11[1]+2*U[0,0]/dU) - (2*U[0,1]/dU)**2
+
+    det_higgs.append(det)
+
+plt.figure('chi-higgs',figsize=(4.9,2.7))
+plt.clf()
+det_higgs = np.stack(det_higgs)
+
+# plt.plot(ws, np.real(x11.T) + np.array([2/U[0,0], 2/U[1,1]]))
+# plt.plot(ws,np.abs(det.real))
+# plt.plot(ws,np.abs(det.imag))
+ww = ws*u_w
+
+data = 1/np.abs(det_higgs)
+data = np.nan_to_num(data)
+
+sep = (d_eq0[0]+d_eq0[1])/2*u_w*2
+data_bottom = np.copy(data)
+data_bottom[:,ww>sep]=0
+data_bottom = nm(data_bottom.T)
+
+data_top= np.copy(data)
+data_top[:,ww<=sep]=0
+data_top = nm(data_top.T)
+
+data = nm(data.T)
+# data = data.T
+
+# data = data_top+data_bottom
+
+
+
+
+plt.pcolormesh(vs,ws*u_w,np.log(data), cmap='Blues', vmin=-1.5,vmax=-0.5)
+plt.colorbar()
+plt.ylabel('$\omega$ (THz)')
+plt.xlabel('v')
+
+p1 = np.argmax(data[ww<2.3], axis=0)
+plt.plot(vs, ww[p1], 'r', lw=0.5)
+
+ww = ws*u_w
+data2 = np.copy(data)
+data2[ww<2.3] = 0
+p2 = np.argmax(data2, axis=0)
+plt.plot(vs, ww[p2], 'r', lw=0.5)
+
+
+
+
+plt.tight_layout()
+# plt.plot(ws,1/np.abs(det))
+
+# plt.axvline(2*d_eq0[0], c='gray', lw=0.5)
+# plt.axvline(2*d_eq0[1], c='gray', lw=0.5)
+# plt.plot(ws,chi.real)
+# plt.plot(ws,chi.imag)
+plt.savefig('higgs-kernel.png', dpi=600)
