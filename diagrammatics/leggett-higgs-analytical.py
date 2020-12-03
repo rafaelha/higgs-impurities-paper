@@ -16,7 +16,7 @@ w = 0.3
 tau = 1
 te = 0
 
-Ne = 10000
+Ne = 3000
 
 tmin = -10
 tmax = 500
@@ -253,7 +253,7 @@ v_leggett = 0.1
 chis = []
 chi_Higgs = []
 chi_Leggett = []
-vs = np.linspace(0,1,300)
+vs = np.linspace(0,1,200)
 
 il = -1
 for v_leggett in vs:
@@ -400,7 +400,7 @@ plt.text(0.45,0.766*u_w,'$\omega_L$',fontsize=9, color='w')
 plt.ylabel('$\omega$ (THz)')
 plt.tight_layout()
 # plt.legend('a','b')
-plt.savefig('legget-dispersion.png', dpi=600)
+# plt.savefig('legget-dispersion.png', dpi=600)
 
 #%% Higgs
 
@@ -485,4 +485,76 @@ plt.tight_layout()
 # plt.axvline(2*d_eq0[1], c='gray', lw=0.5)
 # plt.plot(ws,chi.real)
 # plt.plot(ws,chi.imag)
-plt.savefig('higgs-kernel.png', dpi=600)
+# plt.savefig('higgs-kernel.png', dpi=600)
+
+
+#%% Leggett 2
+
+
+dim = 2
+ek,ek2,eek,eek2,d,W12,nfeek,nfeek2,nfeekm,nfeek2m,fk,fk2 = genE(dim)
+
+ws = np.linspace(0.0,1.3,500)
+eta = 0.006
+w = ws[ax,ax,:] + 1j*eta
+w2 = ws+ 1j*eta
+
+x33_ = (-2*(d**2 + eek**2 - ek**2))/(4*eek**3 - eek*w**2)
+x33 = N0[:,ax] * integ(x33_, axis=1)
+
+il = -1
+det_l= []
+
+for v_leggett in vs:
+    il += 1
+    #### find U paramerters
+    U = Us[il]
+    UN0 = U*N0[:, np.newaxis]
+    B = 1/(kb*T)
+    d_eq0 = d_eq0s[il]
+    N = N0
+    k = 8*d_eq0[0]*d_eq0[1]*U[0,1]/np.linalg.det(U)
+
+    # det = (-x33[0]-k/w2**2)*(-x33[1]-k/w2**2) - k**2/w2**4
+    det = (-x33[0]-x33[1]-4*k/w2**2)*(-x33[0]-x33[1]) - (-x33[0]+x33[1])**2
+    det *= w2**2/(x33[0]+x33[1])
+    # det = w2**2 + k*(x33[0]+x33[1])/(x33[0]*x33[1])
+
+    det_l.append(det)
+
+plt.figure('chi-leggett',figsize=(4.9,2.7))
+plt.clf()
+det_l = np.stack(det_l)
+
+# plt.plot(ws, np.real(x11.T) + np.array([2/U[0,0], 2/U[1,1]]))
+# plt.plot(ws,np.abs(det.real))
+# plt.plot(ws,np.abs(det.imag))
+ww = ws*u_w
+
+data = 1/np.abs(det_l)
+# data = np.nan_to_num(data)
+
+data = nm(data.T)
+# data = data.T
+
+
+plt.pcolormesh(vs,ws*u_w,data, cmap='Blues')#, vmin=-1.5,vmax=-0.5)
+plt.colorbar()
+plt.ylabel('$\omega$ (THz)')
+plt.xlabel('v')
+
+p1 = np.argmax(data[ww<3], axis=0)
+plt.plot(vs, ww[p1], 'r', lw=1)
+
+
+
+plt.tight_layout()
+# plt.plot(ws,1/np.abs(det))
+
+# plt.axvline(2*d_eq0[0], c='gray', lw=0.5)
+# plt.axvline(2*d_eq0[1], c='gray', lw=0.5)
+# plt.plot(ws,chi.real)
+# plt.plot(ws,chi.imag)
+# plt.savefig('higgs-kernel.png', dpi=600)
+
+plt.plot(vsn,peaks_numerical*u_w,'D', markersize=3, c='red')
