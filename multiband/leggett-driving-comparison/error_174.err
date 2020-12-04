@@ -1,0 +1,14 @@
+higgs_mgb2.py:383: RuntimeWarning: overflow encountered in exp
+  f1 = 1.0/(np.exp(B*E1) + 1)
+higgs_mgb2.py:384: RuntimeWarning: overflow encountered in exp
+  f = 1.0/(np.exp(B*E) + 1)
+higgs_mgb2.py:385: RuntimeWarning: overflow encountered in exp
+  fp = 1.0/(np.exp(B*Ep) + 1)
+higgs_mgb2.py:387: RuntimeWarning: overflow encountered in exp
+  ff1_ = 1.0/(np.exp(B*e1_) + 1)
+higgs_mgb2.py:388: RuntimeWarning: overflow encountered in exp
+  ff1 = 1.0/(np.exp(B*e1) + 1)
+higgs_mgb2.py:389: RuntimeWarning: overflow encountered in exp
+  ff = 1.0/(np.exp(B*e) + 1)
+higgs_mgb2.py:390: RuntimeWarning: overflow encountered in exp
+  ffp = 1.0/(np.exp(B*ep) + 1)
