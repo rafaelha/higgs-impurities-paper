@@ -19,7 +19,7 @@ code_version = {
     "1.1": "pulse shape modified, now parameter te, te_pr",
     "1.2": "U calculated from gap and v (gap and v are input parameters), r21e r21o saved"
 }
-if True:#len(sys.argv)==3:
+if len(sys.argv)==3:
     job_ID = int(sys.argv[1])
     task_ID = int(sys.argv[1])
     task_count = int(sys.argv[2])+1
@@ -35,30 +35,27 @@ if task_ID != -1:
     print('parameters loaded')
 else:
     print('parameters not loaded')
-    pass
-    from parameters import params
-    params = [ params[0] ]
 
     u_temp = 116.032
     params_ = [
         {
-            "Ne": [450],
-            "tmin": [-25],
-            "tmax": [140],
+            "Ne": [350],
+            "tmin": [0],
+            "tmax": [160],
             # "tmax": [450],
             "Nt": 3000,
-            "T": [4/u_temp],#,0.5,0.54,0.56],
+            "T": [0.01/u_temp],#,0.5,0.54,0.56],
             "wd":  [5],
             "s": np.array([1,-1]),
             "m": [ np.array([0.85, 1.38]) ],
             "ef": [ np.array([290, 70]) ],
             "g": [ np.array([10,10]) ],
             "pre_d0": np.array([0.3,0.7]),
-            "v": [0, 0.02],
-            "A0": [1,0],
-            "tau": [4],
-            "w":  [0.7],
-            "A0_pr": [0.1, 0],
+            "v": [0.0],
+            "A0": [1],
+            "tau": [40000],
+            "w":  [0.3],
+            "A0_pr": [0],
             "te": 0,
             "tau_pr": [1.5],
             "w_pr": [1],
@@ -313,6 +310,8 @@ for p in params:
         else:
             return("Leggett mode only for multiband")
 
+    #%%
+
     B = 1/(kb*0.000001)
     ep = np.linspace(-wd, wd, Ne)
     U = find_U(v_legget, pre_d0, integrate.simps(0.5*1/np.sqrt(ep**2+pre_d0.reshape(2,1)**2)*np.tanh(B/2*np.sqrt(ep**2+pre_d0.reshape(2,1)**2)),ep))
@@ -415,9 +414,12 @@ for p in params:
     def A(t):
         # return A_pump(t) + A_probe(t)
         """ Returns the vector potential at time t """
-        return A0*np.exp(-(t-te)**2/(2*tau**2))*np.cos(w*t) \
+        # return A0*np.exp(-(t-te)**2/(2*tau**2))*np.cos(w*t) \
+            # +  A0_pr*np.exp(-(t-te-t_delay)**2/(2*tau_pr**2))*np.cos(w_pr*(t-t_delay))
+        return A0*np.sin(w*t) \
             +  A0_pr*np.exp(-(t-te-t_delay)**2/(2*tau_pr**2))*np.cos(w_pr*(t-t_delay))
 
+    plt.figure('A')
     plotA(t_points,A(t_points))
     plt.pause(0.01)
 
@@ -749,3 +751,8 @@ for p in params:
 # plot(t,np.sum(r21e[:,0,:Ne//2],axis=1).real)
 # plot(t,np.sum(r21e[:,1,:Ne//2],axis=1).real)
 
+
+#%%
+w, ft = rfft(t, jd_3)
+plt.plot(w/0.3, np.abs(ft))
+plt.xlim((0,4))
