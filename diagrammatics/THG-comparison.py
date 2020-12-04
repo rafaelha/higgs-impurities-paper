@@ -28,9 +28,11 @@ plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
-folder = 'leggett-driving-comparison-QP'
+folder = 'leggett-driving-comparison'
+folder2 = 'leggett-driving-comparison-QP'
 # folder = 'driving'
 files = glob.glob(f'../multiband/{folder}/*.pickle')
+files2 = glob.glob(f'../multiband/{folder2}/*.pickle')
 
 save_plots = False
 
@@ -83,8 +85,19 @@ for f in files:
     except:
         reader.close()
 
+resqp = []
+for f in files2:
+    reader = open(f,'rb')
+    try:
+        while True:
+            a = pickle.load(reader)
+            resqp.append(a)
+
+    except:
+        reader.close()
+
 #%%
-def values(key):
+def values(key, res=res):
     vals = []
     for r in res:
         entry = r[key]
@@ -95,7 +108,7 @@ def values(key):
             vals.append(entry)
     return list(dict.fromkeys(vals))
 
-def sel(first=False, **kwargs):
+def sel(first=False, res=res, **kwargs):
     ret = []
     for r in res:
         cond = True
@@ -702,25 +715,47 @@ def z(array):
 
 vv = []
 en = []
-for j, v in z(vs):
+
+for j, v in z(vs[2:3]):
     plt.pause(0.1)
     for i, case in z(fourcases):
         xx = []
-        yy = []
+        JH = []
+        JL = []
+        JQP = []
         # plt.figure()
         for k, w in z(wss):
             r = sel(first=False, w=w, v=v, g=case)
+            rqp = sel(res=resqp, first=False, w=w, v=v, g=case)
             if r == []:
                 continue
-            if len(r) > 1: print('Error:', len(r), 'matches found')
+            if len(r) > 1 or len(rqp)>1: print('Error:', len(r), 'matches found')
             r = r[0]
-            j1 = r['jd_1'] + r['jp_1']
-            j3 = r['jd_3'] + r['jp_3']
+            rqp = rqp[0]
+            # j1 = r['jd_1'] + r['jp_1']
 
-            tw, j1w = fft(t,j1)
-            tw, j3w = fft(t,j3)
+            j3q_para = rqp['jp_3']
+            j3q_dia = rqp['jd_3']
 
-            if k==6:
+            j3_para = r['jp_3']
+            j3L = r['jd_3']
+
+            j3QP =j3q_para
+            j3H = j3_para - j3QP
+
+            def find3w(j3):
+                tw, j3w = fft(t,np.nan_to_num(j3))
+                y = np.abs(j3w)
+                twn = tw/w
+                y[np.abs(twn-3)>0.2] = 0
+                return np.max(y)
+
+            xx.append(w)
+            JH.append(find3w(j3H))
+            JL.append(find3w(j3L))
+            JQP.append(find3w(j3QP))
+
+            if False:#k==6:
                 plt.figure(figsize=(6,3))
                 plt.subplot(121)
                 plt.plot(t,nm(j1),label='$j_1$')
@@ -738,16 +773,17 @@ for j, v in z(vs):
                 plt.xlim((0,6))
                 plt.xlabel('$\omega/\Omega$')
 
-            # y = nm(np.abs(j3w))
-            y = np.abs(j3w)
-            twn = tw/w
-            y[np.abs(twn-3)>0.2] = 0
 
-            xx.append(w)
-            yy.append(np.max(y))
+        plt.figure(figsize=(6,6))
+        JH = np.array(JH)
+        JL = np.array(JL)
+        JQP = np.array(JQP)
+        plt.plot(xx,JH, '.-', label='Higgs')
+        plt.plot(xx,JL, '.-', label='Leggett')
+        plt.plot(xx,JQP, '.-', label='QP')
+        plt.plot(xx,JQP+JL+JH, '.-', label='full')
+        plt.legend()
 
-        plt.figure(figsize=(3,3))
-        plt.plot(xx,yy, '.-')
         plt.title(f'v={np.round(v,2)}, g={case}')
         lw = np.copy(case)
         lw[lw>0.01] = 2
@@ -759,7 +795,7 @@ for j, v in z(vs):
         plt.ylabel('THG signal strength (a.u.)')
 
         peaks, _ = find_peaks(yy, width=2, distance=5)
-        print(peaks)
+        # print(peaks)
         plt.plot(np.array(xx)[peaks],np.array(yy)[peaks],'x')
 
         if len(peaks) > 0:

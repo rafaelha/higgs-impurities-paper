@@ -39,7 +39,7 @@ else:
     u_temp = 116.032
     params_ = [
         {
-            "Ne": [350],
+            "Ne": [150],
             "tmin": [0],
             "tmax": [160],
             # "tmax": [450],
@@ -51,7 +51,7 @@ else:
             "ef": [ np.array([290, 70]) ],
             "g": [ np.array([10,10]) ],
             "pre_d0": np.array([0.3,0.7]),
-            "v": [0.0],
+            "v": [0.1],
             "A0": [1],
             "tau": [40000],
             "w":  [0.3],
@@ -753,6 +753,8 @@ for p in params:
 
 
 #%%
-w, ft = rfft(t, jd_3)
+plt.plot(t, jp_3)
+plt.figure()
+w, ft = rfft(t, jp_3)
 plt.plot(w/0.3, np.abs(ft))
 plt.xlim((0,4))
