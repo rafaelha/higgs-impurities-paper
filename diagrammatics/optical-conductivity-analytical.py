@@ -34,7 +34,7 @@ u_w = u_e*meV_to_THz
 u_temp = 116.032
 params_ = [
     {
-        "Ne": [4000],
+        "Ne": [800],
         "tmin": [-80],
         "tmax": [300],
         # "tmax": [450],
@@ -48,7 +48,7 @@ params_ = [
         # "g": [ r['g'] ],
         "pre_d0": np.array([0.3,0.7]),
         # "pre_d0": np.array([0.29817841,0.70076507]),
-        "v": [0.8],#np.linspace(0.0002,1,40),
+        "v": [0.05],#np.linspace(0.0002,1,40),
         "A0": [1],
         "tau": [10],
         "w":  [0.2],
@@ -532,54 +532,85 @@ det = (-x33[0]-kappa/w2**2)*(-x33[1]-kappa/w2**2) - kappa**2/w2**4
 Linv = 4 / det * np.array([[-x33[1]-kappa/w2**2,  -kappa/w2**2], \
                                  [-kappa/w2**2,         -x33[0]-kappa/w2**2]])
 
-jL = 4*2**(-6) * np.einsum('iw,ijw,jw->w',x33*si/mi,Linv,x33*si/mi)
-jQPdia = (si/2/mi)**2 * x33
+jphase = 4* 2**(-6) * np.einsum('iw,ijw,jw->w',x33*si/mi,Linv,x33*si/mi)
+jQPdia = (si/2/mi)**2 * x33 #paramagnetic current at third order
+jL = np.sum(jQPdia,0)+jphase
+
+
+d_theta = 2 * 2**(-3) * np.einsum('ijw,jw->iw',Linv,x33*si/mi)
+d_phi = d_theta[0]-d_theta[1]
+
+
+
 plt.figure('jL')
 plt.clf()
-plt.plot(ws,np.abs(jL))
-plt.plot(ws,np.abs(np.sum(jQPdia,0)))
+plt.plot(ws,np.abs(jL), label='Leggett=QPdia + phase')
+factor=1/np.max(JL)*np.max(np.abs(jL))
+plt.plot(xx,JL*factor)
+plt.plot(ws,np.abs(np.sum(jQPdia,0)), ':', label='QP-dia')
+plt.plot(ws,np.abs(jphase), '--', label='Phase')
 plt.axvline(d_eq0[0], c='gray', lw=0.5)
 plt.axvline(d_eq0[1], c='gray', lw=0.5)
+plt.xlabel('$\omega$')
+plt.legend()
 
-plt.figure('jL-diff')
-plt.clf()
-# plt.plot(ws,np.abs(np.sum(jQPdia,0))/np.abs(jL))
-plt.plot(ws,np.abs(np.sum(jQPdia,0)+jL))
-plt.axvline(d_eq0[0], c='gray', lw=0.5)
-plt.axvline(d_eq0[1], c='gray', lw=0.5)
-# plt.ylim((0,5))
+# plt.figure('dphi')
+# plt.title('$\delta\\varphi$')
+# plt.plot(ws, np.abs(d_phi)/ws**2/7.6)
+# plt.axvline(d_eq0[0], c='gray', lw=0.5)
+# plt.axvline(d_eq0[1], c='gray', lw=0.5)
 
-plt.figure('det')
-plt.clf()
-plt.plot(ws, np.abs(1/det))
-# plt.plot(ws, x33[0])
-# plt.plot(ws, x33[1])
-plt.axvline(d_eq0[0], c='gray', lw=0.5)
-plt.axvline(d_eq0[1], c='gray', lw=0.5)
+# ddet = w2**2 + kappa*(x33[0]+x33[1])/(x33[0]*x33[1])
+# plt.plot(ws,1/np.abs(ddet))
 
-#%% QP diamagnetic third order
+# plt.figure('det')
+# plt.plot(ws,np.abs(d_phi)*np.abs(ddet)/ws**2)
+# plt.ylim((0,8))
 
-eta = 0.01
-ws = np.linspace(0,1,1000)
+#%% Higgs current third order
 
-w = 2*ws[ax,ax,:] + 1j*eta
-w2 = 2*ws+ 1j*eta
+eta = 0.008
+ws = np.linspace(0,1,80)
+
+# Higgs propagator
+w = ws[ax,ax,:] + 1j*eta
 
 ek,ek2,eek,eek2,d,W12,nfeek,nfeek2,nfeekm,nfeek2m,fk,fk2 = genE(2)
+x11_ = -((-d**2 + eek**2 + ek**2)/(2*eek**3 - 2*eek*w**2))
+x11 = N0[:,ax]*integ(x11_, axis=1)
 
-x33_ = (-2*(d**2 + eek**2 - ek**2))/(4*eek**3 - eek*w**2)
-x33 = N0[:,ax] * integ(x33_, axis=1)
+dU = U[0,0]*U[1,1]-U[0,1]**2
+det = (x11[0]+2*U[1,1]/dU)*(x11[1]+2*U[0,0]/dU) - (2*U[0,1]/dU)**2
+o = np.ones((len(ws)))
+Hinv = 1/det * np.array([[x11[1]+2*U[0,0]/dU*o,    2*U[0,1]/dU*o],\
+                         [2*U[0,1]/dU*o,            x11[0]+2*U[1,1]/dU*o  ]])
 
-si = s[:,ax]
-mi = m[:,ax]
+
+# susceptibilities
+w = ws[ax,ax,ax,:] + 1j*eta
+
+ek,ek2,ek3,eek,eek2,eek3,d,W12,W13,W23,nfeek,nfeek2,nfeek3,nfeekm,nfeek2m,nfeek3m,fk,fk2,fk3 = genE(3)
+
+x100l_= (d*((eek + eek2)**2*(3*eek**2*eek2 - d**2*(2*eek + eek2) + 2*eek*ek*(ek - 2*ek2) + eek2*ek*(ek - 2*ek2)) + (-6*eek**3 + 3*eek**2*eek2 - 2*eek2**3 + d**2*(2*eek + 5*eek2) - 5*eek2*ek*(ek - 2*ek2) - 2*eek*(eek2**2 + ek**2 - 2*ek*ek2))*w**2 + 6*(eek - eek2)*w**4))/(2.*eek*eek2*(eek + eek2 - 3*w)*(eek - w)*(eek + eek2 - w)*(eek + w)*(eek + eek2 + w)*(eek + eek2 + 3*w))
+x100l = N0[:,ax]**2 * integ(W12*x100l_, axis=(1,2))
+
+x100r_= (d*(3*eek**2*eek2 - d**2*(2*eek + eek2) + eek2*(ek**2 - 2*ek*ek2 - 2*w**2) + 2*eek*(ek**2 - 2*ek*ek2 + w**2)))/(2.*eek*eek2*(eek - w)*(eek + eek2 - w)*(eek + w)*(eek + eek2 + w))
+x100r = N0[:,ax]**2 * integ(W12*x100r_, axis=(1,2))
 
 
-jQPdia = (si/2/mi)**2 * x33
-plt.figure('jQPdia')
+jH = 4* 2**(-6) * np.einsum('iw,ijw,jw->w',vf[:,ax]**2/3/N0[:,ax]*x100l,Hinv,vf[:,ax]**2/3/N0[:,ax]*x100r)
+
+#%%
+plt.figure('jH')
 plt.clf()
-plt.plot(ws,np.abs(jQPdia).T)
+plt.plot(ws,np.abs(jH)*2, label='Higgs')
+plt.plot(xx,JH*factor)
 plt.axvline(d_eq0[0], c='gray', lw=0.5)
 plt.axvline(d_eq0[1], c='gray', lw=0.5)
+plt.xlabel('$\omega$')
+plt.ylabel('$j_3$ (Higgs)')
+plt.tight_layout()
+
 
 
 #%%

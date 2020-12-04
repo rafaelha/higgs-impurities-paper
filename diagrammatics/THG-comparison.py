@@ -28,7 +28,7 @@ plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
-folder = 'leggett-driving4'
+folder = 'leggett-driving-comparison-QP'
 # folder = 'driving'
 files = glob.glob(f'../multiband/{folder}/*.pickle')
 
@@ -664,7 +664,7 @@ t = r0['t']
 taus = np.sort(values('tau'))
 wss = np.sort(values('w'))
 
-gammas = [0.001, 10]
+gammas = [5, 10]
 
 cleanclean= np.array([gammas[0], gammas[0]])
 cleandirty = np.array([gammas[0], gammas[1]])
@@ -672,6 +672,7 @@ dirtyclean = np.array([gammas[1], gammas[0]])
 dirtydirty = np.array([gammas[1], gammas[1]])
 
 fourcases = [cleanclean, cleandirty, dirtyclean, dirtydirty]
+fourcases = [np.array([10,5])]
 # fourcases = [cleanclean]
 lwc = 0.3
 lwd = 0.6
@@ -713,13 +714,13 @@ for j, v in z(vs):
                 continue
             if len(r) > 1: print('Error:', len(r), 'matches found')
             r = r[0]
-            j1 = r['jd_1']*0 + r['jp_1']*0
-            j3 = r['jd_3'] + r['jp_3']*0
+            j1 = r['jd_1'] + r['jp_1']
+            j3 = r['jd_3'] + r['jp_3']
 
             tw, j1w = fft(t,j1)
             tw, j3w = fft(t,j3)
 
-            if True:#k==6:
+            if k==6:
                 plt.figure(figsize=(6,3))
                 plt.subplot(121)
                 plt.plot(t,nm(j1),label='$j_1$')
