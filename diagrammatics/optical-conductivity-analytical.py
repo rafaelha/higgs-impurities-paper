@@ -3,7 +3,7 @@ from operator import mul
 import numpy as np
 from numpy import sqrt
 import matplotlib as mpl
-mpl.use('Agg')
+# mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy import integrate
 from scipy import interpolate
@@ -37,7 +37,7 @@ u_w = u_e*meV_to_THz
 u_temp = 116.032
 params_ = [
     {
-        "Ne": [800],
+        "Ne": [200],
         "tmin": [-80],
         "tmax": [300],
         # "tmax": [450],
@@ -51,7 +51,7 @@ params_ = [
         # "g": [ r['g'] ],
         "pre_d0": np.array([0.3,0.7]),
         # "pre_d0": np.array([0.29817841,0.70076507]),
-        "v": [0.5],#np.linspace(0.0002,1,40),
+        "v": [0.2],#np.linspace(0.0002,1,40),
         "A0": [1],
         "tau": [10],
         "w":  [0.2],
@@ -444,12 +444,6 @@ def integ(x, axis):
     return np.sum(x, axis=axis) * dx
     """
 
-def A(t):
-    # return A_pump(t) + A_probe(t)
-    """ Returns the vector potential at time t """
-    return A0*np.exp(-(t-te)**2/(2*tau**2))*np.cos(w*t) \
-        +  A0_pr*np.exp(-(t-te-t_delay)**2/(2*tau_pr**2))*np.cos(w_pr*(t-t_delay))
-
 #%% optical conductivity first order
 
 # eta = 0.005
@@ -517,11 +511,11 @@ def A(t):
 #%% Leggett current third order
 compare = True
 
-eta = 0.0019
-ws = np.linspace(0,1,1000)
+eta = 0.021
+wsl = np.linspace(0,1,1000)
 
-w = 2*(ws[ax,ax,:] + 1j*eta)
-w2 = 2*(ws+ 1j*eta)
+w = 2*(wsl[ax,ax,:] + 1j*eta)
+w2 = 2*(wsl+ 1j*eta)
 
 ek,ek2,eek,eek2,d,W12,nfeek,nfeek2,nfeekm,nfeek2m,fk,fk2 = genE(2)
 
@@ -555,16 +549,16 @@ d_phi = d_theta[0]-d_theta[1]
 
 plt.figure('jL')
 plt.clf()
-plt.plot(ws,np.abs(jL), label='Leggett=QPdia + phase')
-plt.plot(ws,(jL2.real), label='Leggett2')
+plt.plot(wsl,np.abs(jL), label='Leggett=QPdia + phase')
+plt.plot(wsl,np.abs(jL2), label='Leggett2')
 compare = False
 if 'xx' in globals(): compare = True
 if compare:
     factor=1/np.max(JL)*np.max(np.abs(jL))
     print(factor)
     plt.plot(xx,JL*factor, label='sim-Paul')
-plt.plot(ws,np.abs(np.sum(jQPdia,0)), ':', label='QP-dia')
-plt.plot(ws,np.abs(jphase), '--', label='Phase')
+plt.plot(wsl,np.abs(np.sum(jQPdia,0)), ':', label='QP-dia')
+plt.plot(wsl,np.abs(jphase), '--', label='Phase')
 plt.axvline(d_eq0[0], c='gray', lw=0.5)
 plt.axvline(d_eq0[1], c='gray', lw=0.5)
 plt.xlabel('$\omega$')
@@ -587,69 +581,68 @@ plt.pause(0.01)
 
 #%% Higgs current third order
 
-# eta = 0.002
-# eta = 0.045
-# ws = np.linspace(0,1,80)
+eta = 0.027
+wsh = np.linspace(0,1,30)
 
-# # Higgs propagator
-# w = ws[ax,ax,:] + 1j*eta
+# Higgs propagator
+w = wsh[ax,ax,:] + 1j*eta
 
-# ek,ek2,eek,eek2,d,W12,nfeek,nfeek2,nfeekm,nfeek2m,fk,fk2 = genE(2)
-# # Tr[g[ek, eek, z].s1.g[ek, eek, z + 2 w].s1]
-# x11_ = -((-d**2 + eek**2 + ek**2)/(2*eek**3 - 2*eek*w**2))
-# x11 = N0[:,ax]*integ(x11_, axis=1)
+ek,ek2,eek,eek2,d,W12,nfeek,nfeek2,nfeekm,nfeek2m,fk,fk2 = genE(2)
+# Tr[g[ek, eek, z].s1.g[ek, eek, z + 2 w].s1]
+x11_ = -((-d**2 + eek**2 + ek**2)/(2*eek**3 - 2*eek*w**2))
+x11 = N0[:,ax]*integ(x11_, axis=1)
 
-# dU = U[0,0]*U[1,1]-U[0,1]**2
-# det = (x11[0]+2*U[1,1]/dU)*(x11[1]+2*U[0,0]/dU) - (2*U[0,1]/dU)**2
-# o = np.ones((len(ws)))
-# Hinv = 1/det * np.array([[x11[1]+2*U[0,0]/dU*o,    2*U[0,1]/dU*o],\
-#                          [2*U[0,1]/dU*o,            x11[0]+2*U[1,1]/dU*o  ]])
+dU = U[0,0]*U[1,1]-U[0,1]**2
+det = (x11[0]+2*U[1,1]/dU)*(x11[1]+2*U[0,0]/dU) - (2*U[0,1]/dU)**2
+o = np.ones((len(wsh)))
+Hinv = 1/det * np.array([[x11[1]+2*U[0,0]/dU*o,    2*U[0,1]/dU*o],\
+                         [2*U[0,1]/dU*o,            x11[0]+2*U[1,1]/dU*o  ]])
 
 
-# # susceptibilities
+# susceptibilities
 
-# ek,ek2,ek3,eek,eek2,eek3,d,W12,W13,W23,nfeek,nfeek2,nfeek3,nfeekm,nfeek2m,nfeek3m,fk,fk2,fk3 = genE(3)
-# pre_W = vf[:,ax]**2/3/N0[:,ax]
+ek,ek2,ek3,eek,eek2,eek3,d,W12,W13,W23,nfeek,nfeek2,nfeek3,nfeekm,nfeek2m,nfeek3m,fk,fk2,fk3 = genE(3)
+pre_W = vf[:,ax]**2/3/N0[:,ax]
 
-# jH = []
-# max_w_at_once = 1
-# if max_w_at_once <= len(ws):
-#     wssplit = np.array_split(np.arange(len(ws)),len(ws)//max_w_at_once)
-# else:
-#     wssplit = [np.arange(len(ws))]
-# w_ = ws[ax,ax,ax,:] + 1j*eta
-# durations = []
-# for sel in wssplit:
-#     start = time.time()
-#     print(sel[0],'/',len(ws))
-#     w = w_[:,:,:,sel]
+jH = []
+max_w_at_once = 4
+if max_w_at_once <= len(wsh):
+    wssplit = np.array_split(np.arange(len(wsh)),len(wsh)//max_w_at_once)
+else:
+    wssplit = [np.arange(len(wsh))]
+w_ = wsh[ax,ax,ax,:] + 1j*eta
+durations = []
+for sel in wssplit:
+    start = time.time()
+    print(sel[0],'/',len(wsh))
+    w = w_[:,:,:,sel]
 
-#     # Tr[g[ek, eek, z].s1.g[ek, eek, z - 2 w].g[ek2, eek2, z + w]]
-#     x100l_= (d*((eek + eek2)**2*(3*eek**2*eek2 - d**2*(2*eek + eek2) + 2*eek*ek*(ek - 2*ek2) + eek2*ek*(ek - 2*ek2)) + (-6*eek**3 + 3*eek**2*eek2 - 2*eek2**3 + d**2*(2*eek + 5*eek2) - 5*eek2*ek*(ek - 2*ek2) - 2*eek*(eek2**2 + ek**2 - 2*ek*ek2))*w**2 + 6*(eek - eek2)*w**4))/(2.*eek*eek2*(eek + eek2 - 3*w)*(eek - w)*(eek + eek2 - w)*(eek + w)*(eek + eek2 + w)*(eek + eek2 + 3*w))
-#     x100l = pre_W * N0[:,ax]**2 * integ(W12*x100l_, axis=(1,2))
+    # Tr[g[ek, eek, z].s1.g[ek, eek, z - 2 w].g[ek2, eek2, z + w]]
+    x100l_= (d*((eek + eek2)**2*(3*eek**2*eek2 - d**2*(2*eek + eek2) + 2*eek*ek*(ek - 2*ek2) + eek2*ek*(ek - 2*ek2)) + (-6*eek**3 + 3*eek**2*eek2 - 2*eek2**3 + d**2*(2*eek + 5*eek2) - 5*eek2*ek*(ek - 2*ek2) - 2*eek*(eek2**2 + ek**2 - 2*ek*ek2))*w**2 + 6*(eek - eek2)*w**4))/(2.*eek*eek2*(eek + eek2 - 3*w)*(eek - w)*(eek + eek2 - w)*(eek + w)*(eek + eek2 + w)*(eek + eek2 + 3*w))
+    x100l = pre_W * N0[:,ax]**2 * integ(W12*x100l_, axis=(1,2))
 
-#     # Tr[g[ek, eek, z].s1.g[ek, eek, z + 2 w].g[ek2, eek2, z + w]]
-#     x100r_= (d*(3*eek**2*eek2 - d**2*(2*eek + eek2) + eek2*(ek**2 - 2*ek*ek2 - 2*w**2) + 2*eek*(ek**2 - 2*ek*ek2 + w**2)))/(2.*eek*eek2*(eek - w)*(eek + eek2 - w)*(eek + w)*(eek + eek2 + w))
-#     x100r = pre_W * N0[:,ax]**2 * integ(W12*x100r_, axis=(1,2))
+    # Tr[g[ek, eek, z].s1.g[ek, eek, z + 2 w].g[ek2, eek2, z + w]]
+    x100r_= (d*(3*eek**2*eek2 - d**2*(2*eek + eek2) + eek2*(ek**2 - 2*ek*ek2 - 2*w**2) + 2*eek*(ek**2 - 2*ek*ek2 + w**2)))/(2.*eek*eek2*(eek - w)*(eek + eek2 - w)*(eek + w)*(eek + eek2 + w))
+    x100r = pre_W * N0[:,ax]**2 * integ(W12*x100r_, axis=(1,2))
 
-#     jH.append( 4*1/2* np.einsum('iw,ijw,jw->w',x100l,Hinv[:,:,sel],x100r)  )
-#     durations.append(time.time()-start)
+    jH.append( 4*1/2* np.einsum('iw,ijw,jw->w',x100l,Hinv[:,:,sel],x100r)  )
+    durations.append(time.time()-start)
 
-#     print('Est. time remaining: ', np.round(np.mean(durations) * (len(wssplit)-len(durations)) / 60,1), 'min')
-# print('Finished. Total duration: ', np.round(np.sum(durations)/60,1), 'min')
-# jH = np.concatenate(jH)
+    print('Est. time remaining: ', np.round(np.mean(durations) * (len(wssplit)-len(durations)) / 60,1), 'min')
+print('Finished. Total duration: ', np.round(np.sum(durations)/60,1), 'min')
+jH = np.concatenate(jH)
 
-# plt.figure('jH')
-# plt.clf()
-# plt.plot(ws,np.abs(jH)/9, label='Higgs')
-# factor = 0.01619978567238627
-# if compare: plt.plot(xx,JH*factor)
-# plt.axvline(d_eq0[0], c='gray', lw=0.5)
-# plt.axvline(d_eq0[1], c='gray', lw=0.5)
-# plt.xlabel('$\omega$')
-# plt.ylabel('$j_3$ (Higgs)')
-# plt.tight_layout()
-# plt.pause(0.01)
+plt.figure('jH')
+plt.clf()
+plt.plot(wsh,np.abs(jH)/9, label='Higgs')
+factor = 0.01619978567238627
+if compare: plt.plot(xx,JH*factor)
+plt.axvline(d_eq0[0], c='gray', lw=0.5)
+plt.axvline(d_eq0[1], c='gray', lw=0.5)
+plt.xlabel('$\omega$')
+plt.ylabel('$j_3$ (Higgs)')
+plt.tight_layout()
+plt.pause(0.01)
 
 
 
@@ -657,7 +650,7 @@ plt.pause(0.01)
 #%% QP current third order (parallelized code)
 
 eta = 0.06
-ws = np.linspace(0,1,4)
+ws = np.linspace(0.1,0.9,16)
 
 # Higgs propagator
 w = ws[ax,ax,:] + 1j*eta
@@ -685,7 +678,7 @@ for w_ in ws:
     start = time.time()
     print(np.round(w_/ws[-1],3))
 
-    parallel = True
+    parallel = False
     if parallel:
         pool = Pool()
         multiresult = np.stack( pool.map(multiprocess, np.arange(Ne)) ).T
@@ -705,9 +698,9 @@ print('QP parallel finished. Total duration: ', np.round(np.sum(durations)/60,1)
 plt.figure('jQP')
 # plt.clf()
 missing_factor = 10
-plt.plot(ws,np.abs(jQP[:,0]/missing_factor), '--', c='r', label='Higgs')
-plt.plot(ws,np.abs(jQP[:,1]/missing_factor), '--', c='g', label='Higgs')
-plt.plot(ws,np.abs(np.sum(jQP,axis=1))/missing_factor, label='Higgs')
+plt.plot(ws,np.abs(jQP[:,0]/missing_factor), '--', c='r', label='QP1')
+plt.plot(ws,np.abs(jQP[:,1]/missing_factor), '--', c='g', label='QP2')
+plt.plot(ws,np.abs(np.sum(jQP,axis=1))/missing_factor, label='QP-total')
 factor = 0.01619978567238627
 if compare: plt.plot(xx,JQP*factor)
 plt.axvline(d_eq0[0], c='gray', lw=0.5)
@@ -717,3 +710,16 @@ plt.ylabel('$j_3$ (QP-para)')
 plt.tight_layout()
 plt.pause(0.01)
 
+
+#%%
+plt.figure('j-full')
+# plt.clf()
+missing_factor = 10
+plt.plot(wsh,np.abs(jH)/missing_factor, label='Higgs')
+plt.plot(wsl,np.abs(jL), label='Leggett=QPdia + phase')
+plt.plot(ws,np.abs(np.sum(jQP,axis=1))/missing_factor, label='QP-total')
+plt.legend()
+if compare:
+    plt.plot(xx,JQP*factor, '--', c='r')
+    plt.plot(xx,JH*factor, '--', c='b')
+    plt.plot(xx,JL*factor, '--', c='y')

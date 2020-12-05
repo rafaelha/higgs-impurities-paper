@@ -28,7 +28,7 @@ plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
-folder = 'j3_T'
+folder = 'j3_0'
 files = glob.glob(f'{folder}/*.pickle')
 
 save_plots = False

@@ -43,19 +43,19 @@ filename = 'results-j3.pickle'
 
 params_ = [
     {
-        "Ne": [1400],
-        "eta":  [0.006],
+        "Ne": [200],
+        "eta":  [0.03],
         # "w":  [0.3/u_w],
-        "w":  np.linspace(0,1,32),
+        "w":  np.linspace(0,1,64),
         # "T": np.linspace(0,50,32)/u_temp,
         "T": [0.01/u_temp],
         "wd":  [5],
         "s": np.array([1,-1]),
         "m": [ np.array([0.85, 1.38]) ],
         "ef": [ np.array([290, 70]) ],
-        "g": [ np.array([1,1.5])],
+        "g": [ np.array([10,5])],
         "pre_d0": np.array([0.3,0.7]),
-        "v": [0.1]
+        "v": [0.2]
     }
 ]
 
@@ -368,7 +368,7 @@ for p in params:
 
 #%% Leggett current third order
 
-    w = 2*w_point + 1j*eta
+    w = 2*(w_point + 1j*eta)
 
     ek,eek,d,nfeek,nfeekm = genE(1)
 
