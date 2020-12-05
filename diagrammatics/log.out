@@ -1,0 +1,16 @@
+1 parameters generated
+U= [[0.15689031 0.07844515]
+ [0.07844515 0.34272156]]
+UN0= [[0.15000605 0.07500302]
+ [0.07622879 0.33303842]]
+gap= [0.3 0.7] at T=0 (computed with new function)
+gap= [0.3 0.7] at T= 0.0008618312189740761  (computed with new function)
+0.0
+Est. time remaining:  2.2 min
+0.333
+Est. time remaining:  1.5 min
+0.667
+Est. time remaining:  0.7 min
+1.0
+Est. time remaining:  0.0 min
+QP parallel finished. Total duration:  2.9 min

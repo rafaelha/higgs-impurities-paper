@@ -1,0 +1,20 @@
+optical-conductivity-analytical.py:409: RuntimeWarning: overflow encountered in exp
+  nfeek = 1.0/(np.exp(B*eek) + 1)
+optical-conductivity-analytical.py:410: RuntimeWarning: overflow encountered in exp
+  nfeek2 = 1.0/(np.exp(B*eek2) + 1)
+optical-conductivity-analytical.py:414: RuntimeWarning: overflow encountered in exp
+  fk = 1.0/(np.exp(B*ek) + 1)
+optical-conductivity-analytical.py:415: RuntimeWarning: overflow encountered in exp
+  fk2 = 1.0/(np.exp(B*ek2) + 1)
+optical-conductivity-analytical.py:572: UserWarning: Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure.
+  plt.pause(0.01)
+optical-conductivity-analytical.py:409: RuntimeWarning: overflow encountered in exp
+  nfeek = 1.0/(np.exp(B*eek) + 1)
+optical-conductivity-analytical.py:410: RuntimeWarning: overflow encountered in exp
+  nfeek2 = 1.0/(np.exp(B*eek2) + 1)
+optical-conductivity-analytical.py:414: RuntimeWarning: overflow encountered in exp
+  fk = 1.0/(np.exp(B*ek) + 1)
+optical-conductivity-analytical.py:415: RuntimeWarning: overflow encountered in exp
+  fk2 = 1.0/(np.exp(B*ek2) + 1)
+optical-conductivity-analytical.py:718: UserWarning: Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure.
+  plt.pause(0.01)

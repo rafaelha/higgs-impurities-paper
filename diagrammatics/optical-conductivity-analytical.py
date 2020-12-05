@@ -2,8 +2,8 @@
 from operator import mul
 import numpy as np
 from numpy import sqrt
-# import matplotlib as mpl
-# mpl.use('Agg')
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy import integrate
 from scipy import interpolate
@@ -587,135 +587,72 @@ plt.pause(0.01)
 
 #%% Higgs current third order
 
-eta = 0.002
-eta = 0.045
-ws = np.linspace(0,1,80)
-
-# Higgs propagator
-w = ws[ax,ax,:] + 1j*eta
-
-ek,ek2,eek,eek2,d,W12,nfeek,nfeek2,nfeekm,nfeek2m,fk,fk2 = genE(2)
-# Tr[g[ek, eek, z].s1.g[ek, eek, z + 2 w].s1]
-x11_ = -((-d**2 + eek**2 + ek**2)/(2*eek**3 - 2*eek*w**2))
-x11 = N0[:,ax]*integ(x11_, axis=1)
-
-dU = U[0,0]*U[1,1]-U[0,1]**2
-det = (x11[0]+2*U[1,1]/dU)*(x11[1]+2*U[0,0]/dU) - (2*U[0,1]/dU)**2
-o = np.ones((len(ws)))
-Hinv = 1/det * np.array([[x11[1]+2*U[0,0]/dU*o,    2*U[0,1]/dU*o],\
-                         [2*U[0,1]/dU*o,            x11[0]+2*U[1,1]/dU*o  ]])
-
-
-# susceptibilities
-
-ek,ek2,ek3,eek,eek2,eek3,d,W12,W13,W23,nfeek,nfeek2,nfeek3,nfeekm,nfeek2m,nfeek3m,fk,fk2,fk3 = genE(3)
-pre_W = vf[:,ax]**2/3/N0[:,ax]
-
-jH = []
-max_w_at_once = 1
-if max_w_at_once <= len(ws):
-    wssplit = np.array_split(np.arange(len(ws)),len(ws)//max_w_at_once)
-else:
-    wssplit = [np.arange(len(ws))]
-w_ = ws[ax,ax,ax,:] + 1j*eta
-durations = []
-for sel in wssplit:
-    start = time.time()
-    print(sel[0],'/',len(ws))
-    w = w_[:,:,:,sel]
-
-    # Tr[g[ek, eek, z].s1.g[ek, eek, z - 2 w].g[ek2, eek2, z + w]]
-    x100l_= (d*((eek + eek2)**2*(3*eek**2*eek2 - d**2*(2*eek + eek2) + 2*eek*ek*(ek - 2*ek2) + eek2*ek*(ek - 2*ek2)) + (-6*eek**3 + 3*eek**2*eek2 - 2*eek2**3 + d**2*(2*eek + 5*eek2) - 5*eek2*ek*(ek - 2*ek2) - 2*eek*(eek2**2 + ek**2 - 2*ek*ek2))*w**2 + 6*(eek - eek2)*w**4))/(2.*eek*eek2*(eek + eek2 - 3*w)*(eek - w)*(eek + eek2 - w)*(eek + w)*(eek + eek2 + w)*(eek + eek2 + 3*w))
-    x100l = pre_W * N0[:,ax]**2 * integ(W12*x100l_, axis=(1,2))
-
-    # Tr[g[ek, eek, z].s1.g[ek, eek, z + 2 w].g[ek2, eek2, z + w]]
-    x100r_= (d*(3*eek**2*eek2 - d**2*(2*eek + eek2) + eek2*(ek**2 - 2*ek*ek2 - 2*w**2) + 2*eek*(ek**2 - 2*ek*ek2 + w**2)))/(2.*eek*eek2*(eek - w)*(eek + eek2 - w)*(eek + w)*(eek + eek2 + w))
-    x100r = pre_W * N0[:,ax]**2 * integ(W12*x100r_, axis=(1,2))
-
-    jH.append( 4*1/2* np.einsum('iw,ijw,jw->w',x100l,Hinv[:,:,sel],x100r)  )
-    durations.append(time.time()-start)
-
-    print('Est. time remaining: ', np.round(np.mean(durations) * (len(wssplit)-len(durations)) / 60,1), 'min')
-print('Finished. Total duration: ', np.round(np.sum(durations)/60,1), 'min')
-jH = np.concatenate(jH)
-#%%
-plt.figure('jH')
-plt.clf()
-plt.plot(ws,np.abs(jH)/9, label='Higgs')
-factor = 0.01619978567238627
-if compare: plt.plot(xx,JH*factor)
-plt.axvline(d_eq0[0], c='gray', lw=0.5)
-plt.axvline(d_eq0[1], c='gray', lw=0.5)
-plt.xlabel('$\omega$')
-plt.ylabel('$j_3$ (Higgs)')
-plt.tight_layout()
-plt.pause(0.01)
-
-#%%
-# Higgs suceptibility false color plot
-# plt.figure('x001real')
-# plt.clf()
-# plt.subplot(121)
-# idx = 279
-# plt.pcolormesh(e1_,e1_, np.log(np.abs(x100l_[0,:,:,idx].real)))
-# plt.colorbar()
-# plt.title(f'$\omega={ws[idx]}$')
-# plt.subplot(122)
-# plt.pcolormesh(e1_,e1_, np.log(np.abs(x100l_[0,:,:,idx].imag)))
-# plt.colorbar()
-
-
-
-#%% QP current third order
-
-# eta = 0.06
-# ws = np.linspace(0,1,4)
+# eta = 0.002
+# eta = 0.045
+# ws = np.linspace(0,1,80)
 
 # # Higgs propagator
 # w = ws[ax,ax,:] + 1j*eta
 
-# ek,ek2,ek3,eek,eek2,eek3,d,W12,W13,W23,nfeek,nfeek2,nfeek3,nfeekm,nfeek2m,nfeek3m,fk,fk2,fk3 = genE(3)
-# pre_W = vf**2/3/N0
+# ek,ek2,eek,eek2,d,W12,nfeek,nfeek2,nfeekm,nfeek2m,fk,fk2 = genE(2)
+# # Tr[g[ek, eek, z].s1.g[ek, eek, z + 2 w].s1]
+# x11_ = -((-d**2 + eek**2 + ek**2)/(2*eek**3 - 2*eek*w**2))
+# x11 = N0[:,ax]*integ(x11_, axis=1)
+
+# dU = U[0,0]*U[1,1]-U[0,1]**2
+# det = (x11[0]+2*U[1,1]/dU)*(x11[1]+2*U[0,0]/dU) - (2*U[0,1]/dU)**2
+# o = np.ones((len(ws)))
+# Hinv = 1/det * np.array([[x11[1]+2*U[0,0]/dU*o,    2*U[0,1]/dU*o],\
+#                          [2*U[0,1]/dU*o,            x11[0]+2*U[1,1]/dU*o  ]])
 
 
 # # susceptibilities
 
 # ek,ek2,ek3,eek,eek2,eek3,d,W12,W13,W23,nfeek,nfeek2,nfeek3,nfeekm,nfeek2m,nfeek3m,fk,fk2,fk3 = genE(3)
+# pre_W = vf[:,ax]**2/3/N0[:,ax]
 
-# jQP = []
+# jH = []
+# max_w_at_once = 1
+# if max_w_at_once <= len(ws):
+#     wssplit = np.array_split(np.arange(len(ws)),len(ws)//max_w_at_once)
+# else:
+#     wssplit = [np.arange(len(ws))]
+# w_ = ws[ax,ax,ax,:] + 1j*eta
 # durations = []
-# for w_ in ws:
-#     w = w_ + 1j*eta
+# for sel in wssplit:
 #     start = time.time()
-#     print(np.round(w_/ws[-1],3))
+#     print(sel[0],'/',len(ws))
+#     w = w_[:,:,:,sel]
 
-#     # Tr[g[ek, eek, z].g[ek3, eek3, z - w].g[ek, eek, z - 2 w].g[ek2, eek2, z + w]]
-#     x3333_ = -(d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 - 18*d**2*eek*w - 6*eek**3*w - 4*eek*ek**2*w - 4*eek*ek*ek2*w - 8*eek*ek*ek3*w - 2*eek*ek2*ek3*w + 11*d**2*w**2 + 11*eek**2*w**2 + 3*ek**2*w**2 + 2*ek*ek2*w**2 + 6*ek*ek3*w**2 - 6*eek*w**3)/(2.*eek*w*(-2*eek + 2*w)*(eek**2 - eek3**2 - 2*eek*w + w**2)*(eek**2 - eek2**2 - 6*eek*w + 9*w**2)) + (d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 + 6*d**2*eek*w + 2*eek**3*w + 4*eek*ek*ek2*w + 2*eek*ek2*ek3*w - d**2*w**2 - eek**2*w**2 - ek**2*w**2 + 2*ek*ek2*w**2 - 2*ek*ek3*w**2 - 2*eek*w**3)/(2.*eek*(-2*eek - 2*w)*w*(eek**2 - eek2**2 - 2*eek*w + w**2)*(eek**2 - eek3**2 + 2*eek*w + w**2)) - (d**4 + 6*d**2*eek2**2 + eek2**4 - d**2*ek**2 + eek2**2*ek**2 + 2*d**2*ek*ek2 + 2*eek2**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek2**2*ek*ek3 - d**2*ek2*ek3 + eek2**2*ek2*ek3 + ek**2*ek2*ek3 + 18*d**2*eek2*w + 6*eek2**3*w + 2*eek2*ek**2*w + 8*eek2*ek*ek2*w + 4*eek2*ek*ek3*w + 4*eek2*ek2*ek3*w + 11*d**2*w**2 + 11*eek2**2*w**2 + 8*ek*ek2*w**2 + 3*ek2*ek3*w**2 + 6*eek2*w**3)/(eek2*(-eek**2 + eek2**2 + 2*eek2*w + w**2)*(eek2**2 - eek3**2 + 4*eek2*w + 4*w**2)*(-eek**2 + eek2**2 + 6*eek2*w + 9*w**2)) - (d**4 + 6*d**2*eek3**2 + eek3**4 - d**2*ek**2 + eek3**2*ek**2 + 2*d**2*ek*ek2 + 2*eek3**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek3**2*ek*ek3 - d**2*ek2*ek3 + eek3**2*ek2*ek3 + ek**2*ek2*ek3 - 6*d**2*eek3*w - 2*eek3**3*w - 2*eek3*ek**2*w - 4*eek3*ek*ek3*w - d**2*w**2 - eek3**2*w**2 - ek2*ek3*w**2 + 2*eek3*w**3)/(eek3*(-eek**2 + eek3**2 - 2*eek3*w + w**2)*(-eek**2 + eek3**2 + 2*eek3*w + w**2)*(-eek2**2 + eek3**2 - 4*eek3*w + 4*w**2))
-#     x3333 = pre_W**2 * N0**3 * integ(W12 * W13 * x3333_, axis=(1,2,3))
+#     # Tr[g[ek, eek, z].s1.g[ek, eek, z - 2 w].g[ek2, eek2, z + w]]
+#     x100l_= (d*((eek + eek2)**2*(3*eek**2*eek2 - d**2*(2*eek + eek2) + 2*eek*ek*(ek - 2*ek2) + eek2*ek*(ek - 2*ek2)) + (-6*eek**3 + 3*eek**2*eek2 - 2*eek2**3 + d**2*(2*eek + 5*eek2) - 5*eek2*ek*(ek - 2*ek2) - 2*eek*(eek2**2 + ek**2 - 2*ek*ek2))*w**2 + 6*(eek - eek2)*w**4))/(2.*eek*eek2*(eek + eek2 - 3*w)*(eek - w)*(eek + eek2 - w)*(eek + w)*(eek + eek2 + w)*(eek + eek2 + 3*w))
+#     x100l = pre_W * N0[:,ax]**2 * integ(W12*x100l_, axis=(1,2))
 
-#     jQP_ = 1/4 * 4 * x3333
+#     # Tr[g[ek, eek, z].s1.g[ek, eek, z + 2 w].g[ek2, eek2, z + w]]
+#     x100r_= (d*(3*eek**2*eek2 - d**2*(2*eek + eek2) + eek2*(ek**2 - 2*ek*ek2 - 2*w**2) + 2*eek*(ek**2 - 2*ek*ek2 + w**2)))/(2.*eek*eek2*(eek - w)*(eek + eek2 - w)*(eek + w)*(eek + eek2 + w))
+#     x100r = pre_W * N0[:,ax]**2 * integ(W12*x100r_, axis=(1,2))
 
-#     jQP.append( jQP_)
+#     jH.append( 4*1/2* np.einsum('iw,ijw,jw->w',x100l,Hinv[:,:,sel],x100r)  )
 #     durations.append(time.time()-start)
 
-#     print('Est. time remaining: ', np.round(np.mean(durations) * (len(ws)-len(durations)) / 60,1), 'min')
-# jQP = np.stack(jQP)
-# print('QP vectorized finished. Total duration: ', np.round(np.sum(durations)/60,1), 'min')
+#     print('Est. time remaining: ', np.round(np.mean(durations) * (len(wssplit)-len(durations)) / 60,1), 'min')
+# print('Finished. Total duration: ', np.round(np.sum(durations)/60,1), 'min')
+# jH = np.concatenate(jH)
 
-# plt.figure('jQP')
+# plt.figure('jH')
 # plt.clf()
-# missing_factor = 10
-# plt.plot(ws,np.abs(jQP[:,0]/missing_factor), '--', c='r', label='Higgs')
-# plt.plot(ws,np.abs(jQP[:,1]/missing_factor), '--', c='g', label='Higgs')
-# plt.plot(ws,np.abs(np.sum(jQP,axis=1))/missing_factor, label='Higgs')
+# plt.plot(ws,np.abs(jH)/9, label='Higgs')
 # factor = 0.01619978567238627
-# if compare: plt.plot(xx,JQP*factor)
+# if compare: plt.plot(xx,JH*factor)
 # plt.axvline(d_eq0[0], c='gray', lw=0.5)
 # plt.axvline(d_eq0[1], c='gray', lw=0.5)
 # plt.xlabel('$\omega$')
-# plt.ylabel('$j_3$ (QP-para)')
+# plt.ylabel('$j_3$ (Higgs)')
 # plt.tight_layout()
-# plt.pause(0.1)
+# plt.pause(0.01)
+
+
+
 
 #%% QP current third order (parallelized code)
 
