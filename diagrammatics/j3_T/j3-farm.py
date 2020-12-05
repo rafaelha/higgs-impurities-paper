@@ -39,11 +39,12 @@ u_w = u_e*meV_to_THz
 u_temp = 116.032
 
 parallel = False
-filtename = 'results-j3'
+filename = 'results-j3'
 params_ = [
     {
         "Ne": [400],
-        "w":  0.3/u_w,
+        "eta":  [0.03],
+        "w":  [0.3/u_w],
         "T": np.arange(0,60,100)/u_temp,
         "wd":  [5],
         "s": np.array([1,-1]),
@@ -51,8 +52,7 @@ params_ = [
         "ef": [ np.array([290, 70]) ],
         "g": [ np.array([10,5])],
         "pre_d0": np.array([0.3,0.7]),
-        "v": [0.5],#np.linspace(0.0002,1,40),
-        "eta":  [0.01],
+        "v": [0.5]
     }
 ]
 
@@ -406,7 +406,10 @@ for p in params:
 
     ek,eek,d,nfeek,nfeekm = genE(1)
 
-    x33_ = (-2*(d**2 + eek**2 - ek**2))/(4*eek**3 - eek*w**2)
+    if zerotemp:
+        x33_ = (-2*(d**2 + eek**2 - ek**2))/(4*eek**3 - eek*w**2)
+    else:
+        x33_ = (2*(d**2 + eek**2 - ek**2)*(nfeek - nfeekm))/(4*eek**3 - eek*w**2)
     x33 = N0 * integ(x33_, axis=1)
 
     kappa = 8*d_eq0[0]*d_eq0[1]*U[0,1]/np.linalg.det(U)
@@ -430,7 +433,10 @@ for p in params:
 
     ek,eek,d,nfeek,nfeekm = genE(1)
     # Tr[g[ek, eek, z].s1.g[ek, eek, z + 2 w].s1]
-    x11_ = -((-d**2 + eek**2 + ek**2)/(2*eek**3 - 2*eek*w**2))
+    if zerotemp:
+        x11_ = -((-d**2 + eek**2 + ek**2)/(2*eek**3 - 2*eek*w**2))
+    else:
+        x11_ = ((-d**2 + eek**2 + ek**2)*(nfeek - nfeekm))/(2*eek*(eek - w)*(eek + w))
     x11 = N0*integ(x11_, axis=1)
 
     dU = U[0,0]*U[1,1]-U[0,1]**2
@@ -445,11 +451,17 @@ for p in params:
     jH = []
 
     # Tr[g[ek, eek, z].s1.g[ek, eek, z - 2 w].g[ek2, eek2, z + w]]
-    x100l_= (d*((eek + eek2)**2*(3*eek**2*eek2 - d**2*(2*eek + eek2) + 2*eek*ek*(ek - 2*ek2) + eek2*ek*(ek - 2*ek2)) + (-6*eek**3 + 3*eek**2*eek2 - 2*eek2**3 + d**2*(2*eek + 5*eek2) - 5*eek2*ek*(ek - 2*ek2) - 2*eek*(eek2**2 + ek**2 - 2*ek*ek2))*w**2 + 6*(eek - eek2)*w**4))/(2.*eek*eek2*(eek + eek2 - 3*w)*(eek - w)*(eek + eek2 - w)*(eek + w)*(eek + eek2 + w)*(eek + eek2 + 3*w))
+    if zerotemp:
+        x100l_= (d*((eek + eek2)**2*(3*eek**2*eek2 - d**2*(2*eek + eek2) + 2*eek*ek*(ek - 2*ek2) + eek2*ek*(ek - 2*ek2)) + (-6*eek**3 + 3*eek**2*eek2 - 2*eek2**3 + d**2*(2*eek + 5*eek2) - 5*eek2*ek*(ek - 2*ek2) - 2*eek*(eek2**2 + ek**2 - 2*ek*ek2))*w**2 + 6*(eek - eek2)*w**4))/(2.*eek*eek2*(eek + eek2 - 3*w)*(eek - w)*(eek + eek2 - w)*(eek + w)*(eek + eek2 + w)*(eek + eek2 + 3*w))
+    else:
+        x100l_ = (d*nfeekm*(d**2 + 3*eek**2 - ek**2 + 2*ek*ek2 + 2*eek*w - 2*w**2))/(2.*eek*(-2*eek - 2*w)*w*(eek**2 - eek2**2 - 2*eek*w + w**2)) - (d*nfeek*(d**2 + 3*eek**2 - ek**2 + 2*ek*ek2 - 2*eek*w - 2*w**2))/(2.*eek*(2*eek - 2*w)*w*(eek**2 - eek2**2 + 2*eek*w + w**2)) - (d*nfeekm*(d**2 + 3*eek**2 - ek**2 + 2*ek*ek2 - 10*eek*w + 6*w**2))/(2.*eek*w*(-2*eek + 2*w)*(eek**2 - eek2**2 - 6*eek*w + 9*w**2)) + (d*nfeek*(d**2 + 3*eek**2 - ek**2 + 2*ek*ek2 + 10*eek*w + 6*w**2))/(2.*eek*w*(2*eek + 2*w)*(eek**2 - eek2**2 + 6*eek*w + 9*w**2)) + (d*nfeek2*(d**2 + 3*eek2**2 - ek**2 + 2*ek*ek2 - 8*eek2*w + 3*w**2))/(eek2*(-eek**2 + eek2**2 - 2*eek2*w + w**2)*(-eek**2 + eek2**2 - 6*eek2*w + 9*w**2)) - (d*nfeek2m*(d**2 + 3*eek2**2 - ek**2 + 2*ek*ek2 + 8*eek2*w + 3*w**2))/(eek2*(-eek**2 + eek2**2 + 2*eek2*w + w**2)*(-eek**2 + eek2**2 + 6*eek2*w + 9*w**2))
     x100l = pre_W * N0**2 * integ(W12*x100l_, axis=(1,2))
 
     # Tr[g[ek, eek, z].s1.g[ek, eek, z + 2 w].g[ek2, eek2, z + w]]
-    x100r_= (d*(3*eek**2*eek2 - d**2*(2*eek + eek2) + eek2*(ek**2 - 2*ek*ek2 - 2*w**2) + 2*eek*(ek**2 - 2*ek*ek2 + w**2)))/(2.*eek*eek2*(eek - w)*(eek + eek2 - w)*(eek + w)*(eek + eek2 + w))
+    if zerotemp:
+        x100r_= (d*(3*eek**2*eek2 - d**2*(2*eek + eek2) + eek2*(ek**2 - 2*ek*ek2 - 2*w**2) + 2*eek*(ek**2 - 2*ek*ek2 + w**2)))/(2.*eek*eek2*(eek - w)*(eek + eek2 - w)*(eek + w)*(eek + eek2 + w))
+    else:
+        x100r_ = (d*(3*eek**4*eek2*(-nfeek + nfeekm) - 3*eek**2*eek2*(nfeek - nfeekm)*(eek2**2 - ek**2 + 2*ek*ek2 - 3*w**2) + 2*eek**3*(nfeek2 - nfeek2m)*(3*eek2**2 - ek**2 + 2*ek*ek2 - w**2) + eek2*(nfeek - nfeekm)*(ek**2 - 2*ek*ek2 - 2*w**2)*(-eek2**2 + w**2) + 2*eek*(nfeek2 - nfeek2m)*w**2*(-3*eek2**2 + ek**2 - 2*ek*ek2 + w**2) + d**2*(2*eek**3*(nfeek2 - nfeek2m) + 3*eek**2*eek2*(-nfeek + nfeekm) + 2*eek*(-nfeek2 + nfeek2m)*w**2 + eek2*(nfeek - nfeekm)*(eek2 - w)*(eek2 + w))))/(2.*eek*eek2*(eek - w)*(eek - eek2 - w)*(eek + eek2 - w)*(eek + w)*(eek - eek2 + w)*(eek + eek2 + w))
     x100r = pre_W * N0**2 * integ(W12*x100r_, axis=(1,2))
 
     jH = 4*1/2* np.einsum('i,ij,j->',x100l,Hinv,x100r)
@@ -468,7 +480,11 @@ for p in params:
         eek3 = eek[:,ik,:,ax]
         W13 = W12[:,:,ik]
         # Tr[g[ek, eek, z].g[ek3, eek3, z - w].g[ek, eek, z - 2 w].g[ek2, eek2, z + w]]
-        x3333_ = -(d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 - 18*d**2*eek*w - 6*eek**3*w - 4*eek*ek**2*w - 4*eek*ek*ek2*w - 8*eek*ek*ek3*w - 2*eek*ek2*ek3*w + 11*d**2*w**2 + 11*eek**2*w**2 + 3*ek**2*w**2 + 2*ek*ek2*w**2 + 6*ek*ek3*w**2 - 6*eek*w**3)/(2.*eek*w*(-2*eek + 2*w)*(eek**2 - eek3**2 - 2*eek*w + w**2)*(eek**2 - eek2**2 - 6*eek*w + 9*w**2)) + (d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 + 6*d**2*eek*w + 2*eek**3*w + 4*eek*ek*ek2*w + 2*eek*ek2*ek3*w - d**2*w**2 - eek**2*w**2 - ek**2*w**2 + 2*ek*ek2*w**2 - 2*ek*ek3*w**2 - 2*eek*w**3)/(2.*eek*(-2*eek - 2*w)*w*(eek**2 - eek2**2 - 2*eek*w + w**2)*(eek**2 - eek3**2 + 2*eek*w + w**2)) - (d**4 + 6*d**2*eek2**2 + eek2**4 - d**2*ek**2 + eek2**2*ek**2 + 2*d**2*ek*ek2 + 2*eek2**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek2**2*ek*ek3 - d**2*ek2*ek3 + eek2**2*ek2*ek3 + ek**2*ek2*ek3 + 18*d**2*eek2*w + 6*eek2**3*w + 2*eek2*ek**2*w + 8*eek2*ek*ek2*w + 4*eek2*ek*ek3*w + 4*eek2*ek2*ek3*w + 11*d**2*w**2 + 11*eek2**2*w**2 + 8*ek*ek2*w**2 + 3*ek2*ek3*w**2 + 6*eek2*w**3)/(eek2*(-eek**2 + eek2**2 + 2*eek2*w + w**2)*(eek2**2 - eek3**2 + 4*eek2*w + 4*w**2)*(-eek**2 + eek2**2 + 6*eek2*w + 9*w**2)) - (d**4 + 6*d**2*eek3**2 + eek3**4 - d**2*ek**2 + eek3**2*ek**2 + 2*d**2*ek*ek2 + 2*eek3**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek3**2*ek*ek3 - d**2*ek2*ek3 + eek3**2*ek2*ek3 + ek**2*ek2*ek3 - 6*d**2*eek3*w - 2*eek3**3*w - 2*eek3*ek**2*w - 4*eek3*ek*ek3*w - d**2*w**2 - eek3**2*w**2 - ek2*ek3*w**2 + 2*eek3*w**3)/(eek3*(-eek**2 + eek3**2 - 2*eek3*w + w**2)*(-eek**2 + eek3**2 + 2*eek3*w + w**2)*(-eek2**2 + eek3**2 - 4*eek3*w + 4*w**2))
+        if zerotemp:
+            x3333_ = -(d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 - 18*d**2*eek*w - 6*eek**3*w - 4*eek*ek**2*w - 4*eek*ek*ek2*w - 8*eek*ek*ek3*w - 2*eek*ek2*ek3*w + 11*d**2*w**2 + 11*eek**2*w**2 + 3*ek**2*w**2 + 2*ek*ek2*w**2 + 6*ek*ek3*w**2 - 6*eek*w**3)/(2.*eek*w*(-2*eek + 2*w)*(eek**2 - eek3**2 - 2*eek*w + w**2)*(eek**2 - eek2**2 - 6*eek*w + 9*w**2)) + (d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 + 6*d**2*eek*w + 2*eek**3*w + 4*eek*ek*ek2*w + 2*eek*ek2*ek3*w - d**2*w**2 - eek**2*w**2 - ek**2*w**2 + 2*ek*ek2*w**2 - 2*ek*ek3*w**2 - 2*eek*w**3)/(2.*eek*(-2*eek - 2*w)*w*(eek**2 - eek2**2 - 2*eek*w + w**2)*(eek**2 - eek3**2 + 2*eek*w + w**2)) - (d**4 + 6*d**2*eek2**2 + eek2**4 - d**2*ek**2 + eek2**2*ek**2 + 2*d**2*ek*ek2 + 2*eek2**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek2**2*ek*ek3 - d**2*ek2*ek3 + eek2**2*ek2*ek3 + ek**2*ek2*ek3 + 18*d**2*eek2*w + 6*eek2**3*w + 2*eek2*ek**2*w + 8*eek2*ek*ek2*w + 4*eek2*ek*ek3*w + 4*eek2*ek2*ek3*w + 11*d**2*w**2 + 11*eek2**2*w**2 + 8*ek*ek2*w**2 + 3*ek2*ek3*w**2 + 6*eek2*w**3)/(eek2*(-eek**2 + eek2**2 + 2*eek2*w + w**2)*(eek2**2 - eek3**2 + 4*eek2*w + 4*w**2)*(-eek**2 + eek2**2 + 6*eek2*w + 9*w**2)) - (d**4 + 6*d**2*eek3**2 + eek3**4 - d**2*ek**2 + eek3**2*ek**2 + 2*d**2*ek*ek2 + 2*eek3**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek3**2*ek*ek3 - d**2*ek2*ek3 + eek3**2*ek2*ek3 + ek**2*ek2*ek3 - 6*d**2*eek3*w - 2*eek3**3*w - 2*eek3*ek**2*w - 4*eek3*ek*ek3*w - d**2*w**2 - eek3**2*w**2 - ek2*ek3*w**2 + 2*eek3*w**3)/(eek3*(-eek**2 + eek3**2 - 2*eek3*w + w**2)*(-eek**2 + eek3**2 + 2*eek3*w + w**2)*(-eek2**2 + eek3**2 - 4*eek3*w + 4*w**2))
+        else:
+            x3333_ = -(nfeekm*(d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 - 18*d**2*eek*w - 6*eek**3*w - 4*eek*ek**2*w - 4*eek*ek*ek2*w - 8*eek*ek*ek3*w - 2*eek*ek2*ek3*w + 11*d**2*w**2 + 11*eek**2*w**2 + 3*ek**2*w**2 + 2*ek*ek2*w**2 + 6*ek*ek3*w**2 - 6*eek*w**3))/(2.*eek*w*(-2*eek + 2*w)*(eek**2 - eek3**2 - 2*eek*w + w**2)*(eek**2 - eek2**2 - 6*eek*w + 9*w**2)) + (nfeekm*(d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 + 6*d**2*eek*w + 2*eek**3*w + 4*eek*ek*ek2*w + 2*eek*ek2*ek3*w - d**2*w**2 - eek**2*w**2 - ek**2*w**2 + 2*ek*ek2*w**2 - 2*ek*ek3*w**2 - 2*eek*w**3))/(2.*eek*(-2*eek - 2*w)*w*(eek**2 - eek2**2 - 2*eek*w + w**2)*(eek**2 - eek3**2 + 2*eek*w + w**2)) - (nfeek*(d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 - 6*d**2*eek*w - 2*eek**3*w - 4*eek*ek*ek2*w - 2*eek*ek2*ek3*w - d**2*w**2 - eek**2*w**2 - ek**2*w**2 + 2*ek*ek2*w**2 - 2*ek*ek3*w**2 + 2*eek*w**3))/(2.*eek*(2*eek - 2*w)*w*(eek**2 - eek3**2 - 2*eek*w + w**2)*(eek**2 - eek2**2 + 2*eek*w + w**2)) + (nfeek*(d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 + 18*d**2*eek*w + 6*eek**3*w + 4*eek*ek**2*w + 4*eek*ek*ek2*w + 8*eek*ek*ek3*w + 2*eek*ek2*ek3*w + 11*d**2*w**2 + 11*eek**2*w**2 + 3*ek**2*w**2 + 2*ek*ek2*w**2 + 6*ek*ek3*w**2 + 6*eek*w**3))/(2.*eek*w*(2*eek + 2*w)*(eek**2 - eek3**2 + 2*eek*w + w**2)*(eek**2 - eek2**2 + 6*eek*w + 9*w**2)) + (nfeek2*(d**4 + 6*d**2*eek2**2 + eek2**4 - d**2*ek**2 + eek2**2*ek**2 + 2*d**2*ek*ek2 + 2*eek2**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek2**2*ek*ek3 - d**2*ek2*ek3 + eek2**2*ek2*ek3 + ek**2*ek2*ek3 - 18*d**2*eek2*w - 6*eek2**3*w - 2*eek2*ek**2*w - 8*eek2*ek*ek2*w - 4*eek2*ek*ek3*w - 4*eek2*ek2*ek3*w + 11*d**2*w**2 + 11*eek2**2*w**2 + 8*ek*ek2*w**2 + 3*ek2*ek3*w**2 - 6*eek2*w**3))/(eek2*(-eek**2 + eek2**2 - 2*eek2*w + w**2)*(eek2**2 - eek3**2 - 4*eek2*w + 4*w**2)*(-eek**2 + eek2**2 - 6*eek2*w + 9*w**2)) - (nfeek2m*(d**4 + 6*d**2*eek2**2 + eek2**4 - d**2*ek**2 + eek2**2*ek**2 + 2*d**2*ek*ek2 + 2*eek2**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek2**2*ek*ek3 - d**2*ek2*ek3 + eek2**2*ek2*ek3 + ek**2*ek2*ek3 + 18*d**2*eek2*w + 6*eek2**3*w + 2*eek2*ek**2*w + 8*eek2*ek*ek2*w + 4*eek2*ek*ek3*w + 4*eek2*ek2*ek3*w + 11*d**2*w**2 + 11*eek2**2*w**2 + 8*ek*ek2*w**2 + 3*ek2*ek3*w**2 + 6*eek2*w**3))/(eek2*(-eek**2 + eek2**2 + 2*eek2*w + w**2)*(eek2**2 - eek3**2 + 4*eek2*w + 4*w**2)*(-eek**2 + eek2**2 + 6*eek2*w + 9*w**2)) + (nfeek3*(d**4 + 6*d**2*eek3**2 + eek3**4 - d**2*ek**2 + eek3**2*ek**2 + 2*d**2*ek*ek2 + 2*eek3**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek3**2*ek*ek3 - d**2*ek2*ek3 + eek3**2*ek2*ek3 + ek**2*ek2*ek3 + 6*d**2*eek3*w + 2*eek3**3*w + 2*eek3*ek**2*w + 4*eek3*ek*ek3*w - d**2*w**2 - eek3**2*w**2 - ek2*ek3*w**2 - 2*eek3*w**3))/(eek3*(-eek**2 + eek3**2 - 2*eek3*w + w**2)*(-eek**2 + eek3**2 + 2*eek3*w + w**2)*(-eek2**2 + eek3**2 + 4*eek3*w + 4*w**2)) - (nfeek3m*(d**4 + 6*d**2*eek3**2 + eek3**4 - d**2*ek**2 + eek3**2*ek**2 + 2*d**2*ek*ek2 + 2*eek3**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek3**2*ek*ek3 - d**2*ek2*ek3 + eek3**2*ek2*ek3 + ek**2*ek2*ek3 - 6*d**2*eek3*w - 2*eek3**3*w - 2*eek3*ek**2*w - 4*eek3*ek*ek3*w - d**2*w**2 - eek3**2*w**2 - ek2*ek3*w**2 + 2*eek3*w**3))/(eek3*(-eek**2 + eek3**2 - 2*eek3*w + w**2)*(-eek**2 + eek3**2 + 2*eek3*w + w**2)*(-eek2**2 + eek3**2 - 4*eek3*w + 4*w**2))
+
         x3333 = pre_W**2 * N0**2 *integ(W13 * integ(W12 * x3333_, axis=2), axis=1)
         return x3333
 
@@ -498,6 +514,7 @@ for p in params:
             'U': U,
             'd_eq': d_eq,
             'nb': nb,
+            'zerotemp': zerotemp,
 
             'T': T,
             'w': w,
@@ -517,6 +534,6 @@ for p in params:
 
 
     # f1 = open(f'{job_ID}_{task_ID}.pickle', 'ab')
-    f1 = open(f'result-j3.pickle', 'ab')
+    f1 = open(filename, 'ab')
     pickle.dump(res, f1)
     f1.close()
