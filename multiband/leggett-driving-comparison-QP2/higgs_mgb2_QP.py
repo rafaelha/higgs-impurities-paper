@@ -36,8 +36,6 @@ if task_ID != -1:
 else:
     print('parameters not loaded')
     pass
-    from parameters import params
-    params = [ params[0] ]
 
     u_temp = 116.032
     params_ = [
@@ -57,7 +55,7 @@ else:
             "v": [0, 0.02],
             "A0": [1,0],
             "tau": [4],
-            "w":  [0.7],
+            "w":  [0.],
             "A0_pr": [0.1, 0],
             "te": 0,
             "tau_pr": [1.5],
@@ -418,8 +416,8 @@ for p in params:
         return A0*np.sin(w*t) \
             +  A0_pr*np.exp(-(t-te-t_delay)**2/(2*tau_pr**2))*np.sin(w_pr*(t-t_delay))
 
-    # plotA(t_points,A(t_points))
-    # plt.pause(0.01)
+    plotA(t_points,A(t_points))
+    plt.pause(0.01)
 
 #%%
     def sprime(t, s):
