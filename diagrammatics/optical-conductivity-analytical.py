@@ -35,7 +35,7 @@ u_w = u_e*meV_to_THz
 u_temp = 116.032
 params_ = [
     {
-        "Ne": [1000],
+        "Ne": [400],
         "tmin": [-80],
         "tmax": [300],
         # "tmax": [450],
@@ -585,7 +585,8 @@ plt.legend()
 #%% Higgs current third order
 
 eta = 0.002
-ws = np.linspace(0,4,80)
+eta = 0.045
+ws = np.linspace(0,1,80)
 
 # Higgs propagator
 w = ws[ax,ax,:] + 1j*eta
@@ -660,3 +661,53 @@ plt.tight_layout()
 # plt.colorbar()
 
 
+
+#%% QP current third order
+
+eta = 0.01
+ws = np.linspace(0,1,20)
+
+# Higgs propagator
+w = ws[ax,ax,:] + 1j*eta
+
+ek,ek2,ek3,eek,eek2,eek3,d,W12,W13,W23,nfeek,nfeek2,nfeek3,nfeekm,nfeek2m,nfeek3m,fk,fk2,fk3 = genE(3)
+pre_W = vf**2/3/N0
+
+
+# susceptibilities
+
+ek,ek2,ek3,eek,eek2,eek3,d,W12,W13,W23,nfeek,nfeek2,nfeek3,nfeekm,nfeek2m,nfeek3m,fk,fk2,fk3 = genE(3)
+
+jQP = []
+durations = []
+for w_ in ws:
+    w = w_ + 1j*eta
+    start = time.time()
+    print(np.round(w_/ws[-1],3))
+
+    # Tr[g[ek, eek, z].g[ek3, eek3, z - w].g[ek, eek, z - 2 w].g[ek2, eek2, z + w]]
+    x3333_ = -(d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 - 18*d**2*eek*w - 6*eek**3*w - 4*eek*ek**2*w - 4*eek*ek*ek2*w - 8*eek*ek*ek3*w - 2*eek*ek2*ek3*w + 11*d**2*w**2 + 11*eek**2*w**2 + 3*ek**2*w**2 + 2*ek*ek2*w**2 + 6*ek*ek3*w**2 - 6*eek*w**3)/(2.*eek*w*(-2*eek + 2*w)*(eek**2 - eek3**2 - 2*eek*w + w**2)*(eek**2 - eek2**2 - 6*eek*w + 9*w**2)) + (d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 + 6*d**2*eek*w + 2*eek**3*w + 4*eek*ek*ek2*w + 2*eek*ek2*ek3*w - d**2*w**2 - eek**2*w**2 - ek**2*w**2 + 2*ek*ek2*w**2 - 2*ek*ek3*w**2 - 2*eek*w**3)/(2.*eek*(-2*eek - 2*w)*w*(eek**2 - eek2**2 - 2*eek*w + w**2)*(eek**2 - eek3**2 + 2*eek*w + w**2)) - (d**4 + 6*d**2*eek2**2 + eek2**4 - d**2*ek**2 + eek2**2*ek**2 + 2*d**2*ek*ek2 + 2*eek2**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek2**2*ek*ek3 - d**2*ek2*ek3 + eek2**2*ek2*ek3 + ek**2*ek2*ek3 + 18*d**2*eek2*w + 6*eek2**3*w + 2*eek2*ek**2*w + 8*eek2*ek*ek2*w + 4*eek2*ek*ek3*w + 4*eek2*ek2*ek3*w + 11*d**2*w**2 + 11*eek2**2*w**2 + 8*ek*ek2*w**2 + 3*ek2*ek3*w**2 + 6*eek2*w**3)/(eek2*(-eek**2 + eek2**2 + 2*eek2*w + w**2)*(eek2**2 - eek3**2 + 4*eek2*w + 4*w**2)*(-eek**2 + eek2**2 + 6*eek2*w + 9*w**2)) - (d**4 + 6*d**2*eek3**2 + eek3**4 - d**2*ek**2 + eek3**2*ek**2 + 2*d**2*ek*ek2 + 2*eek3**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek3**2*ek*ek3 - d**2*ek2*ek3 + eek3**2*ek2*ek3 + ek**2*ek2*ek3 - 6*d**2*eek3*w - 2*eek3**3*w - 2*eek3*ek**2*w - 4*eek3*ek*ek3*w - d**2*w**2 - eek3**2*w**2 - ek2*ek3*w**2 + 2*eek3*w**3)/(eek3*(-eek**2 + eek3**2 - 2*eek3*w + w**2)*(-eek**2 + eek3**2 + 2*eek3*w + w**2)*(-eek2**2 + eek3**2 - 4*eek3*w + 4*w**2))
+    x3333 = pre_W**2 * N0**3 * integ(W12 * W13 * x3333_, axis=(1,2,3))
+
+    jQP_ = 1/4 * 4 * x3333
+
+    jQP.append( jQP_)
+    durations.append(time.time()-start)
+
+    print('Est. time remaining: ', np.round(np.mean(durations) * (len(ws)-len(durations)) / 60,1), 'min')
+jQP = np.stack(jQP)
+print('Finished. Total duration: ', np.round(np.sum(durations)/60,1), 'min')
+#%%
+plt.figure('jQP')
+plt.clf()
+missing_factor = 10
+plt.plot(ws,np.abs(jQP[:,0]/missing_factor), '--', c='r', label='Higgs')
+plt.plot(ws,np.abs(jQP[:,1]/missing_factor), '--', c='g', label='Higgs')
+plt.plot(ws,np.abs(np.sum(jQP,axis=1))/missing_factor, label='Higgs')
+factor = 0.01619978567238627
+if compare: plt.plot(xx,JQP*factor)
+plt.axvline(d_eq0[0], c='gray', lw=0.5)
+plt.axvline(d_eq0[1], c='gray', lw=0.5)
+plt.xlabel('$\omega$')
+plt.ylabel('$j_3$ (QP-para)')
+plt.tight_layout()

@@ -716,7 +716,7 @@ def z(array):
 vv = []
 en = []
 
-for j, v in z(vs[2:3]):
+for j, v in z([vs[-1]]):
     plt.pause(0.1)
     for i, case in z(fourcases):
         xx = []
@@ -794,6 +794,7 @@ for j, v in z(vs[2:3]):
         plt.xlabel('$\omega$ (of driving pulse)')
         plt.ylabel('THG signal strength (a.u.)')
 
+        yy = JH
         peaks, _ = find_peaks(yy, width=2, distance=5)
         # print(peaks)
         plt.plot(np.array(xx)[peaks],np.array(yy)[peaks],'x')
