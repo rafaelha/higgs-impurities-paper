@@ -1,0 +1,4 @@
+../j3-farm.py:118: RuntimeWarning: divide by zero encountered in double_scalars
+  B = 1/(kb*T)
+../j3-farm.py:254: RuntimeWarning: divide by zero encountered in double_scalars
+  B = 1/(kb*T)

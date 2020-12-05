@@ -28,7 +28,7 @@ plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
-folder = 'j3_0'
+folder = 'j3_T'
 files = glob.glob(f'{folder}/*.pickle')
 
 save_plots = False
@@ -83,47 +83,70 @@ for f in files:
         reader.close()
 
 w = []
+T = []
 jh = []
 jl = []
 jl2 = []
 jqp = []
+durations = []
 
 for r in res:
     w.append(r['w'])
+    T.append(r['T'])
+
     jh.append(r['jH'])
     jl.append(r['jL'])
     jl2.append(r['jL2'])
     jqp.append(r['jQP'])
 
+    durations.append(r['duration'])
+
 w = np.array(w)
+T = np.array(T)
 jl = np.array(jl)
 jl2 = np.array(jl2)
 jh = np.array(jh)
 jqp = np.stack(jqp)
 
-ind = np.argsort(w)
+if len(np.unique(w))>1:
+    x = np.copy(w)
+    xlabel = '$\omega$'
+    omega = True
+else:
+    x = np.copy(T)
+    xlabel = '$T$'
+    omega = False
 
+ind = np.argsort(x)
+
+x = x[ind]
 w = w[ind]
+T = T[ind]
 jh = jh[ind]
 jl = jl[ind]
 jl2 = jl2[ind]
 jqp = jqp[ind]
-#%%
+jqp_ = np.sum(jqp,axis=1)
 
 d_eq0 = r['d_eq'][:,0,0]
-jqp_ = np.sum(jqp,axis=1)
+print('eta', r['eta'])
+print('mean duration:', np.mean(durations))
 
 #%%
 plt.figure('j3')
+plt.clf()
 plt.ion()
 c = 1/9
-plt.plot(w, np.abs(jh)*c, label='Higgs')
-plt.plot(w, np.abs(jl), label='Leggett')
-plt.plot(w, np.abs(jqp_)*c, label='QP')
+plt.plot(x, np.abs(jh)*c, '.-', label='Higgs')
+plt.plot(x, np.abs(jl)*25, label='Leggett')
+plt.plot(x, np.abs(jqp_)*c, label='QP')
 
-plt.plot(w, np.abs(jh*c-jqp_*c+jl), label='Full')
+plt.plot(x, np.abs(jh*c-jqp_*c+jl), label='Full')
 
-plt.axvline(d_eq0[0], c='gray', lw=0.5)
-plt.axvline(d_eq0[1], c='gray', lw=0.5)
+if omega:
+    plt.axvline(d_eq0[0], c='gray', lw=0.5)
+    plt.axvline(d_eq0[1], c='gray', lw=0.5)
+
+plt.xlabel(xlabel)
 
 plt.legend()

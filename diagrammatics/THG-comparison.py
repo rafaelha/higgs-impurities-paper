@@ -716,7 +716,7 @@ def z(array):
 vv = []
 en = []
 
-for j, v in z([vs[-1]]):
+for j, v in z(vs):
     plt.pause(0.1)
     for i, case in z(fourcases):
         xx = []

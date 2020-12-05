@@ -27,7 +27,7 @@ do
 
 	echo "export OMP_NUM_THREADS=1" >> $FILENAME
 
-	echo "python3 j3-farm.py ${i} ${MAX}" >> $FILENAME
+	echo "python3 ../j3-farm.py ${i} ${MAX}" >> $FILENAME
 
 
 	llsubmit $FILENAME >> log.out
