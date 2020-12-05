@@ -5,11 +5,11 @@ UN0= [[0.20959821 0.04191964]
  [0.04260473 0.35170526]]
 gap= [0.3 0.7] at T=0 (computed with new function)
 gap= [0.3 0.7] at T= 8.618312189740761e-05  (computed with new function)
- finished in 0.0751482884089152s
+ finished in 1.6288108825683594s
 U= [[0.21921735 0.04384347]
  [0.04384347 0.36193115]]
 UN0= [[0.20959821 0.04191964]
  [0.04260473 0.35170526]]
 gap= [0.3 0.7] at T=0 (computed with new function)
 gap= [0.3 0.7] at T= 8.618312189740761e-05  (computed with new function)
- finished in 0.09623650709788005s
+ finished in 1.5213213046391805s

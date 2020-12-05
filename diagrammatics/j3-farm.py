@@ -43,8 +43,8 @@ filename = 'results-j3.pickle'
 
 params_ = [
     {
-        "Ne": [200],
-        "eta":  [0.03],
+        "Ne": [500],
+        "eta":  [0.006],
         # "w":  [0.3/u_w],
         "w":  np.linspace(0,1,64),
         # "T": np.linspace(0,50,32)/u_temp,
