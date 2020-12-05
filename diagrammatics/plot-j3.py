@@ -28,10 +28,12 @@ plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
-folder = 'j3_0'
+folder = 'j3_g10_5_v0p2'
 files = glob.glob(f'{folder}/*.pickle')
 
 save_plots = False
+
+plt.ion()
 
 def savefig(fname, transparent=True):
     if save_plots:
@@ -138,7 +140,7 @@ plt.clf()
 plt.ion()
 c = 1/9
 plt.plot(x, np.abs(jh)*c, '.-', label='Higgs')
-plt.plot(x, np.abs(jl)*25, label='Leggett')
+plt.plot(x, np.abs(jl), label='Leggett')
 plt.plot(x, np.abs(jqp_)*c, label='QP')
 
 plt.plot(x, np.abs(jh*c-jqp_*c+jl), label='Full')
