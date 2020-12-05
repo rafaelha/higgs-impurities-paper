@@ -29,6 +29,7 @@ plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 folder = 'j3_g10_5_v0p2'
+folder = 'j3_g10_5_v0'
 files = glob.glob(f'{folder}/*.pickle')
 
 save_plots = False
@@ -139,9 +140,10 @@ plt.figure('j3')
 plt.clf()
 plt.ion()
 c = 1/9
+magn = 20
 plt.plot(x, np.abs(jh)*c, '.-', label='Higgs')
-plt.plot(x, np.abs(jl), label='Leggett')
-plt.plot(x, np.abs(jqp_)*c, label='QP')
+plt.plot(x, np.abs(jl)*magn, label='Leggett')
+plt.plot(x, np.abs(jqp_)*c/2, label='QP')
 
 plt.plot(x, np.abs(jh*c-jqp_*c+jl), label='Full')
 
@@ -152,3 +154,10 @@ if omega:
 plt.xlabel(xlabel)
 
 plt.legend()
+
+compare = True
+if 'xx' in globals() and compare:
+    plt.plot(xx,JQP*factor, '--', c='r')
+    plt.plot(xx,JH*factor, '--', c='b')
+    plt.plot(xx,JL*factor*magn, '--', c='y')
+    plt.plot(xx,(JL+JH+JQP)*factor, '--', c='g')
