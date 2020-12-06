@@ -442,7 +442,7 @@ for p in params:
         # self-consitent recalculation of the gap
         d = U @ ( N0*integ(-d_eq1/E1*r11 + u1**2*r21 - v1**2*np.conj(r21), axis=1) )
         # d = np.array([0,0])
-        d -= 1j*d.imag # set only real gap to zero
+        d -= d.real# set only real gap to zero
 
         # this is for python broadcasting convenience
         d1 = d[:,ax]
