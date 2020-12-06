@@ -716,13 +716,14 @@ def z(array):
 vv = []
 en = []
 
-for j, v in z(vs):
+for j, v in z([vs[0]]):
     plt.pause(0.1)
     for i, case in z(fourcases):
         xx = []
         JH = []
         JL = []
         JQP = []
+        JFULL = []
         # plt.figure()
         for k, w in z(wss):
             r = sel(first=False, w=w, v=v, g=case)
@@ -745,15 +746,19 @@ for j, v in z(vs):
 
             def find3w(j3):
                 tw, j3w = fft(t,np.nan_to_num(j3))
-                y = np.abs(j3w)
+                # y = np.abs(j3w)
+                y = j3w
                 twn = tw/w
-                y[np.abs(twn-3)>0.2] = 0
-                return np.max(y)
+                idx = np.argmin(np.abs(twn-3))
+                # y[np.abs(twn-3)>0.2] = 0
+                # return np.max(y)
+                return y[idx]
 
             xx.append(w)
             JH.append(find3w(j3H))
             JL.append(find3w(j3L))
             JQP.append(find3w(j3QP))
+            JFULL.append(find3w(j3_para+j3L))
 
             if False:#k==6:
                 plt.figure(figsize=(6,3))
@@ -778,10 +783,11 @@ for j, v in z(vs):
         JH = np.array(JH)
         JL = np.array(JL)
         JQP = np.array(JQP)
-        plt.plot(xx,JH, '.-', label='Higgs')
-        plt.plot(xx,JL, '.-', label='Leggett')
-        plt.plot(xx,JQP, '.-', label='QP')
-        plt.plot(xx,JQP+JL+JH, '.-', label='full')
+        # plt.plot(xx,np.imag(JH), '.-', label='Higgs')
+        # plt.plot(xx,JL.imag, '.-', label='Leggett')
+        plt.plot(xx,JQP.imag, '.-', label='QP')
+        # plt.plot(xx,JQP+JL+JH, '.-', label='full')
+        # plt.plot(xx,JFULL, '.-', label='full')
         plt.legend()
 
         plt.title(f'v={np.round(v,2)}, g={case}')
@@ -797,7 +803,7 @@ for j, v in z(vs):
         yy = JH
         peaks, _ = find_peaks(yy, width=2, distance=5)
         # print(peaks)
-        plt.plot(np.array(xx)[peaks],np.array(yy)[peaks],'x')
+        # plt.plot(np.array(xx)[peaks],np.array(yy)[peaks],'x')
 
         if len(peaks) > 0:
             vv.append(v)

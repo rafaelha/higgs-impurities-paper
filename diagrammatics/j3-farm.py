@@ -38,15 +38,15 @@ u_w = u_e*meV_to_THz
 
 u_temp = 116.032
 
-parallel = True
+parallel = False
 filename = 'results-j3.pickle'
 
 params_ = [
     {
-        "Ne": [500],
-        "eta":  [0.008],
-        # "w":  [0.3/u_w],
-        "w":  np.linspace(0,1,64),
+        "Ne": [600],
+        "eta":  [0.01],
+        # "w":  [0.1/u_w],
+        "w":  np.linspace(0.1,0.85,25),
         # "T": np.linspace(0,50,32)/u_temp,
         "T": [0.01/u_temp],
         "wd":  [5],
@@ -55,7 +55,7 @@ params_ = [
         "ef": [ np.array([290, 70]) ],
         "g": [ np.array([10,5])],
         "pre_d0": np.array([0.3,0.7]),
-        "v": [0]
+        "v": [0,0.02,0.05,0.2,0.5]
     }
 ]
 

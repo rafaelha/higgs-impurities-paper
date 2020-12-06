@@ -37,7 +37,7 @@ u_w = u_e*meV_to_THz
 u_temp = 116.032
 params_ = [
     {
-        "Ne": [200],
+        "Ne": [600],
         "tmin": [-80],
         "tmax": [300],
         # "tmax": [450],
@@ -51,7 +51,7 @@ params_ = [
         # "g": [ r['g'] ],
         "pre_d0": np.array([0.3,0.7]),
         # "pre_d0": np.array([0.29817841,0.70076507]),
-        "v": [0.2],#np.linspace(0.0002,1,40),
+        "v": [0.5],#np.linspace(0.0002,1,40),
         "A0": [1],
         "tau": [10],
         "w":  [0.2],
@@ -444,7 +444,7 @@ def integ(x, axis):
     return np.sum(x, axis=axis) * dx
     """
 
-#%% optical conductivity first order
+#% optical conductivity first order
 
 # eta = 0.005
 # ws1 = np.linspace(0,1.4*4,20)
@@ -508,11 +508,11 @@ def integ(x, axis):
 # plt.xlim((-2,6))
 # plt.tight_layout()
 
-#%% Leggett current third order
+#% Leggett current third order
 compare = True
 
-eta = 0.021
-wsl = np.linspace(0,1,1000)
+eta = 0.01
+wsl = np.linspace(0,1,300)
 
 w = 2*(wsl[ax,ax,:] + 1j*eta)
 w2 = 2*(wsl+ 1j*eta)
@@ -554,11 +554,11 @@ plt.plot(wsl,np.abs(jL2), label='Leggett2')
 compare = False
 if 'xx' in globals(): compare = True
 if compare:
-    factor=1/np.max(JL)*np.max(np.abs(jL))
+    factor=1/np.max(np.abs(JL))*np.max(np.abs(jL))
     print(factor)
-    plt.plot(xx,JL*factor, label='sim-Paul')
-plt.plot(wsl,np.abs(np.sum(jQPdia,0)), ':', label='QP-dia')
-plt.plot(wsl,np.abs(jphase), '--', label='Phase')
+    plt.plot(xx,np.abs(JL)*factor, label='sim-Paul')
+# plt.plot(wsl,np.abs(np.sum(jQPdia,0)), ':', label='QP-dia')
+# plt.plot(wsl,np.abs(jphase), '--', label='Phase')
 plt.axvline(d_eq0[0], c='gray', lw=0.5)
 plt.axvline(d_eq0[1], c='gray', lw=0.5)
 plt.xlabel('$\omega$')
@@ -577,12 +577,12 @@ plt.pause(0.01)
 # plt.figure('det')
 # plt.plot(ws,np.abs(d_phi)*np.abs(ddet)/ws**2)
 # plt.ylim((0,8))
-
+# plt.xlim((-100,100))
 
 #%% Higgs current third order
 
-eta = 0.027
-wsh = np.linspace(0,1,30)
+eta = 0.01
+wsh = np.linspace(0.1,0.85,20)
 
 # Higgs propagator
 w = wsh[ax,ax,:] + 1j*eta
@@ -632,11 +632,12 @@ for sel in wssplit:
 print('Finished. Total duration: ', np.round(np.sum(durations)/60,1), 'min')
 jH = np.concatenate(jH)
 
+#%%
 plt.figure('jH')
 plt.clf()
 plt.plot(wsh,np.abs(jH)/9, label='Higgs')
 factor = 0.01619978567238627
-if compare: plt.plot(xx,JH*factor)
+if compare: plt.plot(xx,np.abs(JH)*factor)
 plt.axvline(d_eq0[0], c='gray', lw=0.5)
 plt.axvline(d_eq0[1], c='gray', lw=0.5)
 plt.xlabel('$\omega$')
@@ -649,8 +650,8 @@ plt.pause(0.01)
 
 #%% QP current third order (parallelized code)
 
-eta = 0.06
-ws = np.linspace(0.1,0.9,16)
+eta = 0.01
+ws = np.linspace(0.1,0.85,20)
 
 # Higgs propagator
 w = ws[ax,ax,:] + 1j*eta
@@ -723,3 +724,5 @@ if compare:
     plt.plot(xx,JQP*factor, '--', c='r')
     plt.plot(xx,JH*factor, '--', c='b')
     plt.plot(xx,JL*factor, '--', c='y')
+#%%
+plt.plot(ws,np.imag(jQP), label='Leggett=QPdia + phase')
