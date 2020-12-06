@@ -716,7 +716,13 @@ def z(array):
 vv = []
 en = []
 
-for j, v in z([vs[0]]):
+JH_ = []
+JL_ = []
+JQP_ = []
+JFULL_ = []
+V_ = []
+
+for j, v in z(vs):
     plt.pause(0.1)
     for i, case in z(fourcases):
         xx = []
@@ -746,13 +752,13 @@ for j, v in z([vs[0]]):
 
             def find3w(j3):
                 tw, j3w = fft(t,np.nan_to_num(j3))
-                # y = np.abs(j3w)
-                y = j3w
+                y = np.abs(j3w)
+                # y = j3w
                 twn = tw/w
-                idx = np.argmin(np.abs(twn-3))
-                # y[np.abs(twn-3)>0.2] = 0
-                # return np.max(y)
-                return y[idx]
+                # idx = np.argmin(np.abs(twn-3))
+                y[np.abs(twn-3)>0.5] = 0
+                idx =  np.argmax(y)
+                return j3w[idx]
 
             xx.append(w)
             JH.append(find3w(j3H))
@@ -783,11 +789,19 @@ for j, v in z([vs[0]]):
         JH = np.array(JH)
         JL = np.array(JL)
         JQP = np.array(JQP)
-        # plt.plot(xx,np.imag(JH), '.-', label='Higgs')
-        # plt.plot(xx,JL.imag, '.-', label='Leggett')
-        plt.plot(xx,JQP.imag, '.-', label='QP')
+        JFULL = np.array(JFULL)
+
+        V_.append(v)
+        JH_.append(JH)
+        JL_.append(JL)
+        JQP_.append(JQP)
+        JFULL_.append(JFULL)
+
+        plt.plot(xx,np.abs(JH), '.-', label='Higgs')
+        plt.plot(xx,np.abs(JL)*20, '.-', label='Leggett (x20)')
+        plt.plot(xx,np.abs(JQP), '.-', label='QP')
         # plt.plot(xx,JQP+JL+JH, '.-', label='full')
-        # plt.plot(xx,JFULL, '.-', label='full')
+        plt.plot(xx,np.abs(JFULL), '.-', label='full')
         plt.legend()
 
         plt.title(f'v={np.round(v,2)}, g={case}')
@@ -800,26 +814,26 @@ for j, v in z([vs[0]]):
         plt.xlabel('$\omega$ (of driving pulse)')
         plt.ylabel('THG signal strength (a.u.)')
 
-        yy = JH
-        peaks, _ = find_peaks(yy, width=2, distance=5)
-        # print(peaks)
-        # plt.plot(np.array(xx)[peaks],np.array(yy)[peaks],'x')
+        # yy = JH
+        # peaks, _ = find_peaks(yy, width=2, distance=5)
+        # # print(peaks)
+        # # plt.plot(np.array(xx)[peaks],np.array(yy)[peaks],'x')
 
-        if len(peaks) > 0:
-            vv.append(v)
-            en.append(xx[peaks[0]])
+        # if len(peaks) > 0:
+        #     vv.append(v)
+        #     en.append(xx[peaks[0]])
 
 
         plt.tight_layout()
         # plt.savefig(f'figs-driving/{folder}-v{j}-case{i}.pdf')
 
 
-plt.figure()
-plt.plot(vv,np.array(en)*2,'.-')
-plt.axhline(2*d_eq[0],c='gray',lw=0.5)
-plt.axhline(2*d_eq[1],c='gray',lw=0.5)
-plt.xlabel('$v$')
-plt.ylabel('$\omega$')
+# plt.figure()
+# plt.plot(vv,np.array(en)*2,'.-')
+# plt.axhline(2*d_eq[0],c='gray',lw=0.5)
+# plt.axhline(2*d_eq[1],c='gray',lw=0.5)
+# plt.xlabel('$v$')
+# plt.ylabel('$\omega$')
 # plt.savefig(f'figs-driving/{folder}-legget-energy.pdf')
 
 
