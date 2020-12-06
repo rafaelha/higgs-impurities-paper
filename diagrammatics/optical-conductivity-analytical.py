@@ -56,7 +56,7 @@ u_w = u_e*meV_to_THz
 u_temp = 116.032
 params_ = [
     {
-        "Ne": [6400],
+        "Ne": [300],
         "tmin": [-80],
         "tmax": [300],
         # "tmax": [450],
@@ -66,11 +66,12 @@ params_ = [
         "s": np.array([1,-1]),
         "m": [ np.array([0.85, 1.38]) ],
         "ef": [ np.array([290, 70]) ],
-        "g": [ np.array([10,5])],
+        # "g": [ np.array([10,5])],
+        "g": [ np.array([1e-1,1e-1])],
         # "g": [ r['g'] ],
         "pre_d0": np.array([0.3,0.7]),
         # "pre_d0": np.array([0.29817841,0.70076507]),
-        "v": [0.2],#np.linspace(0.0002,1,40),
+        "v": [0.5],#np.linspace(0.0002,1,40),
         "A0": [1],
         "tau": [10],
         "w":  [0.2],
@@ -631,56 +632,12 @@ jphase = 4 * 1/2 * np.einsum('iw,ijw,jw->w',x33*si/(2*mi), Linv, x33*si/(2*mi) )
 jQPdia = 4 * 1/2 * (si/2/mi)**2 * x33 #paramagnetic current at third order
 
 jL = np.sum(jQPdia,0)+jphase
-
-# m1 = m[0]
-# m2 = m[1]
-# s1 = s[0]
-# s2 = s[1]
-
-# jL2 = -4 * 1/2*1/4* kappa * (s1/m1-s2/m2)**2 / (-w2**2 - kappa*(x33[0]+x33[1])/(x33[0]*x33[1]))
-
-
-# d_theta = np.einsum('ijw,jw->iw', Linv, x33*si/(2*mi))
-
-
-
 plt.figure('jL')
-# plt.clf()
-plt.plot(wsl,np.abs(jL), label='Leggett=QPdia + phase')
-# plt.plot(wsl,np.abs(jL2),'--', label='Leggett2')
-# compare = False
-# if 'xx' in globals(): compare = True
-# if compare:
-#     factor=1/np.max(np.abs(JL))*np.max(np.abs(jL))
-#     print(factor)
-#     plt.plot(xx,np.abs(JL)*factor, label='sim-Paul')
-# # plt.plot(wsl,np.abs(np.sum(jQPdia,0)), ':', label='QP-dia')
-# # plt.plot(wsl,np.abs(jphase), '--', label='Phase')
-plt.axvline(d_eq0[0], c='gray', lw=0.5)
-plt.axvline(d_eq0[1], c='gray', lw=0.5)
-# plt.xlabel('$\omega$')
-# plt.legend()
-# plt.pause(0.01)
-
-# plt.figure('dphi')
-# plt.title('$\delta\\varphi$')
-# plt.plot(wsl, np.abs(d_phi)/wsl**2/(1/m1-1/m2)/10)
-# plt.axvline(d_eq0[0], c='gray', lw=0.5)
-# plt.axvline(d_eq0[1], c='gray', lw=0.5)
-
-# d_phi = (d_theta[0]-d_theta[1]) / (s1/m1-s2/m2)
-
-# ddet = w2**2 + kappa*(x33[0]+x33[1])/(x33[0]*x33[1])
-# plt.plot(wsl,1/np.abs(ddet))
-
-# plt.figure('det')
-# plt.plot(wsl,np.abs(d_phi/w2**2)  * np.abs(ddet) )
-# plt.ylim((0,10))
-# plt.xlim((-100,100))
+plt.plot(wsl,np.abs(jL), '--', label='Leggett=QPdia + phase')
 
 #%% Higgs current third order
 
-eta = 0.01
+eta = 0.04
 wsh = np.linspace(0.1,0.85,20)
 
 # Higgs propagator
@@ -731,7 +688,6 @@ for sel in wssplit:
 print('Finished. Total duration: ', np.round(np.sum(durations)/60,1), 'min')
 jH = np.concatenate(jH)
 
-#%%
 plt.figure('jH')
 plt.clf()
 plt.plot(wsh,np.abs(jH)/9, label='Higgs')
@@ -743,6 +699,8 @@ plt.xlabel('$\omega$')
 plt.ylabel('$j_3$ (Higgs)')
 plt.tight_layout()
 plt.pause(0.01)
+
+print(np.max(np.abs(x100r)))
 
 
 

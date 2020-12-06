@@ -1,0 +1,8 @@
+125 parameters generated
+U= [[0.29819135 0.        ]
+ [0.         0.38627143]]
+UN0= [[0.28510687 0.        ]
+ [0.         0.37535785]]
+gap= [0.3 0.7] at T=0 (computed with new function)
+gap= [0.3 0.7] at T= 8.618312189740761e-05  (computed with new function)
+ finished in 335.39034436543784s

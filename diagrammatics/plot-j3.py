@@ -30,7 +30,8 @@ plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 folder = 'j3_g10_5_v0p2'
 folder = 'j3_g10_5_v0'
-folder = 'j3_g10_5_vall'
+folder = 'j3_g10_5_vall-highres'
+# folder = 'j3_g10_5_vall'
 files = glob.glob(f'{folder}/*.pickle')
 
 save_plots = False
@@ -94,8 +95,8 @@ jl2 = []
 jqp = []
 durations = []
 
-vv = [0,0.02,0.05,0.5,0.5]
-v = 0.0
+vv = [0,0.02,0.05,0.2,0.5]
+v = 0.5
 
 for r in res:
     if r['v']==v:
@@ -171,3 +172,6 @@ if 'xx' in globals() and compare:
     plt.plot(xx,np.abs(JH_)[idx]*factor, '--', c='b')
     plt.plot(xx,np.abs(JL_)[idx]*factor*magn, '--', c='y')
     # plt.plot(xx,np.abs(JFULL_[idx])*factor, '--', c='g')
+plt.title(f'$g=10/5 v={str(v)}$')
+
+plt.savefig(next('comp'))
