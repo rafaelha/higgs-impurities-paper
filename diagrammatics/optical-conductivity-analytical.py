@@ -614,8 +614,7 @@ w = wsl[ax,ax,:] + 1j*eta
 ek,ek2,eek,eek2,d,W12,nfeek,nfeek2,nfeekm,nfeek2m,fk,fk2 = genE(2)
 
 # x33_ = ((d**2 + eek**2 - ek**2)*(nfeek - nfeekm))/(2.*eek*(eek - w)*(eek + w))
-
-x33_ = -((-d**2 + eek**2 + ek**2)/(2*eek**3 - 2*eek*w**2))
+x33_ = -((d**2 + eek**2 - ek**2)/(2*eek**3 - 2*eek*w**2))
 x33 = N0[:,ax] * integ(x33_, axis=1)
 
 kappa = 8*d_eq0[0]*d_eq0[1]*U[0,1]/np.linalg.det(U)
