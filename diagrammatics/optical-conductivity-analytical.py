@@ -16,6 +16,25 @@ import os
 import gc
 import time
 from multiprocessing import Pool
+from cycler import cycler
+
+CB_color_cycle = ['#377eb8', '#ff7f00', '#4daf4a', '#f781bf', '#a65628', '#984ea3', '#999999', '#e41a1c', '#dede00']
+tableau10 = ['#4e79a7', '#f28e2b', '#e15759', '#76b7b2', '#59a14f', '#edc948', '#b07aa1', '#ff9da7', '#9c755f']#, '#bab0ac']
+tableauCB = ['#1170aa', '#fc7d0b', '#a3acb9', '#57606c', '#5fa2ce', '#c85200', '#7b848f', '#a3cce9', '#ffbc79', '#c8d0d9']
+mpl.rcParams['axes.prop_cycle'] = cycler(color=tableau10)
+
+SMALL_SIZE = 11
+MEDIUM_SIZE = 13
+BIGGER_SIZE = 15
+
+plt.rc('font', size=MEDIUM_SIZE)          # controls default text sizes
+plt.rc('axes', titlesize=MEDIUM_SIZE)     # fontsize of the axes title
+plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
+plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+
 
 code_version = {
     "1.0": "first version",
@@ -37,7 +56,7 @@ u_w = u_e*meV_to_THz
 u_temp = 116.032
 params_ = [
     {
-        "Ne": [600],
+        "Ne": [6400],
         "tmin": [-80],
         "tmax": [300],
         # "tmax": [450],
@@ -444,10 +463,10 @@ def integ(x, axis):
     return np.sum(x, axis=axis) * dx
     """
 
-#% optical conductivity first order
+# #%% optical conductivity first order
 
-# eta = 0.005
-# ws1 = np.linspace(0,1.4*4,20)
+# eta = 0.406
+# ws1 = np.linspace(0,1.4*4,70)
 # ws2 = np.logspace(-1.5,0.5,30)
 # ws = np.sort(np.concatenate([ws1,ws2]))
 
@@ -481,7 +500,7 @@ def integ(x, axis):
 # plt.figure('cond-imp-real')
 # plt.clf()
 # plt.subplot(121)
-# # plt.plot(wg*u_w,np.abs(c.real), label=f'$\gamma/2\Delta={str(np.round(g[0]/2/gap,1))}$')
+# plt.plot(wg*u_w,np.abs(c.real), label=f'$\gamma/2\Delta={str(np.round(g[0]/2/gap,1))}$')
 # # g = r['g']
 # # plt.title(f'$\gamma_1={g[0]}, \gamma_2={g[1]}$')
 # plt.xlim((0,6))
@@ -496,22 +515,25 @@ def integ(x, axis):
 # plt.tight_layout()
 
 # plt.subplot(122)
-# # plt.loglog(wg*u_w,c.imag, '.-', label=f'$\gamma/2\Delta={str(np.round(g[0]/2/gap,1))}$')
+# plt.loglog(wg*u_w,c.imag, '-', label='density matr.')
 # plt.xlim((0,6))
 # plt.axvline(2*d_eq0[0]*u_w, c='gray', lw=0.5)
 # plt.axvline(2*d_eq0[1]*u_w, c='gray', lw=0.5)
-# plt.plot(ws*u_w, sigma.imag, '.')
+# plt.plot(ws*u_w, sigma.imag, '.', label='eff. action')
 # plt.ylabel('$\sigma\,\'\'$ ($\Omega^{-1}$cm$^{-1}$)')
 # plt.xlabel('Frequency (THz)')
 # # plt.ticklabel_format(axis="y", style="sci", scilimits=(2,4))
 # # plt.ylim((0,0.5e5))
 # plt.xlim((-2,6))
+# plt.legend()
 # plt.tight_layout()
 
-#% Leggett current third order
-compare = True
+# plt.savefig('opt-cond-comparison-eff-action.pdf')
 
-eta = 0.01
+#%% Leggett current third order
+compare =False 
+
+eta = 0.001
 wsl = np.linspace(0,1,300)
 
 w = 2*(wsl[ax,ax,:] + 1j*eta)
@@ -529,7 +551,7 @@ mi = m[:,ax]
 
 det = (-x33[0]-kappa/w2**2)*(-x33[1]-kappa/w2**2) - kappa**2/w2**4
 Linv = 4 / det * np.array([[-x33[1]-kappa/w2**2,  -kappa/w2**2], \
-                                 [-kappa/w2**2,         -x33[0]-kappa/w2**2]])
+                           [-kappa/w2**2,         -x33[0]-kappa/w2**2]])
 
 jphase = 4 * 1/2 * 2**(-4) * np.einsum('iw,ijw,jw->w',x33*si/mi,Linv,x33*si/mi) # 4 legs to do functional derivation
 jQPdia = 4* 1/2* (si/2/mi)**2 * x33 #paramagnetic current at third order
@@ -543,40 +565,116 @@ jL2 = -4 * 1/2*1/4* kappa * (s1/m1-s2/m2)**2 / (-w2**2 - kappa*(x33[0]+x33[1])/(
 
 
 d_theta = 2 * 2**(-3) * np.einsum('ijw,jw->iw',Linv,x33*si/mi)
-d_phi = d_theta[0]-d_theta[1]
+
+
+
+# plt.figure('jL')
+# plt.clf()
+# plt.plot(wsl,np.abs(jL), label='Leggett=QPdia + phase')
+# plt.plot(wsl,np.abs(jL2),'--', label='Leggett2')
+# compare = False
+# if 'xx' in globals(): compare = True
+# if compare:
+#     factor=1/np.max(np.abs(JL))*np.max(np.abs(jL))
+#     print(factor)
+#     plt.plot(xx,np.abs(JL)*factor, label='sim-Paul')
+# # plt.plot(wsl,np.abs(np.sum(jQPdia,0)), ':', label='QP-dia')
+# # plt.plot(wsl,np.abs(jphase), '--', label='Phase')
+# plt.axvline(d_eq0[0], c='gray', lw=0.5)
+# plt.axvline(d_eq0[1], c='gray', lw=0.5)
+# plt.xlabel('$\omega$')
+# plt.legend()
+# plt.pause(0.01)
+
+plt.figure('dphi')
+# plt.title('$\delta\\varphi$')
+# plt.plot(wsl, np.abs(d_phi)/wsl**2/(1/m1-1/m2)/10)
+# plt.axvline(d_eq0[0], c='gray', lw=0.5)
+# plt.axvline(d_eq0[1], c='gray', lw=0.5)
+
+d_phi = (d_theta[0]-d_theta[1]) / (s1/m1-s2/m2)
+
+ddet = w2**2 + kappa*(x33[0]+x33[1])/(x33[0]*x33[1])
+plt.plot(wsl,1/np.abs(ddet))
+
+plt.figure('det')
+plt.plot(wsl,np.abs(d_phi/w2**2)  * np.abs(ddet) )
+plt.ylim((0,10))
+# plt.xlim((-100,100))
+
+
+#%% Leggett current third order >>> 2 <<<
+compare =False
+
+eta = 0.001
+wsl = np.linspace(0,1,300)
+
+w = wsl[ax,ax,:] + 1j*eta
+
+ek,ek2,eek,eek2,d,W12,nfeek,nfeek2,nfeekm,nfeek2m,fk,fk2 = genE(2)
+
+x33_ = 1
+x33 = N0[:,ax] * integ(x33_, axis=1)
+
+kappa = 8*d_eq0[0]*d_eq0[1]*U[0,1]/np.linalg.det(U)
+
+si = s[:,ax]
+mi = m[:,ax]
+
+w2 = 2* ( wsl+ 1j*eta )
+det = (-x33[0]-kappa/w2**2)*(-x33[1]-kappa/w2**2) - kappa**2/w2**4
+Linv = 1 / det * np.array([[-x33[1]-kappa/w2**2,  -kappa/w2**2], \
+                           [-kappa/w2**2,         -x33[0]-kappa/w2**2]])
+
+jphase = 4 * 1/2 * np.einsum('iw,ijw,jw->w',x33*si/(2*mi), Linv, x33*si/(2*mi) ) # 4 legs to do functional derivation
+jQPdia = 4 * 1/2 * (si/2/mi)**2 * x33 #paramagnetic current at third order
+
+jL = np.sum(jQPdia,0)+jphase
+
+# m1 = m[0]
+# m2 = m[1]
+# s1 = s[0]
+# s2 = s[1]
+
+# jL2 = -4 * 1/2*1/4* kappa * (s1/m1-s2/m2)**2 / (-w2**2 - kappa*(x33[0]+x33[1])/(x33[0]*x33[1]))
+
+
+# d_theta = np.einsum('ijw,jw->iw', Linv, x33*si/(2*mi))
 
 
 
 plt.figure('jL')
 plt.clf()
 plt.plot(wsl,np.abs(jL), label='Leggett=QPdia + phase')
-plt.plot(wsl,np.abs(jL2), label='Leggett2')
-compare = False
-if 'xx' in globals(): compare = True
-if compare:
-    factor=1/np.max(np.abs(JL))*np.max(np.abs(jL))
-    print(factor)
-    plt.plot(xx,np.abs(JL)*factor, label='sim-Paul')
-# plt.plot(wsl,np.abs(np.sum(jQPdia,0)), ':', label='QP-dia')
-# plt.plot(wsl,np.abs(jphase), '--', label='Phase')
-plt.axvline(d_eq0[0], c='gray', lw=0.5)
-plt.axvline(d_eq0[1], c='gray', lw=0.5)
-plt.xlabel('$\omega$')
-plt.legend()
-plt.pause(0.01)
+# plt.plot(wsl,np.abs(jL2),'--', label='Leggett2')
+# compare = False
+# if 'xx' in globals(): compare = True
+# if compare:
+#     factor=1/np.max(np.abs(JL))*np.max(np.abs(jL))
+#     print(factor)
+#     plt.plot(xx,np.abs(JL)*factor, label='sim-Paul')
+# # plt.plot(wsl,np.abs(np.sum(jQPdia,0)), ':', label='QP-dia')
+# # plt.plot(wsl,np.abs(jphase), '--', label='Phase')
+# plt.axvline(d_eq0[0], c='gray', lw=0.5)
+# plt.axvline(d_eq0[1], c='gray', lw=0.5)
+# plt.xlabel('$\omega$')
+# plt.legend()
+# plt.pause(0.01)
 
 # plt.figure('dphi')
 # plt.title('$\delta\\varphi$')
-# plt.plot(ws, np.abs(d_phi)/ws**2/7.6)
+# plt.plot(wsl, np.abs(d_phi)/wsl**2/(1/m1-1/m2)/10)
 # plt.axvline(d_eq0[0], c='gray', lw=0.5)
 # plt.axvline(d_eq0[1], c='gray', lw=0.5)
 
+# d_phi = (d_theta[0]-d_theta[1]) / (s1/m1-s2/m2)
+
 # ddet = w2**2 + kappa*(x33[0]+x33[1])/(x33[0]*x33[1])
-# plt.plot(ws,1/np.abs(ddet))
+# plt.plot(wsl,1/np.abs(ddet))
 
 # plt.figure('det')
-# plt.plot(ws,np.abs(d_phi)*np.abs(ddet)/ws**2)
-# plt.ylim((0,8))
+# plt.plot(wsl,np.abs(d_phi/w2**2)  * np.abs(ddet) )
+# plt.ylim((0,10))
 # plt.xlim((-100,100))
 
 #%% Higgs current third order

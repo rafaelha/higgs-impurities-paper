@@ -960,8 +960,8 @@ plt.figure('cond-imp-imag', figsize=(3,2.8))
 plt.clf()
 plt.figure('cond-imp-legend', figsize=(5,5))
 plt.clf()
-gammas1 = gammas[np.array([16])]
-gammas2 = gammas[np.array([1])]
+gammas1 = gammas[np.array([-1])]
+gammas2 = gammas[np.array([-3])]
 for g1 in gammas1:
     for g2 in gammas2:
         g = np.array([g1,g2])
@@ -977,8 +977,8 @@ for g1 in gammas1:
         u_w = u_e*meV_to_THz
         plt.plot(wg*u_w,np.abs(c.real), label=f'$\gamma/2\Delta={str(np.round(g[0]/2/gap,1))}$',ls=ls)
         plt.xlabel('Frequency (THz)')
-        # plt.xlim((0,5.5))
-        plt.ylim((0,2e5))
+        plt.xlim((0,5.5))
+        plt.ylim((0,1e5))
         plt.ylabel('$\sigma\,\'$ ($\Omega^{-1}$cm$^{-1}$)')
         plt.ticklabel_format(axis="y", style="sci", scilimits=(2,4))
         # plt.legend()

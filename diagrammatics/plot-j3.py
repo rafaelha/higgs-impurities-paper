@@ -30,6 +30,7 @@ plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 folder = 'j3_g10_5_v0p2'
 folder = 'j3_g10_5_v0'
+folder = 'j3_g10_5_vall'
 files = glob.glob(f'{folder}/*.pickle')
 
 save_plots = False
@@ -93,16 +94,20 @@ jl2 = []
 jqp = []
 durations = []
 
+vv = [0,0.02,0.05,0.5,0.5]
+v = 0.0
+
 for r in res:
-    w.append(r['w'])
-    T.append(r['T'])
+    if r['v']==v:
+        w.append(r['w'])
+        T.append(r['T'])
 
-    jh.append(r['jH'])
-    jl.append(r['jL'])
-    jl2.append(r['jL2'])
-    jqp.append(r['jQP'])
+        jh.append(r['jH'])
+        jl.append(r['jL'])
+        jl2.append(r['jL2'])
+        jqp.append(r['jQP'])
 
-    durations.append(r['duration'])
+        durations.append(r['duration'])
 
 w = np.array(w)
 T = np.array(T)
@@ -136,7 +141,7 @@ print('eta', r['eta'])
 print('mean duration:', np.mean(durations))
 
 #%%
-plt.figure('j3')
+plt.figure('j3', figsize=(9,8))
 plt.clf()
 plt.ion()
 c = 1/9
@@ -145,7 +150,7 @@ plt.plot(x, np.abs(jh)*c, '.-', label='Higgs')
 plt.plot(x, np.abs(jl)*magn, label='Leggett')
 plt.plot(x, np.abs(jqp_)*c/2, label='QP')
 
-plt.plot(x, np.abs(jh*c-jqp_*c+jl), label='Full')
+# plt.plot(x, np.abs(jh*c-jqp_*c/2+jl), label='Full')
 
 if omega:
     plt.axvline(d_eq0[0], c='gray', lw=0.5)
@@ -155,9 +160,14 @@ plt.xlabel(xlabel)
 
 plt.legend()
 
-compare = True
+compare = True 
 if 'xx' in globals() and compare:
-    plt.plot(xx,JQP*factor, '--', c='r')
-    plt.plot(xx,JH*factor, '--', c='b')
-    plt.plot(xx,JL*factor*magn, '--', c='y')
-    plt.plot(xx,(JL+JH+JQP)*factor, '--', c='g')
+    idx = np.argmin(np.abs(vs-v))
+
+    # factor = np.max(np.abs(jl))/np.max(np.abs(JL_[idx]))
+
+    factor = 0.01619978567238627
+    plt.plot(xx,np.abs(JQP_)[idx]*factor, '--', c='r')
+    plt.plot(xx,np.abs(JH_)[idx]*factor, '--', c='b')
+    plt.plot(xx,np.abs(JL_)[idx]*factor*magn, '--', c='y')
+    # plt.plot(xx,np.abs(JFULL_[idx])*factor, '--', c='g')
