@@ -70,7 +70,7 @@ params_ = [
         # "g": [ r['g'] ],
         "pre_d0": np.array([0.3,0.7]),
         # "pre_d0": np.array([0.29817841,0.70076507]),
-        "v": [0.5],#np.linspace(0.0002,1,40),
+        "v": [0.2],#np.linspace(0.0002,1,40),
         "A0": [1],
         "tau": [10],
         "w":  [0.2],
@@ -533,7 +533,7 @@ def integ(x, axis):
 #%% Leggett current third order
 compare =False 
 
-eta = 0.001
+eta = 0.005
 wsl = np.linspace(0,1,300)
 
 w = 2*(wsl[ax,ax,:] + 1j*eta)
@@ -568,9 +568,9 @@ d_theta = 2 * 2**(-3) * np.einsum('ijw,jw->iw',Linv,x33*si/mi)
 
 
 
-# plt.figure('jL')
-# plt.clf()
-# plt.plot(wsl,np.abs(jL), label='Leggett=QPdia + phase')
+plt.figure('jL')
+plt.clf()
+plt.plot(wsl,np.abs(jL), label='Leggett=QPdia + phase')
 # plt.plot(wsl,np.abs(jL2),'--', label='Leggett2')
 # compare = False
 # if 'xx' in globals(): compare = True
@@ -586,27 +586,27 @@ d_theta = 2 * 2**(-3) * np.einsum('ijw,jw->iw',Linv,x33*si/mi)
 # plt.legend()
 # plt.pause(0.01)
 
-plt.figure('dphi')
+# plt.figure('dphi')
 # plt.title('$\delta\\varphi$')
 # plt.plot(wsl, np.abs(d_phi)/wsl**2/(1/m1-1/m2)/10)
 # plt.axvline(d_eq0[0], c='gray', lw=0.5)
 # plt.axvline(d_eq0[1], c='gray', lw=0.5)
 
-d_phi = (d_theta[0]-d_theta[1]) / (s1/m1-s2/m2)
+# d_phi = (d_theta[0]-d_theta[1]) / (s1/m1-s2/m2)
 
-ddet = w2**2 + kappa*(x33[0]+x33[1])/(x33[0]*x33[1])
-plt.plot(wsl,1/np.abs(ddet))
+# ddet = w2**2 + kappa*(x33[0]+x33[1])/(x33[0]*x33[1])
+# plt.plot(wsl,1/np.abs(ddet))
 
-plt.figure('det')
-plt.plot(wsl,np.abs(d_phi/w2**2)  * np.abs(ddet) )
-plt.ylim((0,10))
+# plt.figure('det')
+# plt.plot(wsl,np.abs(d_phi/w2**2)  * np.abs(ddet) )
+# plt.ylim((0,10))
 # plt.xlim((-100,100))
 
 
-#%% Leggett current third order >>> 2 <<<
+## %% Leggett current third order >>> 2 <<<
 compare =False
 
-eta = 0.001
+eta = 0.005
 wsl = np.linspace(0,1,300)
 
 w = wsl[ax,ax,:] + 1j*eta
@@ -614,6 +614,7 @@ w = wsl[ax,ax,:] + 1j*eta
 ek,ek2,eek,eek2,d,W12,nfeek,nfeek2,nfeekm,nfeek2m,fk,fk2 = genE(2)
 
 # x33_ = ((d**2 + eek**2 - ek**2)*(nfeek - nfeekm))/(2.*eek*(eek - w)*(eek + w))
+
 x33_ = -((-d**2 + eek**2 + ek**2)/(2*eek**3 - 2*eek*w**2))
 x33 = N0[:,ax] * integ(x33_, axis=1)
 
@@ -645,7 +646,7 @@ jL = np.sum(jQPdia,0)+jphase
 
 
 plt.figure('jL')
-plt.clf()
+# plt.clf()
 plt.plot(wsl,np.abs(jL), label='Leggett=QPdia + phase')
 # plt.plot(wsl,np.abs(jL2),'--', label='Leggett2')
 # compare = False
@@ -656,8 +657,8 @@ plt.plot(wsl,np.abs(jL), label='Leggett=QPdia + phase')
 #     plt.plot(xx,np.abs(JL)*factor, label='sim-Paul')
 # # plt.plot(wsl,np.abs(np.sum(jQPdia,0)), ':', label='QP-dia')
 # # plt.plot(wsl,np.abs(jphase), '--', label='Phase')
-# plt.axvline(d_eq0[0], c='gray', lw=0.5)
-# plt.axvline(d_eq0[1], c='gray', lw=0.5)
+plt.axvline(d_eq0[0], c='gray', lw=0.5)
+plt.axvline(d_eq0[1], c='gray', lw=0.5)
 # plt.xlabel('$\omega$')
 # plt.legend()
 # plt.pause(0.01)
