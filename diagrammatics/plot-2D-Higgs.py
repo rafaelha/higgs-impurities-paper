@@ -98,183 +98,67 @@ for f in files:
 
 #%%
 
-v_list = [0.01,0.02,0.05,0.1,0.2,0.4]
-v_list = [0.02]
-w_list = np.array([0.3,0.4,0.5,0.6,0.7])
-w_list = [0.3]
-v = 0.02
-w_sel = 0.6
-gammas = [np.array([10, 0.00001]), np.array([0.00001, 10]),  np.array([10,5]), np.array([0.00001,0.00001])]
-gammas = [np.array([10, 0.0001]), np.array([0.00001, 10]),  np.array([10,5]), np.array([0.00001,0.00001])]
+v_list = [0.02,0.05,0.2,0.4]
 
-ii = 0
+w_list = np.linspace(0.00001,1,100)
+T_list = np.linspace(0.00001,50,100)/u_temp
+gammas = [ np.array([10, 0.001]), np.array([0.001, 10]),  np.array([10,5])]
+
+
+vind = 0
 for v in v_list:
-    ii += 1
-    kk = 0
-    for w_sel in w_list:
-
-        print(v, w_sel)
-        kk += 1
-
-        w = []
-        T = []
-        jh = []
-        jl = []
-        jl2 = []
-        jqp = []
-        durations = []
-        d_eq = []
+    vind += 1
+    gind = 0
+    for g in gammas:
+        gind += 1
+        JH2D = np.zeros((len(w_list),len(T_list)), dtype=complex)
         for r in res:
-            if True or r['v']==v and r['w'].real*u_w==w_sel and (r['g']==gammas[0]).all():
-                r2 = r
-                w.append(r['w'])
-                T.append(r['T'])
-
-                jh.append(r['jH'])
-                # jl.append(r['jL'])
-                # jl2.append(r['jL2'])
-                # jqp.append(r['jQP'])
-
-                d_eq.append(r['d_eq0'])
-
-                durations.append(r['duration'])
-        if len(w) == 0:
-            continue
-        r = r2
-
-        w = np.array(w)
-        T = np.array(T)
-        # jl = np.array(jl)
-        # jl2 = np.array(jl2)
-        jh = np.array(jh)
-        # jqp = np.stack(jqp)
-        d_eq = np.stack(d_eq)
-
-        if len(np.unique(w))>1:
-            x = np.copy(w)
-            xlabel = '$\omega$'
-            omega = True
-        else:
-            x = np.copy(T)*u_temp
-            xlabel = '$T$'
-            omega = False
-            ww = w[0].real
-
-        ind = np.argsort(x)
-
-        x = x[ind]
-        d_eq = d_eq[ind]
-        w = w[ind]
-        T = T[ind]
-        jh = jh[ind]
-        # jl = jl[ind]
-        # jl2 = jl2[ind]
-        # jqp = jqp[ind]
-        # jqp_ = np.sum(jqp,axis=1)
-
-        d_eq0 = r['d_eq'][:,0,0]
-        g = r['g']
-        v = r['v']
-        Ne = r['Ne']
-        eta = r['eta']
-        print('eta', r['eta'])
-        print('mean duration:', np.mean(durations))
-        print('max duration:', np.max(durations))
-
-        #%%
-        plt.ion()
-        c = 1/9
-        c = 1
-        overall = 0.5
-        overall = 1
-        magn = 20
+            if r['v']==v and (r['g']==gammas[0]).all():
+                def indexof(x, array):
+                    return np.where(x==array)[0][0]
+                JH2D[indexof(r['w'].real, w_list), indexof(r['T'],T_list)] = r['jH']
 
 
-        def vlines():
-            if omega:
-                plt.axvline(d_eq0[0], c='gray', lw=0.5)
-                plt.axvline(d_eq0[1], c='gray', lw=0.5)
-            else:
-                ind = np.argmin(np.abs(ww-d_eq[:,0]))
-                plt.axvline(x[ind], c='gray', lw=0.5)
 
-                ind = np.argmin(np.abs(ww-2*d_eq[:,1]))
-                plt.axvline(x[ind], c='gray', lw=0.5)
-
-
-        plt.figure('j3', figsize=(7,7))
+        plt.figure('Higgs-2D', figsize=(3,2.8))
         plt.clf()
-        plt.plot(x, overall*np.abs(jh)*c, '.-', label='Higgs')
-        # plt.plot(x, overall*np.abs(jl)*magn, '.-', label=f'Leggett (x{magn})')
-        # plt.plot(x, overall*np.abs(jqp_)*c, label='QP')
-        # plt.plot(x, np.abs(jh*c-jqp_*c/2+jl), label='Full')
-        plt.title(f'$g={g} v={str(v)}$')
-        plt.legend()
-        vlines()
+        plt.ion()
+        data = np.abs(np.nan_to_num(JH2D))
+        plt.pcolormesh(w_list*u_w,T_list*u_temp,data.T, vmax=np.max(data), cmap='cividis')
+        plt.xlabel('$\omega$ (THz)')
+        plt.ylabel('$T$ (K)')
+        plt.colorbar()
+        plt.title(f'$v={v}$')
+        # plt.xlim((0,1.4))
+        plt.ylim((0,50))
+        plt.tight_layout()
+        plt.savefig(f'higgs-2d/v{vind}-g{gind}_abs.png', dpi=800)
+        plt.savefig(f'higgs-2d/v{vind}-g{gind}_abs.pdf', transparent=True)
 
+        plt.figure('Higgs-2d-phase', figsize=(3,2.8))
+        plt.clf()
+        plt.ion()
+        data2 = np.angle(np.nan_to_num(JH2D))/np.pi
+        # data2 -= data2[0,0]
+        plt.pcolormesh(w_list*u_w,T_list*u_temp,data2.T, cmap='hsv', vmin=-1, vmax=1)
+        plt.xlabel('$\omega$ (THz)')
+        plt.ylabel('$T$ (K)')
+        plt.colorbar()
+        plt.title(f'$v={v}$')
+        # plt.xlim((0,1.4))
+        plt.ylim((0,50))
+        plt.tight_layout()
+        plt.savefig(f'higgs-2d/v{vind}-g{gind}_phase.png', dpi=800)
+        plt.savefig(f'higgs-2d/v{vind}-g{gind}_phase.pdf', transparent=True)
 
-        # plt.figure('j3-phase', figsize=(9,8))
-        # plt.clf()
-        # def angle(x):
-        #     xx = np.angle(x)/np.pi
-        #     add = np.ones(len(x))*2
-        #     add[xx>=0]=0
-        #     return (xx+add)
-        # plt.plot(x, angle(jh), '.-', label='Higgs')
-        # plt.plot(x, angle(jl), label='Leggett')
-        # plt.plot(x, angle(jqp_), label='QP')
-        # plt.title(f'$g={g} v={str(v)}$')
-        # plt.ylabel('$\\varphi/\pi$')
-        # plt.xlabel(xlabel)
-        # plt.legend()
-        # plt.tight_layout()
-        # # plt.savefig(next('phase'))
-        # vlines()
+plt.figure('a')
+plt.clf()
+# plt.plot(w_list,data[:,0])
+def nm(x):
+    return x/np.max(x, axis=0)
+plt.plot(T_list,nm(data[::5].T))
 
-
-
-
-        plt.xlabel(xlabel)
-
-        if omega:
-            plt.title(f'$g={g}, v={str(v)}, w={np.round(ww*u_w,2)}, N_E={Ne}, \eta={eta}, T={np.round(T*u_temp,1)}$')
-        else:
-            plt.title(f'$g={g}, v={str(v)}, w={np.round(ww*u_w,2)}, N_E={Ne}, \eta={eta}$')
-        plt.legend()
-
-        plt.pause(0.01)
-        plt.savefig(next(f'grid-g6-v{ii}-w{kk}'))
-
-        compare = False
-        if 'xx' in globals() and compare:
-            if omega:
-                idx = np.argmin(np.abs(vs-v))
-                u = 1
-            else:
-                idx = np.argmin(np.abs(wss-ww))
-                plt.title(f'$g={g}, v={str(v)}, w={np.round(ww*u_w,2)}, N_E={Ne}, \eta={eta}$\n h={h}, l={np.round(l,3)}, q={np.round(q,3)}')
-                u = u_temp
-
-            factor = 0.01619978567238627
-            factor = np.abs(jh[0])/np.abs(JH_[idx,0])
-
-            h = 1
-            l = 1 / (np.abs(JL_)[idx,0]*factor/np.abs(jl[0]))
-            # l = 1/4
-            # q = 1
-            q = 1 / (np.abs(JQP_)[idx,-1]*factor/np.abs(jqp_[-1]))
-
-
-            # factor = np.max(np.abs(jl))/np.max(np.abs(JL_[idx]))
-
-            plt.figure('j3', figsize=(9,8))
-            plt.plot(np.array(xx)*u,np.abs(JH_)[idx]*factor*h, '--', c='b')
-            plt.plot(np.array(xx)*u,np.abs(JL_)[idx]*factor*magn*l, '--', c='y')
-            plt.plot(np.array(xx)*u,np.abs(JQP_)[idx]*factor*q, '--', c='r')
-
-            # plt.figure('j3-phase', figsize=(9,8))
-            # plt.plot(xx,angle(JQP_[idx]), '--', c='r')
-            # plt.plot(xx,angle(JH_[idx]), '--', c='b')
-            # plt.plot(xx,angle(JL_[idx]), '--', c='y')
-            # plt.plot(xx,np.abs(JFULL_[idx])*factor, '--', c='g')
-
+plt.figure('b')
+plt.clf()
+# plt.plot(w_list,data[:,0])
+plt.plot(T_list,np.mod(data2[::5].T+0.5, 2))

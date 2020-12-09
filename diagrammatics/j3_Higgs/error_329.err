@@ -1,0 +1,10 @@
+../j3-farm-Higgs.py:349: RuntimeWarning: overflow encountered in exp
+  nfeek = 1.0/(np.exp(B*eek) + 1)
+../j3-farm-Higgs.py:334: RuntimeWarning: overflow encountered in exp
+  nfeek = 1.0/(np.exp(B*eek) + 1)
+../j3-farm-Higgs.py:335: RuntimeWarning: overflow encountered in exp
+  nfeek2 = 1.0/(np.exp(B*eek2) + 1)
+../j3-farm-Higgs.py:339: RuntimeWarning: overflow encountered in exp
+  fk = 1.0/(np.exp(B*ek) + 1)
+../j3-farm-Higgs.py:340: RuntimeWarning: overflow encountered in exp
+  fk2 = 1.0/(np.exp(B*ek2) + 1)
