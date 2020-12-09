@@ -1,6 +1,13 @@
 import numpy as np
 
 u_temp = 116.032
+u_t = 6.58285E-2
+u_e = 10
+u_conductivity = 881.553 #Ohm^-1 cm-1
+meV_to_THz = 0.2417990504024
+u_w = u_e*meV_to_THz
+
+u_temp = 116.032
 params_ = [
     {
         "Ne": [840],

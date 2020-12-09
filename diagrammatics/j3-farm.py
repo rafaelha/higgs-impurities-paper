@@ -21,28 +21,35 @@ code_version = {
     "1.0": "first version",
 }
 
-if len(sys.argv) != 3:
-    job_ID = -1
-    task_ID = job_ID
-    task_count = 0
-else:
+
+if len(sys.argv) == 4:
     job_ID = int(sys.argv[1])
     task_ID = int(sys.argv[1])
     task_count = int(sys.argv[2])+1
+    parallel = bool(sys.argv[3])
+else:
+    job_ID = -1
+    task_ID = job_ID
+    task_count = 0
+    parallel = False
 
 u_t = 6.58285E-2
 u_e = 10
 u_conductivity = 881.553 #Ohm^-1 cm-1
 meV_to_THz = 0.2417990504024
 u_w = u_e*meV_to_THz
-
 u_temp = 116.032
 
-parallel = False
-filename = 'results-j3.pickle'
+filename = f'results-j3-parallel{parallel}.pickle'
 
-params_ = [
-    {
+if task_ID != -1:
+    # from parameters import params, parallel
+    exec(open("./parameters.py").read())
+    params = params[task_ID::task_count]
+    print('parameters loaded')
+else:
+    params_ = [
+        {
         "Ne": [1200],
         "eta":  [0.004],
         # "w":  [0.1/u_w],
@@ -57,39 +64,31 @@ params_ = [
         "pre_d0": np.array([0.3,0.7]),
         "v": [0,0.02,0.05,0.2,0.5]
     }
-]
-
-
-params = []
-for p in params_:
-    for Ne in p["Ne"]:
-        for T in p["T"]:
-            for wd in p["wd"]:
-                for m in p["m"]:
-                    for ef in p["ef"]:
-                        for v in p["v"]:
-                            for w in p["w"]:
-                                for eta in p["eta"]:
-                                    for g in p["g"]:
-                                        params.append({
-                                                        "Ne": Ne,
-                                                        "T": T,
-                                                        "wd": wd,
-                                                        "s": p["s"],
-                                                        "m": m,
-                                                        "ef": ef,
-                                                        "g": g,
-                                                        "pre_d0": p["pre_d0"],
-                                                        "v": v,
-                                                        "w":  w,
-                                                        "eta": eta
-                                                    })
-
-print(len(params),'parameters generated')
-
-if task_ID != -1:
-    params = params[task_ID::task_count]
-else:
+    ]
+    params = []
+    for p in params_:
+        for Ne in p["Ne"]:
+            for T in p["T"]:
+                for wd in p["wd"]:
+                    for m in p["m"]:
+                        for ef in p["ef"]:
+                            for v in p["v"]:
+                                for w in p["w"]:
+                                    for eta in p["eta"]:
+                                        for g in p["g"]:
+                                            params.append({
+                                                            "Ne": Ne,
+                                                            "T": T,
+                                                            "wd": wd,
+                                                            "s": p["s"],
+                                                            "m": m,
+                                                            "ef": ef,
+                                                            "g": g,
+                                                            "pre_d0": p["pre_d0"],
+                                                            "v": v,
+                                                            "w":  w,
+                                                            "eta": eta
+                                                        })
     params = [ params[0] ]
 
 for p in params:
@@ -486,6 +485,9 @@ for p in params:
             'zerotemp': zerotemp,
             'eta': eta,
             'v': v_leggett,
+
+            'd_eq0_T0': d_eq0_T0,
+            'd_eq0': d_eq0,
 
             'T': T,
             'w': w,

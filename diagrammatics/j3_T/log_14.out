@@ -1,8 +1,16 @@
 32 parameters generated
-U= [[0.15689031 0.07844515]
- [0.07844515 0.34272156]]
-UN0= [[0.15000605 0.07500302]
- [0.07622879 0.33303842]]
+parameters loaded
+U= [[0.28782242 0.00575645]
+ [0.00575645 0.38307567]]
+UN0= [[0.27519293 0.00550386]
+ [0.00559381 0.37225237]]
 gap= [0.3 0.7] at T=0 (computed with new function)
-gap= [0.25256062 0.63258251] at T= 0.1946070494457591  (computed with new function)
- finished in 4.714147599538167s
+gap= [0.3 0.7] at T= 8.618312189740761e-05  (computed with new function)
+ finished in 0.7462019960085551s
+U= [[0.28782242 0.00575645]
+ [0.00575645 0.38307567]]
+UN0= [[0.27519293 0.00550386]
+ [0.00559381 0.37225237]]
+gap= [0.3 0.7] at T=0 (computed with new function)
+gap= [0.3 0.7] at T= 8.618312189740761e-05  (computed with new function)
+ finished in 0.6999014298121135s

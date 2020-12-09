@@ -1,6 +1,6 @@
 #!/bin/bash
-
-MAX=31
+rm *.pickle
+MAX=7
 for i in `seq 0 1 ${MAX}`
 do
 	FILENAME=job_file_${i}.ll
@@ -15,7 +15,7 @@ do
 	echo "# @ node_usage = shared" >> $FILENAME
 
 	echo "# @ node = 1" >> $FILENAME
-	echo "# @ tasks_per_node = 14" >> $FILENAME
+	echo "# @ tasks_per_node = 56" >> $FILENAME
 	echo "# @ environment = COPY_ALL" >> $FILENAME
 	echo "# @ notification = never" >> $FILENAME
 	echo "# @ notify_user =" >> $FILENAME
@@ -25,7 +25,7 @@ do
 	echo "# exit on error" >> $FILENAME
 	echo "set -e" >> $FILENAME
 
-	echo "python3 ../j3-farm.py ${i} ${MAX}" >> $FILENAME
+	echo "python3 ../j3-farm.py ${i} ${MAX} True" >> $FILENAME
 
 
 	llsubmit $FILENAME >> log.out

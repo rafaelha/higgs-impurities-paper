@@ -1,2 +1,0 @@
-../j3-farm.py:389: RuntimeWarning: invalid value encountered in cdouble_scalars
-  jL2 = -4 * 1/2*1/4* kappa * (s/m-s/m)**2 / (-w**2 - kappa*(x33[0]+x33[1])/(x33[0]*x33[1]))

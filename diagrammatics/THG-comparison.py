@@ -10,6 +10,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from cycler import cycler
 import matplotlib as mpl
 from scipy.signal import find_peaks
+from scipy import signal
 
 CB_color_cycle = ['#377eb8', '#ff7f00', '#4daf4a', '#f781bf', '#a65628', '#984ea3', '#999999', '#e41a1c', '#dede00']
 tableau10 = ['#4e79a7', '#f28e2b', '#e15759', '#76b7b2', '#59a14f', '#edc948', '#b07aa1', '#ff9da7', '#9c755f']#, '#bab0ac']
@@ -30,6 +31,8 @@ plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 folder = 'leggett-driving-comparison'
 folder2 = 'leggett-driving-comparison-QP'
+# folder = 'leggett-driving-comparison2'
+# folder2 = 'leggett-driving-comparison-QP2'
 # folder = 'driving'
 files = glob.glob(f'../multiband/{folder}/*.pickle')
 files2 = glob.glob(f'../multiband/{folder2}/*.pickle')
@@ -722,6 +725,7 @@ JQP_ = []
 JFULL_ = []
 V_ = []
 
+# for j, v in z([vs[-1]]):
 for j, v in z(vs):
     plt.pause(0.1)
     for i, case in z(fourcases):
@@ -731,7 +735,7 @@ for j, v in z(vs):
         JQP = []
         JFULL = []
         # plt.figure()
-        for k, w in z(wss):
+        for k, w in z(wss[wss>0.15]):
             r = sel(first=False, w=w, v=v, g=case)
             rqp = sel(res=resqp, first=False, w=w, v=v, g=case)
             if r == []:
@@ -746,43 +750,101 @@ for j, v in z(vs):
 
             j3_para = r['jp_3']
             j3L = r['jd_3']
+            jFull = j3_para + j3L
 
             j3QP =j3q_para
             j3H = j3_para - j3QP
 
-            def find3w(j3):
-                tw, j3w = fft(t,np.nan_to_num(j3))
+
+            t0 = 00
+            t1 = 230
+            sl = np.logical_and(t>t0,t<t1)
+            tsl = t[sl]
+            def find3w(t,j3):
+                # fs_tpp = 1/(t[1]-t[0])
+                # filt_order = 8
+                # # b1, a1 = signal.butter(filt_order,Wn=[0.9,1.6], btype='bandstop',fs=fs_tpp)
+                # b1, a1 = signal.butter(filt_order,Wn=2.7*w/2/np.pi, btype='highpass',fs=fs_tpp)
+                # yfiltered = signal.filtfilt(b1, a1, j3, padlen=10, axis=0)
+                # j3 = yfiltered
+
+                tw, j3w = fft(t,j3)
                 y = np.abs(j3w)
                 # y = j3w
                 twn = tw/w
-                # idx = np.argmin(np.abs(twn-3))
-                y[np.abs(twn-3)>0.5] = 0
-                idx =  np.argmax(y)
-                return j3w[idx]
+                idx = np.argmin(np.abs(twn-3))
+                # y[np.abs(twn-3)>0.1] = 0
+                # idx =  np.argmax(y)
+                # print(twn[idx])
+                result = j3w[idx]
+                if np.abs(result) > 1e10:
+                    return 0
+                else:
+                    return result
+
+                fs_tpp = 1/(t[1]-t[0])
+                filt_order = 8
+                # b1, a1 = signal.butter(filt_order,Wn=[0.9,1.6], btype='bandstop',fs=fs_tpp)
+                b1, a1 = signal.butter(filt_order,Wn=2.7*w/2/np.pi, btype='highpass',fs=fs_tpp)
+                yfiltered = signal.filtfilt(b1, a1, j3, padlen=10, axis=0)
 
             xx.append(w)
-            JH.append(find3w(j3H))
-            JL.append(find3w(j3L))
-            JQP.append(find3w(j3QP))
-            JFULL.append(find3w(j3_para+j3L))
+            JH.append(find3w(tsl, j3H[sl]))
+            JL.append(find3w(tsl,j3L[sl]))
+            JQP.append(find3w(tsl,j3QP[sl]))
+            JFULL.append(find3w(tsl,jFull[sl]))
 
-            if False:#k==6:
-                plt.figure(figsize=(6,3))
-                plt.subplot(121)
-                plt.plot(t,nm(j1),label='$j_1$')
-                plt.plot(t,nm(j3),label='$j_3$')
-                plt.xlabel('t')
-                plt.legend()
+            if True and k in [0,10,20,30,40,50,60, len(wss)-1]:
+                plt.figure(figsize=(25,6))
+                def spec(t1,j1, label=''):
 
-                plt.subplot(122)
-                plt.plot(tw/w, nm(np.abs(j3w)))
-                plt.plot(tw/w, np.abs(j3w))
-                plt.axvline(1)
-                plt.axvline(3)
-                plt.axvline(5)
-                plt.axvline(7)
-                plt.xlim((0,6))
-                plt.xlabel('$\omega/\Omega$')
+                    t = t1[sl]
+                    j = j1[sl]
+
+                    val = np.abs(find3w(t,j))
+                    val2 = np.abs(JL[-1])
+
+                    plt.subplot(221)
+                    plt.plot(t,(j),label=f'${label}$')
+                    plt.xlabel('t')
+                    plt.title(w)
+
+                    plt.subplot(222)
+                    tw, jw = fft(t, j)
+                    plt.plot(tw/w, np.abs(jw),label=f'${label}$')
+                    plt.plot(3,val, '.')
+                    plt.plot(3,val2, '*')
+                    plt.ylim((0,3*val))
+                    plt.xlim((0,4))
+                    plt.legend()
+
+
+                    twn = tw/w
+                    idx = np.argmin(np.abs(twn-3))
+                    plt.plot(twn[idx], np.abs(jw[idx]), 'v')
+
+
+                    fs_tpp = 1/(t[1]-t[0])
+                    filt_order = 8
+                    # b1, a1 = signal.butter(filt_order,Wn=[0.9,1.6], btype='bandstop',fs=fs_tpp)
+                    b1, a1 = signal.butter(filt_order,Wn=2.7*w/2/np.pi, btype='highpass',fs=fs_tpp)
+
+                    yfiltered = signal.filtfilt(b1, a1, j, padlen=10, axis=0)
+
+                    plt.subplot(223)
+                    plt.plot(t,yfiltered)
+
+                    plt.subplot(224)
+                    tw, jw = fft(t, yfiltered)
+                    plt.plot(tw/w, np.abs(jw))
+                    plt.plot(3,val, '.')
+                    plt.plot(3,val2, '.')
+                    plt.xlim((0,4))
+
+                # spec(t, jFull, 'jfull')
+                # spec(t, j3L, 'j_L')
+                spec(t, j3H, 'j_H')
+                # spec(t, j3_para, 'j_Q')
 
 
         plt.figure(figsize=(6,6))

@@ -6,7 +6,7 @@
 # @ job_type = MPICH
 # @ node_usage = shared
 # @ node = 1
-# @ tasks_per_node = 14
+# @ tasks_per_node = 28
 # @ environment = COPY_ALL
 # @ notification = never
 # @ notify_user =
@@ -14,4 +14,4 @@
 # @ queue
 # exit on error
 set -e
-python3 ../j3-farm.py 15 31
+python3 ../j3-farm.py 15 15 True

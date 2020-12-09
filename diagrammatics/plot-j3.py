@@ -31,12 +31,21 @@ plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 folder = 'j3_g10_5_v0p2'
 folder = 'j3_g10_5_v0'
 folder = 'j3_g10_5_vall-highres'
+folder = 'j3_T'
+folder = 'j3_Higgs'
 # folder = 'j3_g10_5_vall'
 files = glob.glob(f'{folder}/*.pickle')
 
 save_plots = False
 
 plt.ion()
+
+u_t = 6.58285E-2
+u_e = 10
+u_conductivity = 881.553 #Ohm^-1 cm-1
+meV_to_THz = 0.2417990504024
+u_w = u_e*meV_to_THz
+u_temp = 116.032
 
 def savefig(fname, transparent=True):
     if save_plots:
@@ -87,91 +96,182 @@ for f in files:
     except:
         reader.close()
 
-w = []
-T = []
-jh = []
-jl = []
-jl2 = []
-jqp = []
-durations = []
 
-vv = [0,0.02,0.05,0.2,0.5]
-v = 0.5
+v_list = [0.01,0.02,0.05,0.1,0.2,0.4]
+v_list = [0.02]
+w_list = np.array([0.3,0.4,0.5,0.6,0.7])
+w_list = [0.3]
+v = 0.02
+w_sel = 0.6
+gammas = [np.array([10, 0.00001]), np.array([0.00001, 10]),  np.array([10,5]), np.array([0.00001,0.00001])]
+gammas = [np.array([10, 0.0001]), np.array([0.00001, 10]),  np.array([10,5]), np.array([0.00001,0.00001])]
 
-for r in res:
-    if r['v']==v:
-        w.append(r['w'])
-        T.append(r['T'])
+ii = 0
+for v in v_list:
+    ii += 1
+    kk = 0
+    for w_sel in w_list:
+        kk += 1
 
-        jh.append(r['jH'])
-        jl.append(r['jL'])
-        jl2.append(r['jL2'])
-        jqp.append(r['jQP'])
+        w = []
+        T = []
+        jh = []
+        jl = []
+        jl2 = []
+        jqp = []
+        durations = []
+        d_eq = []
+        for r in res:
+            if r['v']==v and r['w'].real*u_w==w_sel and (r['g']==gammas[0]).all():
+                r2 = r
+                w.append(r['w'])
+                T.append(r['T'])
 
-        durations.append(r['duration'])
+                jh.append(r['jH'])
+                jl.append(r['jL'])
+                jl2.append(r['jL2'])
+                jqp.append(r['jQP'])
 
-w = np.array(w)
-T = np.array(T)
-jl = np.array(jl)
-jl2 = np.array(jl2)
-jh = np.array(jh)
-jqp = np.stack(jqp)
+                d_eq.append(r['d_eq0'])
 
-if len(np.unique(w))>1:
-    x = np.copy(w)
-    xlabel = '$\omega$'
-    omega = True
-else:
-    x = np.copy(T)
-    xlabel = '$T$'
-    omega = False
+                durations.append(r['duration'])
+        if len(w) == 0:
+            continue
+        r = r2
 
-ind = np.argsort(x)
+        w = np.array(w)
+        T = np.array(T)
+        jl = np.array(jl)
+        jl2 = np.array(jl2)
+        jh = np.array(jh)
+        jqp = np.stack(jqp)
+        d_eq = np.stack(d_eq)
 
-x = x[ind]
-w = w[ind]
-T = T[ind]
-jh = jh[ind]
-jl = jl[ind]
-jl2 = jl2[ind]
-jqp = jqp[ind]
-jqp_ = np.sum(jqp,axis=1)
+        if len(np.unique(w))>1:
+            x = np.copy(w)
+            xlabel = '$\omega$'
+            omega = True
+        else:
+            x = np.copy(T)*u_temp
+            xlabel = '$T$'
+            omega = False
+            ww = w[0].real
 
-d_eq0 = r['d_eq'][:,0,0]
-print('eta', r['eta'])
-print('mean duration:', np.mean(durations))
+        ind = np.argsort(x)
 
-#%%
-plt.figure('j3', figsize=(9,8))
-plt.clf()
-plt.ion()
-c = 1/9
-magn = 20
-plt.plot(x, np.abs(jh)*c, '.-', label='Higgs')
-plt.plot(x, np.abs(jl)*magn, label='Leggett')
-plt.plot(x, np.abs(jqp_)*c/2, label='QP')
+        x = x[ind]
+        d_eq = d_eq[ind]
+        w = w[ind]
+        T = T[ind]
+        jh = jh[ind]
+        jl = jl[ind]
+        jl2 = jl2[ind]
+        jqp = jqp[ind]
+        jqp_ = np.sum(jqp,axis=1)
 
-# plt.plot(x, np.abs(jh*c-jqp_*c/2+jl), label='Full')
+        d_eq0 = r['d_eq'][:,0,0]
+        g = r['g']
+        v = r['v']
+        Ne = r['Ne']
+        eta = r['eta']
+        print('eta', r['eta'])
+        print('mean duration:', np.mean(durations))
+        print('max duration:', np.max(durations))
 
-if omega:
-    plt.axvline(d_eq0[0], c='gray', lw=0.5)
-    plt.axvline(d_eq0[1], c='gray', lw=0.5)
+        #%%
+        plt.ion()
+        c = 1/9
+        c = 1
+        overall = 0.5
+        overall = 1
+        magn = 20
 
-plt.xlabel(xlabel)
 
-plt.legend()
+        def vlines():
+            if omega:
+                plt.axvline(d_eq0[0], c='gray', lw=0.5)
+                plt.axvline(d_eq0[1], c='gray', lw=0.5)
+            else:
+                ind = np.argmin(np.abs(ww-d_eq[:,0]))
+                plt.axvline(x[ind], c='gray', lw=0.5)
 
-compare = True 
-if 'xx' in globals() and compare:
-    idx = np.argmin(np.abs(vs-v))
+                ind = np.argmin(np.abs(ww-2*d_eq[:,1]))
+                plt.axvline(x[ind], c='gray', lw=0.5)
 
-    # factor = np.max(np.abs(jl))/np.max(np.abs(JL_[idx]))
 
-    factor = 0.01619978567238627
-    plt.plot(xx,np.abs(JQP_)[idx]*factor, '--', c='r')
-    plt.plot(xx,np.abs(JH_)[idx]*factor, '--', c='b')
-    plt.plot(xx,np.abs(JL_)[idx]*factor*magn, '--', c='y')
-    # plt.plot(xx,np.abs(JFULL_[idx])*factor, '--', c='g')
-plt.title(f'$g=10/5 v={str(v)}$')
+        plt.figure('j3', figsize=(7,7))
+        plt.clf()
+        plt.plot(x, overall*np.abs(jh)*c, '.-', label='Higgs')
+        plt.plot(x, overall*np.abs(jl)*magn, '.-', label=f'Leggett (x{magn})')
+        # plt.plot(x, overall*np.abs(jqp_)*c, label='QP')
+        # plt.plot(x, np.abs(jh*c-jqp_*c/2+jl), label='Full')
+        plt.title(f'$g={g} v={str(v)}$')
+        plt.legend()
+        vlines()
 
-plt.savefig(next('comp'))
+
+        # plt.figure('j3-phase', figsize=(9,8))
+        # plt.clf()
+        # def angle(x):
+        #     xx = np.angle(x)/np.pi
+        #     add = np.ones(len(x))*2
+        #     add[xx>=0]=0
+        #     return (xx+add)
+        # plt.plot(x, angle(jh), '.-', label='Higgs')
+        # plt.plot(x, angle(jl), label='Leggett')
+        # plt.plot(x, angle(jqp_), label='QP')
+        # plt.title(f'$g={g} v={str(v)}$')
+        # plt.ylabel('$\\varphi/\pi$')
+        # plt.xlabel(xlabel)
+        # plt.legend()
+        # plt.tight_layout()
+        # # plt.savefig(next('phase'))
+        # vlines()
+
+
+
+
+        plt.xlabel(xlabel)
+
+        if omega:
+            plt.title(f'$g={g}, v={str(v)}, w={np.round(ww*u_w,2)}, N_E={Ne}, \eta={eta}, T={np.round(T*u_temp,1)}$')
+        else:
+            plt.title(f'$g={g}, v={str(v)}, w={np.round(ww*u_w,2)}, N_E={Ne}, \eta={eta}$')
+        plt.legend()
+
+        plt.pause(0.01)
+        plt.savefig(next(f'grid-g6-v{ii}-w{kk}'))
+
+        compare = False
+        if 'xx' in globals() and compare:
+            if omega:
+                idx = np.argmin(np.abs(vs-v))
+                u = 1
+            else:
+                idx = np.argmin(np.abs(wss-ww))
+                plt.title(f'$g={g}, v={str(v)}, w={np.round(ww*u_w,2)}, N_E={Ne}, \eta={eta}$\n h={h}, l={np.round(l,3)}, q={np.round(q,3)}')
+                u = u_temp
+
+            factor = 0.01619978567238627
+            factor = np.abs(jh[0])/np.abs(JH_[idx,0])
+
+            h = 1
+            l = 1 / (np.abs(JL_)[idx,0]*factor/np.abs(jl[0]))
+            # l = 1/4
+            # q = 1
+            q = 1 / (np.abs(JQP_)[idx,-1]*factor/np.abs(jqp_[-1]))
+
+
+            # factor = np.max(np.abs(jl))/np.max(np.abs(JL_[idx]))
+
+            plt.figure('j3', figsize=(9,8))
+            plt.plot(np.array(xx)*u,np.abs(JH_)[idx]*factor*h, '--', c='b')
+            plt.plot(np.array(xx)*u,np.abs(JL_)[idx]*factor*magn*l, '--', c='y')
+            plt.plot(np.array(xx)*u,np.abs(JQP_)[idx]*factor*q, '--', c='r')
+
+            # plt.figure('j3-phase', figsize=(9,8))
+            # plt.plot(xx,angle(JQP_[idx]), '--', c='r')
+            # plt.plot(xx,angle(JH_[idx]), '--', c='b')
+            # plt.plot(xx,angle(JL_[idx]), '--', c='y')
+            # plt.plot(xx,np.abs(JFULL_[idx])*factor, '--', c='g')
+

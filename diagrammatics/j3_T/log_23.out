@@ -1,8 +1,0 @@
-32 parameters generated
-U= [[0.15689031 0.07844515]
- [0.07844515 0.34272156]]
-UN0= [[0.15000605 0.07500302]
- [0.07622879 0.33303842]]
-gap= [0.3 0.7] at T=0 (computed with new function)
-gap= [0.12553326 0.34013115] at T= 0.3197115812323185  (computed with new function)
- finished in 4.382087667783101s
