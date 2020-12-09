@@ -1,0 +1,16 @@
+../j3-farm.py:346: RuntimeWarning: overflow encountered in exp
+  nfeek = 1.0/(np.exp(B*eek) + 1)
+../j3-farm.py:331: RuntimeWarning: overflow encountered in exp
+  nfeek = 1.0/(np.exp(B*eek) + 1)
+../j3-farm.py:332: RuntimeWarning: overflow encountered in exp
+  nfeek2 = 1.0/(np.exp(B*eek2) + 1)
+../j3-farm.py:336: RuntimeWarning: overflow encountered in exp
+  fk = 1.0/(np.exp(B*ek) + 1)
+../j3-farm.py:337: RuntimeWarning: overflow encountered in exp
+  fk2 = 1.0/(np.exp(B*ek2) + 1)
+../j3-farm.py:390: RuntimeWarning: invalid value encountered in cdouble_scalars
+  jL2 = -4 * 1/2*1/4* kappa * (s/m-s/m)**2 / (-w**2 - kappa*(x33[0]+x33[1])/(x33[0]*x33[1]))
+../j3-farm.py:383: RuntimeWarning: divide by zero encountered in cdouble_scalars
+  Linv = 4 / det * np.array([[-x33[1]-kappa/w**2,  -kappa/w**2], \
+../j3-farm.py:383: RuntimeWarning: invalid value encountered in cdouble_scalars
+  Linv = 4 / det * np.array([[-x33[1]-kappa/w**2,  -kappa/w**2], \

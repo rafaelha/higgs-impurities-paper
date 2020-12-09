@@ -1,0 +1,223 @@
+\documentclass[a4paper]{article}
+\usepackage[margin = 0.8in]{geometry}
+\setlength{\parskip}{0.7\baselineskip}
+\linespread{1.4}
+\usepackage[]{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{braket}
+\usepackage{siunitx}
+ \usepackage{verbatim}
+%\usepackage{physics}
+%\usepackage{tikz-feynman}
+%\usepackage{slashed}
+%\usepackage{simpler-wick}
+\usepackage{xcolor}
+%\usepackage[style=footnote-dw]{biblatex}
+\newcommand{\normord}[1]{:\mathrel{#1}:}
+% Package biblatex: '\bibliography' must be given in preamble.
+\begin{document}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.23\textwidth]{grid-v1-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-v1-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-v1-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-v1-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-v2-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-v2-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-v2-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-v2-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-v3-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-v3-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-v3-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-v3-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-v4-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-v4-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-v4-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-v4-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-v5-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-v5-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-v5-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-v5-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-v6-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-v6-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-v6-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-v6-w4_0}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.23\textwidth]{grid-g3-v1-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v1-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v1-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v1-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g3-v2-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v2-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v2-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v2-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g3-v3-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v3-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v3-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v3-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g3-v4-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v4-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v4-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v4-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g3-v5-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v5-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v5-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v5-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g3-v6-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v6-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v6-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g3-v6-w4_0}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.23\textwidth]{grid-g2-v1-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v1-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v1-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v1-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g2-v2-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v2-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v2-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v2-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g2-v3-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v3-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v3-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v3-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g2-v4-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v4-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v4-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v4-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g2-v5-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v5-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v5-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v5-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g2-v6-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v6-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v6-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g2-v6-w4_0}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.23\textwidth]{grid-g4-v1-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v1-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v1-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v1-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g4-v2-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v2-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v2-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v2-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g4-v3-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v3-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v3-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v3-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g4-v4-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v4-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v4-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v4-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g4-v5-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v5-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v5-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v5-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g4-v6-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v6-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v6-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g4-v6-w4_0}
+\end{figure}
+
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.23\textwidth]{grid-g5-v1-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v1-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v1-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v1-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g5-v2-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v2-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v2-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v2-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g5-v3-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v3-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v3-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v3-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g5-v4-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v4-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v4-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v4-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g5-v5-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v5-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v5-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v5-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g5-v6-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v6-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v6-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g5-v6-w4_0}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.23\textwidth]{grid-g6-v1-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v1-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v1-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v1-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g6-v2-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v2-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v2-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v2-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g6-v3-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v3-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v3-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v3-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g6-v4-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v4-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v4-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v4-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g6-v5-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v5-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v5-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v5-w4_0}
+  \\
+  \includegraphics[width=0.23\textwidth]{grid-g6-v6-w1_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v6-w2_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v6-w3_0}
+  \includegraphics[width=0.23\textwidth]{grid-g6-v6-w4_0}
+\end{figure}
+\end{document}
+ 
+ 
