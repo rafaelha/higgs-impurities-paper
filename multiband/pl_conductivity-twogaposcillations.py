@@ -432,26 +432,26 @@ def plotHiggsLeggett(r):
 
     color = 'tab:red'
     # ax2.set_ylabel('$\delta\\varphi, v=$'+str(np.round(v,3)), color=color)
-    ax2.tick_params(axis='y', labelcolor=color)
-    ax2.plot(w_*u_e*meV_to_THz, np.abs(dpw_), color=color, alpha=alpha, lw=lww)
+    # ax2.tick_params(axis='y', labelcolor=color)
+    # ax2.plot(w_*u_e*meV_to_THz, np.abs(dpw_), color=color, alpha=alpha, lw=lww)
     plt.xlim((0,3*u_e*meV_to_THz))
 
 
-    axl.set_ylabel('$\delta\\varphi, v=$'+str(np.round(v,3)))
-    axl.set_xlabel('$t$')
-    axl.axvspan(tleft,tright,facecolor='gray', alpha=0.3)
-    axl.plot(t,dphase, c='tab:red', lw=0.8, alpha=alpha)
+    # axl.set_ylabel('$\delta\\varphi, v=$'+str(np.round(v,3)))
+    # axl.set_xlabel('$t$')
+    # axl.axvspan(tleft,tright,facecolor='gray', alpha=0.3)
+    # axl.plot(t,dphase, c='tab:red', lw=0.8, alpha=alpha)
     axl.set_xlim((min(t)+10, tright))
 
     plt.tight_layout()
 
-    dpw_[w_<0] = 0
-    ileggett = np.argmax(np.abs(dpw_))
-    wlegget = w_[ileggett]
-    vallegget = np.abs(dpw_[ileggett])
+    # dpw_[w_<0] = 0
+    # ileggett = np.argmax(np.abs(dpw_))
+    # wlegget = w_[ileggett]
+    # vallegget = np.abs(dpw_[ileggett])
     # ax2.plot([wlegget], [vallegget], 'rx')
 
-    return wlegget
+    # return wlegget
 # plotHiggsLeggett(res[14])
 # plt.pause(0.01)
 # plt.figure()
@@ -744,6 +744,59 @@ cm = 'rainbow'
 def z(array):
     return zip(np.arange(len(array)), array)
 
+def plotHiggsLeggett(r):
+    d = r['d_2'].real
+    d_im = r['d_2'].real
+    t = r['t']
+    tau = r['tau']
+    e = r['efield']
+    w = r['w']
+    d_eq = r['d_eq'][:,0,0]
+    g = r['g']
+    A = r['A']
+    v = r['v']
+
+    plt.figure('HL',figsize=(3,2.8))
+    plt.clf()
+
+    alpha = 0.9
+    lww = 1
+
+
+    # determine left boundary for fft
+    tleft = 3*tau+1
+
+    tright = 120
+    cond = np.logical_and(t>=tleft, t<=tright)
+
+    # axh.set_ylabel('$\delta\\varphi, v=$'+str(np.round(v,3)))
+    plt.xlabel('$t$ (ps)')
+    plt.ylabel('$\delta\Delta$ (THz)')
+    plt.plot(t,(Ascale*d.real), alpha=alpha,lw=lww)
+    plt.xlim((-10,80))
+
+
+    plt.figure('HLw',figsize=(1.4,1.4))
+    t_ = t[cond]
+    d_ = d[cond]
+    d_ -= np.mean(d_, axis=0)
+
+    w_, dw_ = fft(t_, d_)
+
+    lw = np.copy(g)
+    lw[lw>0.01] = 1
+    lw[lw<0.01] = 0.3
+    w_, dw_ = fft(t_, d_)
+    color = 'black'
+    plt.xlabel(f'$\omega$ (THz)')
+    plt.ylabel('$\delta\Delta\'(\omega)$')
+    plt.axvline(d_eq[0]*2*u_e*meV_to_THz, c='gray', lw=lw[0])
+    plt.axvline(d_eq[1]*2*u_e*meV_to_THz, c='gray', lw=lw[1])
+    # plt.axvline(2*w*u_e*meV_to_THz, c='green', lw=1, ls='--')
+
+    plt.plot(w_*u_e*meV_to_THz, np.abs(dw_),lw=lww)
+    plt.xlim((0,5))
+
 # delays = delays[1:]
 s_imp = 8
 delays = np.sort(values('t_delay'))
@@ -759,11 +812,15 @@ for i,pulse in z(pulses):
     pulse_tau = pulse['tau']
     pulse_w = pulse['w']
     r0 = sel(first=True, A0=1, A0_pr=0, tau=pulse_tau, w=pulse_w)
-    plotA(r0)
+    # plotA(r0)
     # plt.savefig(f'figs3/A{i}.pdf')
     plt.pause(0.01)
     for j, v in z(vs):
         for k, case in z(fourcases):
+            if k != 0 or j != 1:
+                continue
+            if i != 0:
+                continue
             cc1 = []
             cc3 = []
             for d in delays:
@@ -789,6 +846,7 @@ for i,pulse in z(pulses):
 
                 r0 = sel(first=True, A0=1, A0_pr=0, tau=pulse['tau'], w=pulse['w'], v=v, g=case)
                 plotHiggsLeggett(r0)
+                """
                 plt.suptitle(f'$v={v}, imp={case}, pulse(w={pulse_w}, \\tau={pulse_tau})$')
                 plt.tight_layout()
                 # plt.savefig(f'figs3/HL-A{i}-v{j}-imp{k}.pdf')
@@ -804,4 +862,5 @@ for i,pulse in z(pulses):
                 cond_w_pcolor()
                 # plt.savefig(f'figs3/cond_w_pcolor-A{i}-v{j}-imp{k}.pdf')
                 plt.pause(0.01)
+                """
 
