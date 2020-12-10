@@ -56,7 +56,7 @@ u_w = u_e*meV_to_THz
 u_temp = 116.032
 params_ = [
     {
-        "Ne": [300],
+        "Ne": [100],
         "tmin": [-80],
         "tmax": [300],
         # "tmax": [450],
@@ -66,8 +66,8 @@ params_ = [
         "s": np.array([1,-1]),
         "m": [ np.array([0.85, 1.38]) ],
         "ef": [ np.array([290, 70]) ],
-        # "g": [ np.array([10,5])],
-        "g": [ np.array([1e-1,1e-1])],
+        "g": [ np.array([10,5])],
+        # "g": [ np.array([1e-1,1e-1])],
         # "g": [ r['g'] ],
         "pre_d0": np.array([0.3,0.7]),
         # "pre_d0": np.array([0.29817841,0.70076507]),
@@ -707,7 +707,7 @@ print(np.max(np.abs(x100r)))
 
 #%% QP current third order (parallelized code)
 
-eta = 0.01
+eta = 0.06
 ws = np.linspace(0.1,0.85,20)
 
 # Higgs propagator
@@ -725,7 +725,8 @@ def multiprocess(ik):
     eek3 = eek[:,ik,:,ax]
     W13 = W12[:,:,ik]
     # Tr[g[ek, eek, z].g[ek3, eek3, z - w].g[ek, eek, z - 2 w].g[ek2, eek2, z + w]]
-    x3333_ = -(d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 - 18*d**2*eek*w - 6*eek**3*w - 4*eek*ek**2*w - 4*eek*ek*ek2*w - 8*eek*ek*ek3*w - 2*eek*ek2*ek3*w + 11*d**2*w**2 + 11*eek**2*w**2 + 3*ek**2*w**2 + 2*ek*ek2*w**2 + 6*ek*ek3*w**2 - 6*eek*w**3)/(2.*eek*w*(-2*eek + 2*w)*(eek**2 - eek3**2 - 2*eek*w + w**2)*(eek**2 - eek2**2 - 6*eek*w + 9*w**2)) + (d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 + 6*d**2*eek*w + 2*eek**3*w + 4*eek*ek*ek2*w + 2*eek*ek2*ek3*w - d**2*w**2 - eek**2*w**2 - ek**2*w**2 + 2*ek*ek2*w**2 - 2*ek*ek3*w**2 - 2*eek*w**3)/(2.*eek*(-2*eek - 2*w)*w*(eek**2 - eek2**2 - 2*eek*w + w**2)*(eek**2 - eek3**2 + 2*eek*w + w**2)) - (d**4 + 6*d**2*eek2**2 + eek2**4 - d**2*ek**2 + eek2**2*ek**2 + 2*d**2*ek*ek2 + 2*eek2**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek2**2*ek*ek3 - d**2*ek2*ek3 + eek2**2*ek2*ek3 + ek**2*ek2*ek3 + 18*d**2*eek2*w + 6*eek2**3*w + 2*eek2*ek**2*w + 8*eek2*ek*ek2*w + 4*eek2*ek*ek3*w + 4*eek2*ek2*ek3*w + 11*d**2*w**2 + 11*eek2**2*w**2 + 8*ek*ek2*w**2 + 3*ek2*ek3*w**2 + 6*eek2*w**3)/(eek2*(-eek**2 + eek2**2 + 2*eek2*w + w**2)*(eek2**2 - eek3**2 + 4*eek2*w + 4*w**2)*(-eek**2 + eek2**2 + 6*eek2*w + 9*w**2)) - (d**4 + 6*d**2*eek3**2 + eek3**4 - d**2*ek**2 + eek3**2*ek**2 + 2*d**2*ek*ek2 + 2*eek3**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek3**2*ek*ek3 - d**2*ek2*ek3 + eek3**2*ek2*ek3 + ek**2*ek2*ek3 - 6*d**2*eek3*w - 2*eek3**3*w - 2*eek3*ek**2*w - 4*eek3*ek*ek3*w - d**2*w**2 - eek3**2*w**2 - ek2*ek3*w**2 + 2*eek3*w**3)/(eek3*(-eek**2 + eek3**2 - 2*eek3*w + w**2)*(-eek**2 + eek3**2 + 2*eek3*w + w**2)*(-eek2**2 + eek3**2 - 4*eek3*w + 4*w**2))
+    # x3333_ = -(d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 - 18*d**2*eek*w - 6*eek**3*w - 4*eek*ek**2*w - 4*eek*ek*ek2*w - 8*eek*ek*ek3*w - 2*eek*ek2*ek3*w + 11*d**2*w**2 + 11*eek**2*w**2 + 3*ek**2*w**2 + 2*ek*ek2*w**2 + 6*ek*ek3*w**2 - 6*eek*w**3)/(2.*eek*w*(-2*eek + 2*w)*(eek**2 - eek3**2 - 2*eek*w + w**2)*(eek**2 - eek2**2 - 6*eek*w + 9*w**2)) + (d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 + 6*d**2*eek*w + 2*eek**3*w + 4*eek*ek*ek2*w + 2*eek*ek2*ek3*w - d**2*w**2 - eek**2*w**2 - ek**2*w**2 + 2*ek*ek2*w**2 - 2*ek*ek3*w**2 - 2*eek*w**3)/(2.*eek*(-2*eek - 2*w)*w*(eek**2 - eek2**2 - 2*eek*w + w**2)*(eek**2 - eek3**2 + 2*eek*w + w**2)) - (d**4 + 6*d**2*eek2**2 + eek2**4 - d**2*ek**2 + eek2**2*ek**2 + 2*d**2*ek*ek2 + 2*eek2**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek2**2*ek*ek3 - d**2*ek2*ek3 + eek2**2*ek2*ek3 + ek**2*ek2*ek3 + 18*d**2*eek2*w + 6*eek2**3*w + 2*eek2*ek**2*w + 8*eek2*ek*ek2*w + 4*eek2*ek*ek3*w + 4*eek2*ek2*ek3*w + 11*d**2*w**2 + 11*eek2**2*w**2 + 8*ek*ek2*w**2 + 3*ek2*ek3*w**2 + 6*eek2*w**3)/(eek2*(-eek**2 + eek2**2 + 2*eek2*w + w**2)*(eek2**2 - eek3**2 + 4*eek2*w + 4*w**2)*(-eek**2 + eek2**2 + 6*eek2*w + 9*w**2)) - (d**4 + 6*d**2*eek3**2 + eek3**4 - d**2*ek**2 + eek3**2*ek**2 + 2*d**2*ek*ek2 + 2*eek3**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek3**2*ek*ek3 - d**2*ek2*ek3 + eek3**2*ek2*ek3 + ek**2*ek2*ek3 - 6*d**2*eek3*w - 2*eek3**3*w - 2*eek3*ek**2*w - 4*eek3*ek*ek3*w - d**2*w**2 - eek3**2*w**2 - ek2*ek3*w**2 + 2*eek3*w**3)/(eek3*(-eek**2 + eek3**2 - 2*eek3*w + w**2)*(-eek**2 + eek3**2 + 2*eek3*w + w**2)*(-eek2**2 + eek3**2 - 4*eek3*w + 4*w**2))
+    x3333_ = -(d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 - 6*d**2*eek*w - 2*eek**3*w - 4*eek*ek*ek3*w - 2*eek*ek2*ek3*w - d**2*w**2 - eek**2*w**2 - ek**2*w**2 - 2*ek*ek2*w**2 + 2*ek*ek3*w**2 + 2*eek*w**3)/(2.*eek*w*(-2*eek + 2*w)*(eek**2 - eek2**2 - 2*eek*w + w**2)*(eek**2 - eek3**2 + 2*eek*w + w**2)) + (d**4 + 6*d**2*eek**2 + eek**4 - d**2*ek**2 + eek**2*ek**2 + 2*d**2*ek*ek2 + 2*eek**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek**2*ek*ek3 - d**2*ek2*ek3 + eek**2*ek2*ek3 + ek**2*ek2*ek3 + 18*d**2*eek*w + 6*eek**3*w + 4*eek*ek**2*w + 8*eek*ek*ek2*w + 4*eek*ek*ek3*w + 2*eek*ek2*ek3*w + 11*d**2*w**2 + 11*eek**2*w**2 + 3*ek**2*w**2 + 6*ek*ek2*w**2 + 2*ek*ek3*w**2 + 6*eek*w**3)/(2.*eek*(-2*eek - 2*w)*w*(eek**2 - eek2**2 + 2*eek*w + w**2)*(eek**2 - eek3**2 + 6*eek*w + 9*w**2)) - (d**4 + 6*d**2*eek2**2 + eek2**4 - d**2*ek**2 + eek2**2*ek**2 + 2*d**2*ek*ek2 + 2*eek2**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek2**2*ek*ek3 - d**2*ek2*ek3 + eek2**2*ek2*ek3 + ek**2*ek2*ek3 + 6*d**2*eek2*w + 2*eek2**3*w + 2*eek2*ek**2*w + 4*eek2*ek*ek2*w - d**2*w**2 - eek2**2*w**2 - ek2*ek3*w**2 - 2*eek2*w**3)/(eek2*(-eek**2 + eek2**2 - 2*eek2*w + w**2)*(-eek**2 + eek2**2 + 2*eek2*w + w**2)*(eek2**2 - eek3**2 + 4*eek2*w + 4*w**2)) - (d**4 + 6*d**2*eek3**2 + eek3**4 - d**2*ek**2 + eek3**2*ek**2 + 2*d**2*ek*ek2 + 2*eek3**2*ek*ek2 + 2*d**2*ek*ek3 + 2*eek3**2*ek*ek3 - d**2*ek2*ek3 + eek3**2*ek2*ek3 + ek**2*ek2*ek3 - 18*d**2*eek3*w - 6*eek3**3*w - 2*eek3*ek**2*w - 4*eek3*ek*ek2*w - 8*eek3*ek*ek3*w - 4*eek3*ek2*ek3*w + 11*d**2*w**2 + 11*eek3**2*w**2 + 8*ek*ek3*w**2 + 3*ek2*ek3*w**2 - 6*eek3*w**3)/(eek3*(-eek**2 + eek3**2 - 2*eek3*w + w**2)*(-eek2**2 + eek3**2 - 4*eek3*w + 4*w**2)*(-eek**2 + eek3**2 - 6*eek3*w + 9*w**2))
     x3333 = pre_W**2 * N0**2 *integ(W13 * integ(W12 * x3333_, axis=2), axis=1)
     return x3333
 
@@ -751,7 +752,6 @@ for w_ in ws:
     print('Est. time remaining: ', np.round(np.mean(durations) * (len(ws)-len(durations)) / 60,1), 'min')
 jQP = np.stack(jQP)
 print('QP parallel finished. Total duration: ', np.round(np.sum(durations)/60,1), 'min')
-#%%
 
 plt.figure('jQP')
 # plt.clf()
