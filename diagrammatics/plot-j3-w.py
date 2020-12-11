@@ -32,6 +32,7 @@ folder = 'j3_g10_5_v0p2'
 folder = 'j3_g10_5_v0'
 folder = 'j3_g10_5_vall-highres'
 folder = 'j3_T'
+folder = 'j3_QP'
 # folder = 'j3_g10_5_vall'
 files = glob.glob(f'{folder}/*.pickle')
 
@@ -101,6 +102,9 @@ v_list = [0.01,0.02,0.05,0.1,0.2,0.4]
 T_list = np.array([0.01, 15, 30, 50])/u_temp
 v = 0.02
 gammas = [np.array([10, 0.00001]), np.array([0.00001, 10]),  np.array([10,5]), np.array([0.00001,0.00001])]
+v_list = [0.02]
+gammas = [np.array([10,5])]
+T_list = [0.4/u_temp]
 
 ii = 0
 for v in v_list:
