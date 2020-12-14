@@ -597,7 +597,7 @@ for ii in range(len(res)):
     plt.xlim((0,1.4))
     plt.ylim((0,50))
     plt.tight_layout()
-    plt.savefig(f'leggett-2d/{ii}_abs.png', dpi=800)
+    plt.savefig(f'leggett-2d/{ii}_abs.png', dpi=300)
     plt.savefig(f'leggett-2d/{ii}_abs.pdf', transparent=True)
 
     plt.figure('Leggett2d', figsize=(3,2.8))
@@ -612,5 +612,5 @@ for ii in range(len(res)):
     plt.xlim((0,1.4))
     plt.ylim((0,50))
     plt.tight_layout()
-    plt.savefig(f'leggett-2d/{ii}_phase.png', dpi=800)
+    plt.savefig(f'leggett-2d/{ii}_phase.png', dpi=300)
     plt.savefig(f'leggett-2d/{ii}_phase.pdf', transparent=True)

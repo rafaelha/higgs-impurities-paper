@@ -106,14 +106,16 @@ gammas = [ np.array([10, 0.001]), np.array([0.001, 10]),  np.array([10,5])]
 
 
 vind = 0
-for v in v_list:
+# for v in v_list:
+for v in [0.4]:
     vind += 1
     gind = 0
-    for g in gammas:
+    # for g in gammas:
+    for g in gammas[0:1]:
         gind += 1
         JH2D = np.zeros((len(w_list),len(T_list)), dtype=complex)
         for r in res:
-            if r['v']==v and (r['g']==gammas[0]).all():
+            if r['v']==v and (r['g']==g).all():
                 def indexof(x, array):
                     return np.where(x==array)[0][0]
                 JH2D[indexof(r['w'].real, w_list), indexof(r['T'],T_list)] = r['jH']
@@ -132,7 +134,7 @@ for v in v_list:
         # plt.xlim((0,1.4))
         plt.ylim((0,50))
         plt.tight_layout()
-        plt.savefig(f'higgs-2d/v{vind}-g{gind}_abs.png', dpi=800)
+        plt.savefig(f'higgs-2d/v{vind}-g{gind}_abs.png', dpi=300)
         plt.savefig(f'higgs-2d/v{vind}-g{gind}_abs.pdf', transparent=True)
 
         plt.figure('Higgs-2d-phase', figsize=(3,2.8))
@@ -148,7 +150,7 @@ for v in v_list:
         # plt.xlim((0,1.4))
         plt.ylim((0,50))
         plt.tight_layout()
-        plt.savefig(f'higgs-2d/v{vind}-g{gind}_phase.png', dpi=800)
+        plt.savefig(f'higgs-2d/v{vind}-g{gind}_phase.png', dpi=300)
         plt.savefig(f'higgs-2d/v{vind}-g{gind}_phase.pdf', transparent=True)
 
 plt.figure('a')
