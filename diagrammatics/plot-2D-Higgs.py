@@ -106,12 +106,12 @@ gammas = [ np.array([10, 0.001]), np.array([0.001, 10]),  np.array([10,5])]
 
 
 vind = 0
-# for v in v_list:
-for v in [0.4]:
+for v in v_list:
+# for v in [0.4]:
     vind += 1
     gind = 0
-    # for g in gammas:
-    for g in gammas[0:1]:
+    for g in gammas:
+    # for g in gammas[0:1]:
         gind += 1
         JH2D = np.zeros((len(w_list),len(T_list)), dtype=complex)
         for r in res:

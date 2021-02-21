@@ -32,7 +32,7 @@ files = glob.glob(f'{folder}/*.pickle')
 
 save_plots = False
 
-def savefig(fname, transparent=True):
+def savefig(fname, transparent=True, save_plots=save_plots):
     if save_plots:
         plt.savefig(fname, transparent=transparent)
 
@@ -716,11 +716,11 @@ for g in np.array(gammas_all)[[6,7,11,15,27,35,38,43]]:
     # plt.legend()
 
     plt.figure('cond-imp-imag')
-    plt.plot(wg*u_e*meV_to_THz,np.abs(c.imag), label=f'$\gamma/2\Delta={str(np.round(g[0]/2/gap,1))}$',ls=ls)
+    plt.loglog(wg*u_e*meV_to_THz,np.abs(c.imag), label=f'$\gamma/2\Delta={str(np.round(g[0]/2/gap,1))}$',ls=ls)
     plt.xlabel('Frequency (THz)')
     plt.xlim((0,4*gap*u_e*meV_to_THz))
     plt.ylim((0,100e4))
-    plt.ticklabel_format(axis="y", style="sci", scilimits=(2,4))
+    # plt.ticklabel_format(axis="y", style="sci", scilimits=(2,4))
     plt.ylabel('$\sigma\,\'\'$ ($\Omega^{-1}$cm$^{-1}$)')
     # plt.legend()
 
@@ -737,7 +737,7 @@ savefig('cond-imp-real.pdf')
 plt.figure('cond-imp-imag')
 plt.axvline(2*gap*u_e*meV_to_THz, c='k', lw=0.3)
 plt.tight_layout()
-savefig('cond-imp-imag.pdf')
+savefig('cond-imp-imag.pdf', save_plots=True)
 
 plt.figure('cond-imp-legend')
 savefig('cond-imp-legend.pdf')

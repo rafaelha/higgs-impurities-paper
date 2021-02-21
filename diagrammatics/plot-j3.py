@@ -105,6 +105,7 @@ v = 0.02
 w_sel = 0.6
 gammas = [np.array([10, 0.00001]), np.array([0.00001, 10]),  np.array([10,5]), np.array([0.00001,0.00001])]
 gammas = [np.array([10, 0.0001]), np.array([0.00001, 10]),  np.array([10,5]), np.array([0.00001,0.00001])]
+gammas = [np.array([10, 5]), np.array([0.00001, 10]),  np.array([10,5]), np.array([0.00001,0.00001])]
 
 ii = 0
 for v in v_list:

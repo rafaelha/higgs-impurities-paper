@@ -27,7 +27,7 @@ plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
-folder = 'conductivity-quench2'
+folder = 'conductivity-quench3'
 files = glob.glob(f'{folder}/*.pickle')
 
 save_plots = False
@@ -515,28 +515,28 @@ def plotA(r):
     tw, aw = fft(t,A)
     # plt.plot(tw, np.real(nm(aw)))
     # plt.plot(tw, np.imag(nm(aw)))
-    plt.plot(tw, np.abs(nm(aw)),'-')
+    plt.plot(tw*u_w, np.abs(nm(aw)),'-')
     plt.xlim((0,5*d_eq[0]))
     plt.ylabel(f'$A(\omega)$')
-    plt.xlabel(f'$\omega$')
-    plt.axvspan(2*d_eq[0], 4*d_eq[1], facecolor='gray', alpha=0.3)
-    if len(d_eq)>1: plt.axvspan(2*d_eq[1], 4*d_eq[1], facecolor='gray', alpha=0.2)
-    plt.xlim((0,3*d_eq[1]))
-    plt.axvline(2*d_eq[0], c='k', lw=0.2)
-    plt.axvline(2*d_eq[0], c='k', lw=0.2)
+    plt.xlabel(f'Frequency (THz)')
+    plt.axvspan(2*d_eq[0]*u_w, 4*d_eq[1]*u_w, facecolor='gray', alpha=0.3)
+    if len(d_eq)>1: plt.axvspan(2*d_eq[1]*u_w, 4*d_eq[1]*u_w, facecolor='gray', alpha=0.2)
+    plt.xlim((0,3*d_eq[1]*u_w))
+    plt.axvline(2*d_eq[0]*u_w, c='k', lw=0.2)
+    plt.axvline(2*d_eq[0]*u_w, c='k', lw=0.2)
     plt.tight_layout()
 
     plt.subplot(133)
     tw, aw2 = fft(t,A**2)
     # plt.plot(tw, np.real(nm(aw2)))
     # plt.plot(tw, np.imag(nm(aw2)))
-    plt.plot(tw, np.abs(nm(aw2)),'-')
-    plt.xlim((0,5*d_eq[0]))
+    plt.plot(tw*u_w, np.abs(nm(aw2)),'-')
+    plt.xlim((0,5*d_eq[0]*u_w))
     plt.ylabel(f'$A^2(\omega)$')
-    plt.xlabel(f'$\omega$')
-    plt.axvline(2*d_eq[0], c='gray', lw=1)
-    plt.xlim((0,3*d_eq[1]))
-    if len(d_eq)>1: plt.axvline(2*d_eq[1], c='gray', lw=1)
+    plt.xlabel(f'Frequency (THz)')
+    plt.axvline(2*d_eq[0]*u_w, c='gray', lw=1)
+    plt.xlim((0,3*d_eq[1]*u_w))
+    if len(d_eq)>1: plt.axvline(2*d_eq[1]*u_w, c='gray', lw=1)
     plt.tight_layout()
 def cond_pcolor(lw=[0.5,0.5]):
     plt.figure('cc', figsize=(3,3))
@@ -571,36 +571,7 @@ def cond_pcolor(lw=[0.5,0.5]):
 
 # cond_pcolor()
 
-def cond_3d():
-    # fig = plt.figure('cc3d', figsize=(3.5,3.5))
-    fig = plt.figure('cc3d', figsize=(5.5,5.5))
-    plt.clf()
-    ax = fig.gca(projection='3d')
-    X, Y = np.meshgrid(w*u_e*meV_to_THz, delays*u_t)
-    surf = ax.plot_surface(X, Y, np.abs(cc.real), cmap=cm)
-    ax.set_xlabel('Frequency (THz)')
-    ax.set_ylabel('$\delta t_{pp}$ (ps)')
-    ax.ticklabel_format(axis="z", style="sci", scilimits=(2,4))
-    ax.set_zlabel('$\sigma\,\'$ ($\Omega^{-1}$cm$^{-1}$)')
-    # ax.set_xticks([0,0.5,1,1.5])
-    plt.tight_layout(pad=2)
-    # savefig('cond-3d-real.pdf', transparent=True)
-    # ax.set_zlim((0,100))
 
-
-    # fig = plt.figure('cc3dim', figsize=(3.3,3.3))
-    fig = plt.figure('cc3dim', figsize=(5.5,5.5))
-    plt.clf()
-    ax = fig.gca(projection='3d')
-    X, Y = np.meshgrid(w*u_e*meV_to_THz, delays*u_t)
-    ax.plot_surface(X, Y, np.abs(cc.imag), cmap=cm)
-    plt.xlabel('Frequency (THz)')
-    plt.ylabel('$\delta t_{pp}$ (ps)')
-    # ax.set_xticks([0,0.5,1,1.5])
-    ax.ticklabel_format(axis="z", style="sci", scilimits=(2,4))
-    ax.set_zlabel('$\sigma\,\'$ ($\Omega^{-1}$cm$^{-1}$)')
-    plt.tight_layout(pad=2)
-    savefig('cond-3d-imag.pdf', transparent=True)
 
 
 def cond_w_pcolor():
@@ -726,6 +697,7 @@ u_t = 6.58285E-2
 u_e = 10
 u_conductivity = 881.553 #Ohm^-1 cm-1
 meV_to_THz = 0.2417990504024
+u_w =u_e*meV_to_THz
 
 #1A are 2.38459E-7 Js/Cm
 u_A = 2.38459E-7
@@ -744,7 +716,7 @@ cm = 'rainbow'
 def z(array):
     return zip(np.arange(len(array)), array)
 
-def plotHiggsLeggett(r):
+def plotHiggsLeggett(r, i):
     d = r['d_2'].real
     d_im = r['d_2'].real
     t = r['t']
@@ -756,7 +728,7 @@ def plotHiggsLeggett(r):
     A = r['A']
     v = r['v']
 
-    plt.figure('HL',figsize=(3,2.8))
+    plt.figure('HL',figsize=(3.5,3.0))
     plt.clf()
 
     alpha = 0.9
@@ -771,12 +743,17 @@ def plotHiggsLeggett(r):
 
     # axh.set_ylabel('$\delta\\varphi, v=$'+str(np.round(v,3)))
     plt.xlabel('$t$ (ps)')
-    plt.ylabel('$\delta\Delta$ (THz)')
-    plt.plot(t,(Ascale*d.real), alpha=alpha,lw=lww)
-    plt.xlim((-10,80))
+    plt.ylabel('$\delta\Delta\'$ (THz)')
+    plt.plot(t*u_t,(Ascale*d.real)[:,0], alpha=alpha,lw=lww, c='teal')
+    plt.plot(t*u_t,(Ascale*d.real)[:,1], alpha=alpha,lw=lww, c='orangered')
+    plt.xlim((-1,6))
+    if i == 2:
+        plt.ylim((-1.1,0.02))
+    plt.tight_layout()
+    plt.savefig(f'gap-oscillations-{i}.pdf', transparent=True)
 
 
-    plt.figure('HLw',figsize=(1.4,1.4))
+    plt.figure('HLw',figsize=(2.1,1.6))
     t_ = t[cond]
     d_ = d[cond]
     d_ -= np.mean(d_, axis=0)
@@ -794,8 +771,42 @@ def plotHiggsLeggett(r):
     plt.axvline(d_eq[1]*2*u_e*meV_to_THz, c='gray', lw=lw[1])
     # plt.axvline(2*w*u_e*meV_to_THz, c='green', lw=1, ls='--')
 
-    plt.plot(w_*u_e*meV_to_THz, np.abs(dw_),lw=lww)
+    plt.plot(w_*u_e*meV_to_THz, np.abs(dw_[:,0])/np.max(np.abs(dw_)),lw=lww, c='teal')
+    plt.plot(w_*u_e*meV_to_THz, np.abs(dw_[:,1])/np.max(np.abs(dw_)),lw=lww, c='orangered')
     plt.xlim((0,5))
+    plt.tight_layout()
+    plt.savefig(f'gap-oscillations-w-{i}.pdf', transparent=True)
+def cond_3d(i):
+    fig = plt.figure('cc3d', figsize=(4.2,4.2))
+    # fig = plt.figure('cc3d', figsize=(5.5,5.5))
+    plt.clf()
+    ax = fig.gca(projection='3d')
+    X, Y = np.meshgrid(w*u_e*meV_to_THz, delays*u_t)
+    surf = ax.plot_surface(X, Y, np.abs(cc.real), cmap=cm)
+    ax.set_xlabel('Frequency (THz)')
+    ax.set_ylabel('$\delta t_{pp}$ (ps)')
+    ax.ticklabel_format(axis="z", style="sci", scilimits=(2,4))
+    ax.set_zlabel('$\sigma\,\'$ ($\Omega^{-1}$cm$^{-1}$)')
+    # ax.set_xticks([0,0.5,1,1.5])
+    plt.tight_layout(pad=4)
+    plt.savefig(f'3d-{i}.pdf', transparent=True)
+    # savefig('cond-3d-real.pdf', transparent=True)
+    # ax.set_zlim((0,100))
+
+
+    # fig = plt.figure('cc3dim', figsize=(3.3,3.3))
+    # fig = plt.figure('cc3dim', figsize=(5.5,5.5))
+    # plt.clf()
+    # ax = fig.gca(projection='3d')
+    # X, Y = np.meshgrid(w*u_e*meV_to_THz, delays*u_t)
+    # ax.plot_surface(X, Y, np.abs(cc.imag), cmap=cm)
+    # plt.xlabel('Frequency (THz)')
+    # plt.ylabel('$\delta t_{pp}$ (ps)')
+    # # ax.set_xticks([0,0.5,1,1.5])
+    # ax.ticklabel_format(axis="z", style="sci", scilimits=(2,4))
+    # ax.set_zlabel('$\sigma\,\'$ ($\Omega^{-1}$cm$^{-1}$)')
+    # plt.tight_layout(pad=2)
+    # savefig('cond-3d-imag.pdf', transparent=True)
 
 # delays = delays[1:]
 s_imp = 8
@@ -812,15 +823,13 @@ for i,pulse in z(pulses):
     pulse_tau = pulse['tau']
     pulse_w = pulse['w']
     r0 = sel(first=True, A0=1, A0_pr=0, tau=pulse_tau, w=pulse_w)
-    # plotA(r0)
-    # plt.savefig(f'figs3/A{i}.pdf')
+    plotA(r0)
+    # plt.savefig(f'A{i}.pdf')
     plt.pause(0.01)
     for j, v in z(vs):
         for k, case in z(fourcases):
-            if k != 0 or j != 1:
-                continue
-            if i != 0:
-                continue
+            # if k != 0 or j != 1:
+                # continue
             cc1 = []
             cc3 = []
             for d in delays:
@@ -845,22 +854,22 @@ for i,pulse in z(pulses):
                 w_delay,ccwi = fft(delays, ccm.imag)
 
                 r0 = sel(first=True, A0=1, A0_pr=0, tau=pulse['tau'], w=pulse['w'], v=v, g=case)
-                plotHiggsLeggett(r0)
+                # plotHiggsLeggett(r0,i)
                 """
                 plt.suptitle(f'$v={v}, imp={case}, pulse(w={pulse_w}, \\tau={pulse_tau})$')
                 plt.tight_layout()
                 # plt.savefig(f'figs3/HL-A{i}-v{j}-imp{k}.pdf')
-                cond_3d()
+                """
+                cond_3d(i)
                 plt.figure('cc3d')
-                # plt.savefig(f'figs3/cond3d_real-A{i}-v{j}-imp{k}.pdf')
-                plt.figure('cc3dim')
+                plt.savefig(f'cond3d_real-A{i}-v{j}-imp{k}.png', dpi=400)
+                # plt.figure('cc3dim')
                 # plt.savefig(f'figs3/cond3d_imag-A{i}-v{j}-imp{k}.pdf')
                 cond_pcolor(lw_imp(case))
-                # plt.savefig(f'figs3/cond_pcolor-A{i}-v{j}-imp{k}.pdf')
+                plt.savefig(f'cond_pcolor-A{i}-v{j}-imp{k}.png', dpi=400)
                 # plt.title(f'$\gamma/2\Delta={gammas[s_imp][0]/2/gap}$')
                 # plt.tight_layout()
                 cond_w_pcolor()
-                # plt.savefig(f'figs3/cond_w_pcolor-A{i}-v{j}-imp{k}.pdf')
+                plt.savefig(f'cond_w_pcolor-A{i}-v{j}-imp{k}.png', dpi=400)
                 plt.pause(0.01)
-                """
 

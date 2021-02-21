@@ -122,7 +122,7 @@ for v in v_list:
         durations = []
         d_eq = []
         for r in res:
-            if r['v']==v and r['T']==T_sel and (r['g']==gammas[0]).all():
+            if r['v']==v and r['T']==T_sel:# and (r['g']==gammas[0]).all():
                 r2 = r
                 w.append(r['w'])
                 T.append(r['T'])

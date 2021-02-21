@@ -556,7 +556,3 @@ plt.tight_layout()
 # plt.plot(ws,chi.real)
 # plt.plot(ws,chi.imag)
 # plt.savefig('higgs-kernel.png', dpi=600)
-
-plt.plot(vsn,peaks_numerical*u_w,'D', markersize=3, c='red')
-plt.savefig(f'THGfigs/v{int(v*100)}by100.png', dpi=800)
-plt.savefig(f'THGfigs/v{int(v*100)}by100.pdf')

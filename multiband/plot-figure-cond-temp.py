@@ -30,9 +30,9 @@ plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 folder = 'conductivity-temp'
 files = glob.glob(f'{folder}/*.pickle')
 
-save_plots = True
+save_plots = False
 
-def savefig(fname, transparent=True):
+def savefig(fname, transparent=True, save_plots=save_plots):
     if save_plots:
         plt.savefig('figs-cond/' + fname, transparent=transparent)
 
@@ -848,12 +848,12 @@ for temp in temps[::3][:-2]:
     # plt.legend()
 
     plt.figure('cond-temp-imag')
-    plt.plot(wg*u_e*meV_to_THz,np.abs(c.imag),ls=ls)
+    plt.loglog(wg*u_e*meV_to_THz,np.abs(c.imag),ls=ls)
     plt.xlabel('Frequency (THz)')
     plt.xlim((0,4*gap*u_e*meV_to_THz))
     # plt.ylim((0,100e4))
-    plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0))
-    plt.ylim((0,0.4e6))
+    # plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0))
+    plt.ylim((0,0.4e6*10))
     plt.ylabel('$\sigma\,\'\'$ ($\Omega^{-1}$cm$^{-1}$)')
     # plt.legend()
 
@@ -874,7 +874,7 @@ plt.figure('cond-temp-imag')
 # plt.axvline(2*d_eq[1]*u_e*meV_to_THz, c='k', lw=0.3)
 
 plt.tight_layout()
-savefig('cond-temp-imag.pdf')
+savefig('cond-temp-imag2.pdf', save_plots=True)
 
 plt.figure('cond-temp-legend')
 savefig('cond-temp-legend2.pdf')
