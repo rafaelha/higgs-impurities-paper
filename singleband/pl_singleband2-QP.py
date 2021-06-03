@@ -27,7 +27,7 @@ plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
-folder = 'conductivity-dirty'
+folder = 'conductivity-dirty-QP'
 files = glob.glob(f'{folder}/*.pickle')
 
 save_plots = False
@@ -425,12 +425,13 @@ def cond_pcolor():
     def nm2(x):
         mean = np.mean(x,axis=0)
         x -= mean
-        x /= np.max(np.abs(x), axis=0)
+        # x /= np.max(np.abs(x), axis=0)
         # return x/(mean[:,np.newaxis])
         # return x/(mean)
         return x
 
-    plt.pcolormesh(w*u_e*meV_to_THz, delays*u_t, nm2(np.abs(cc.real)), cmap=cm, shading='gouraud')#, vmin=0.9, vmax=1.1)
+    km=100
+    plt.pcolormesh(w*u_e*meV_to_THz, delays*u_t, nm2(np.abs(cc.real)), cmap=cm, vmin=km, vmax=km), shading='gouraud')#, vmin=0.9, vmax=1.1)
     plt.axvline(2*gap*u_e*meV_to_THz)
     plt.xlabel('Frequency (THz)')
     plt.ylabel('$\delta t_{pp}$ (ps)')
@@ -579,9 +580,10 @@ cc3 = []
 rr = []
 delays = delays[1:]
 s_imp = 8
+gg = np.array([20])*0.1258396834202397*2
 # s_imp = 3
 for d in delays:
-    r = sel(first=True, t_delay=d, A0_pr=A0_prs[0], g=gammas[s_imp])
+    r = sel(first=True, t_delay=d, A0_pr=A0_prs[0], g=gg)
     rr.append(r)
     w, s1 = conductivity(r, order=1, plot=False)
     w, s3 = conductivity(r, order=3, plot=False)
@@ -610,7 +612,8 @@ w_delay,ccwi = fft(delays, ccm.imag)
 
 # cond_3d()
 cond_pcolor()
-plt.title(f'$\gamma/2\Delta={gammas[s_imp][0]/2/gap}$')
+plt.title(f'$\gamma/2\Delta={gg[0]/2/gap}$')
+plt.colorbar()
 plt.tight_layout()
 # cond_w_pcolor()
 
